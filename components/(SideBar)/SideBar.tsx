@@ -1,5 +1,5 @@
-import SideBarList from './SideBarList';
 import Image from 'next/image';
+import SideBarList from './SideBarList';
 import Logo from '../../public/sideMenuLogo.svg';
 
 function SideMenu() {
@@ -8,7 +8,7 @@ function SideMenu() {
       <div className="p-4 mt-5 ml-6">
         <Image src={Logo} alt="로고" />
       </div>
-      <SideBarList></SideBarList>
+      <SideBarList />
     </div>
   );
 }
