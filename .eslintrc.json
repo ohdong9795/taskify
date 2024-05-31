@@ -2,12 +2,13 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "react", "import"],
-  "extends": ["airbnb-typescript", "prettier", "plugin:@next/next/recommended"],
+  "extends": ["prettier", "plugin:@next/next/recommended", "airbnb", "airbnb-typescript"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
     "@typescript-eslint/semi": "off",
-    "@typescript-eslint/space-before-function-paren": "off"
+    "@typescript-eslint/space-before-function-paren": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }
