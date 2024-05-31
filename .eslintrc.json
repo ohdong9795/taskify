@@ -1,46 +1,13 @@
 {
+  "root": true,
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended",
-    "plugin:tailwindcss/recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint",
-    "import",
-    "jsx-a11y",
-    "react",
-    "react-hooks",
-    "tailwindcss",
-    "zustand",
-    "react-query"
-  ],
+  "plugins": ["@typescript-eslint"],
+  "extends": ["airbnb-typescript", "prettier", "plugin:@next/next/recommended"],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2020,
-    "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "settings": {
-    "react": {
-      "version": "detect"
-    },
-    "import/resolver": {
-      "typescript": {}
-    }
-  },
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "tailwindcss/classnames-order": "warn",
-    "tailwindcss/no-custom-classname": "off",
-    "zustand/no-unstable-state": "warn",
-    "react-query/query-key-stale-time": "warn"
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/space-before-function-paren": "off"
   }
 }
