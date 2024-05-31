@@ -22,6 +22,13 @@ const config: Config = {
         blue_76A6EA: '#76A5EA',
         pink_E876EA: '#E876EA',
       },
+      fontSize: {
+        sm: '14px',
+        base: '16px',
+      },
+      screens: {
+        sm: '375px',
+      },
     },
   },
   plugins: [],
