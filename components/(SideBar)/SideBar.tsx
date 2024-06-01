@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import SideBarList from './SideBarList';
-import Logo from '../../public/sideMenuLogo.svg';
+import Logo from '../../public/images/sideMenuLogo.svg';
 
 function SideMenu() {
   return (

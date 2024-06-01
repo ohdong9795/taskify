@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import SideBtn from '../../public/sideMenuButton.svg';
+import SideBtn from '../../public/images/sideMenuButton.svg';
 
 function SideBarList() {
   const [listItems, setListItems] = useState<number[]>([]);
