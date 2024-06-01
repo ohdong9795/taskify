@@ -19,6 +19,12 @@
   "rules": {
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/space-before-function-paren": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "object-curly-newline": "off",
+    "operator-linebreak": "off",
+    "implicit-arrow-linebreak": "off",
+    "max-len": "off"
   }
 }
