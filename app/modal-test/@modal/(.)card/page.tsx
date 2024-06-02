@@ -1,5 +1,5 @@
-import Card from '../../card/page';
-import { Modal } from './modal';
+import Card from '@/app/modal-test/card/page';
+import { Modal } from '../modal';
 
 function CardModal() {
   return (
