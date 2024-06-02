@@ -1,5 +1,5 @@
-import NewDashboard from '../../new-dashboard/page';
-import { Modal } from '../modal';
+import NewDashboard from '@/app/modal/@newDashboard/page';
+import Modal from '../Modal';
 
 function NewDashboardModal() {
   return (
