@@ -3,6 +3,7 @@
 import { type ElementRef, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
+import { IoClose } from 'react-icons/io5';
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -19,11 +20,11 @@ export function Modal({ children }: { children: React.ReactNode }) {
   }
 
   return createPortal(
-    <div className="modal-backdrop">
-      <dialog ref={dialogRef} className="modal" onClose={onDismiss}>
-        {children}
-        <button onClick={onDismiss} className="close-button" type="button">
-          닫기
+    <div className="bg-black modal-backdrop bg-opacity-70">
+      <dialog ref={dialogRef} className="relative rounded-lg dialog" onClose={onDismiss}>
+        <div className="py-8 px-7">{children}</div>
+        <button onClick={onDismiss} className="absolute z-10 top-8 right-7 close-button" type="button">
+          <IoClose className="w-8 h-8" />
         </button>
       </dialog>
     </div>,
