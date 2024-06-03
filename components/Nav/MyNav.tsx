@@ -5,7 +5,7 @@ import UserImage from '@/public/images/UserImage.svg';
 
 export default function MyNav() {
   return (
-    <nav className="size-full h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px]">
+    <nav className="relative size-full h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px]">
       <div>내 대시보드</div>
       <div className="flex flex-row items-center gap-[12px]">
         {/* 유저 프로필 넣으면 됩니다. */}
