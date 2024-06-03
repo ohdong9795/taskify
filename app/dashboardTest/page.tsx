@@ -1,3 +1,4 @@
+import ColumnAddForm from '@/components/ColumnAddForm';
 import DashboardAddForm from '@/components/DashboardAddForm';
 import Link from 'next/link';
 
@@ -8,6 +9,7 @@ function TestPage() {
         카드 열기
       </Link>
       <DashboardAddForm />
+      <ColumnAddForm />
     </div>
   );
 }
