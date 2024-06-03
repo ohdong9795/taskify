@@ -28,7 +28,7 @@ function Modal() {
         <div className="relative py-8 mx-6 bg-white rounded-lg px-7">
           <div>{content}</div>
           <Link href={pathname}>
-            <button className="absolute top-8 right-7 close-button" type="button">
+            <button className="absolute top-8 right-7 close-button" type="button" aria-label="close">
               <IoClose className="w-8 h-8" />
             </button>
           </Link>
