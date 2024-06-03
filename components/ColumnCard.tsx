@@ -7,7 +7,7 @@ function ColumnCard() {
     <div className="max-w-[730px]">
       <header className="flex items-center justify-between h-8 mb-6">
         <h1 className="text-2xl font-bold text-black_333236">새로운 일정 관리 Taskify</h1>
-        <button type="button" className="mr-14">
+        <button type="button" className="mr-14" aria-label="dropdown">
           <BsThreeDotsVertical className="w-[24px] h-[24px]" />
         </button>
       </header>
@@ -31,7 +31,7 @@ function ColumnCard() {
               name="comment"
               placeholder="댓글 작성하기"
               className="flex items-start p-4 text-sm font-normal border rounded-md h-28 text-gray_9FA6B2 border-gray_D9"
-            ></textarea>
+            />
             <button
               type="submit"
               className="absolute bottom-3 right-3 px-8 py-2 border border-gray_D9 rounded-[4px] text-xs font-medium text-violet_5534DA"
