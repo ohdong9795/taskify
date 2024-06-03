@@ -4,7 +4,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 
 function ColumnCard() {
   return (
-    <div>
+    <div className="max-w-[730px]">
       <header className="flex items-center justify-between h-8 mb-6">
         <h1 className="text-2xl font-bold text-black_333236">새로운 일정 관리 Taskify</h1>
         <button type="button" className="mr-14">

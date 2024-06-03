@@ -25,8 +25,8 @@ function Modal() {
   return (
     content && (
       <dialog className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full overflow-auto bg-black bg-opacity-50 backdrop-blur">
-        <div className="relative p-8 m-auto bg-white rounded-lg">
-          <div className="py-8 px-7">{content}</div>
+        <div className="relative py-8 mx-6 bg-white rounded-lg px-7">
+          <div>{content}</div>
           <Link href={pathname}>
             <button className="absolute top-8 right-7 close-button" type="button">
               <IoClose className="w-8 h-8" />
