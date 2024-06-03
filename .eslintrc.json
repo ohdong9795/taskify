@@ -25,6 +25,15 @@
     "object-curly-newline": "off",
     "operator-linebreak": "off",
     "implicit-arrow-linebreak": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        //"labelComponents": ["label"],
+        //"labelAttributes": ["label"],
+        "controlComponents": ["Input"],
+        "depth": 2
+      }
+    ]
   }
 }

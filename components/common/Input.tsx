@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
 import { PiEyeThin, PiEyeSlashThin } from 'react-icons/pi';
 
 interface InputProps {
   type: 'email' | 'password' | 'modal';
+  id?: string;
   hasError?: boolean;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  register?: UseFormRegisterReturn;
+  onBlur?: () => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 const layout = 'rounded-lg border border-solid px-[16px] py-[15px] focus:outline-1 focus:outline';
@@ -23,7 +23,7 @@ const signClassName = (hasError: boolean) => `${inputClassName(hasError)} w-[520
 const modalClassName = (hasError: boolean) =>
   `${inputClassName(hasError)} w-[484px] h-[48px] max-md:w-[287px] max-md:h-[42px]`;
 
-export default function Input({ type, hasError = false, value, onChange, placeholder, register }: InputProps) {
+export default function Input({ type, id, hasError = false, placeholder, onBlur, onChange, value }: InputProps) {
   const [passwordType, setPasswordType] = useState<'password' | 'text'>('password');
 
   const togglePasswordType = () => {
@@ -33,11 +33,12 @@ export default function Input({ type, hasError = false, value, onChange, placeho
   if (type === 'email') {
     return (
       <input
+        id={id}
         className={signClassName(hasError)}
-        value={value}
-        onChange={onChange}
         placeholder={placeholder}
-        {...register}
+        onBlur={onBlur}
+        onChange={onChange}
+        value={value}
       />
     );
   }
@@ -46,12 +47,13 @@ export default function Input({ type, hasError = false, value, onChange, placeho
     return (
       <div className="relative w-[520px] h-[50px] max-w-full max-h-full">
         <input
+          id={id}
           type={passwordType}
           className={signClassName(hasError)}
-          value={value}
-          onChange={onChange}
           placeholder={placeholder}
-          {...register}
+          onBlur={onBlur}
+          onChange={onChange}
+          value={value}
         />
         {passwordType === 'password' ? (
           <PiEyeSlashThin className={`${visibleButton} w-[24px] h-[24px]`} onClick={togglePasswordType} />
@@ -65,11 +67,12 @@ export default function Input({ type, hasError = false, value, onChange, placeho
   if (type === 'modal') {
     return (
       <input
+        id={id}
         className={modalClassName(hasError)}
-        value={value}
-        onChange={onChange}
         placeholder={placeholder}
-        {...register}
+        onBlur={onBlur}
+        onChange={onChange}
+        value={value}
       />
     );
   }
