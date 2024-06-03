@@ -1,6 +1,7 @@
 import ColumnAddForm from '@/components/ColumnAddForm';
 import ColumnEditForm from '@/components/ColumnEditForm';
 import DashboardAddForm from '@/components/DashboardAddForm';
+import ToDoAddForm from '@/components/ToDoAddForm';
 import Link from 'next/link';
 
 function TestPage() {
@@ -12,6 +13,7 @@ function TestPage() {
       <DashboardAddForm />
       <ColumnAddForm />
       <ColumnEditForm />
+      <ToDoAddForm />
     </div>
   );
 }
