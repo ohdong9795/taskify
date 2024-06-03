@@ -8,7 +8,7 @@ import UserImage from '@/public/images/UserImage.svg';
 
 export default function MyNav() {
   return (
-    <nav className="size-full h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px] fixed">
+    <nav className="fixed top-0 left-0size-full h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px] z-50">
       <div>내 대시보드</div>
       <div className="flex flex-row items-center gap-[40px]">
         <div className="flex flex-row items-center gap-[16px]">
