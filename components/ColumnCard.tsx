@@ -2,7 +2,7 @@ import Image from 'next/image';
 import cardImage from '@/public/images/cardImage2.svg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-function Card() {
+function ColumnCard() {
   return (
     <div>
       <header className="flex items-center justify-between h-8 mb-6">
@@ -48,8 +48,12 @@ function Card() {
               </div>
               <p className="mb-3 text-sm font-normal text-black_333236">하이하이하이</p>
               <div className="flex gap-3 text-xs font-normal text-gray_9FA6B2">
-                <button className="underline">수정</button>
-                <button className="underline">삭제</button>
+                <button className="underline" type="button">
+                  수정
+                </button>
+                <button className="underline" type="button">
+                  삭제
+                </button>
               </div>
             </div>
           </div>
@@ -72,4 +76,4 @@ function Card() {
   );
 }
 
-export default Card;
+export default ColumnCard;

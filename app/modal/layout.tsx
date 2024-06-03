@@ -1,10 +1,11 @@
-function TestLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+import Modal from '@/components/common/Modal';
+
+function TestLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body>
         {children}
-        {modal}
-        <div id="modal-root" />
+        <Modal />
       </body>
     </html>
   );
