@@ -4,8 +4,8 @@ import Logo from '../../public/images/sideMenuLogo.svg';
 
 function SideMenu() {
   return (
-    <div className="fixed top-0 bottom-0 w-72 flex flex-col bg-slate-400">
-      <div className="p-4 mt-5 ml-6">
+    <div className="flex flex-col h-screen w-[300px] border-r-[1px] border-gray-D9D9D9">
+      <div className="mt-5 ml-6">
         <Image src={Logo} alt="로고" />
       </div>
       <SideBarList />

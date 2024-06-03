@@ -1,1 +1,9 @@
-//주스탠드 사용해서 state를 내보낼예정
+// import axiosInstance from '../../utils/axios';
+
+// export default async function SideBarUtil() {
+//   try {
+//     const { data } = await axiosInstance.get('dashboards');
+//   } catch (error) { 
+//     console.error(error);
+//   }
+// }
