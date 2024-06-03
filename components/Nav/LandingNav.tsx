@@ -10,8 +10,8 @@ export default function LandingNav() {
         <Image src={Taskify} alt="logo" className="hidden sm:flex" />
       </div>
       <div className="flex flex-row gap-[36px] sm:gap-[20px]">
-        <div className="text-sm sm:text-base text-white">로그인</div>
-        <div className="text-sm sm:text-base text-white">회원가입</div>
+        <div className="text-sm sm:text-base text-white cursor-pointer">로그인</div>
+        <div className="text-sm sm:text-base text-white cursor-pointer">회원가입</div>
       </div>
     </nav>
   );

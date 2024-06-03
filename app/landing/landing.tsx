@@ -10,7 +10,10 @@ export default function Lainding() {
         <div className=" text-violet_5534DA text-[76px] font-bold">Taskify</div>
       </div>
       <div className="text-white mt-[24px]">서비스의 메인 설명이 들어갑니다.</div>
-      <button className="text-white mt-[66px] w-[280px] pt-[15px] pb-[14px] rounded-[8px] bg-violet_5534DA">
+      <button
+        type="button"
+        className="text-white mt-[66px] w-[280px] pt-[15px] pb-[14px] rounded-[8px] bg-violet_5534DA"
+      >
         로그인하기
       </button>
     </div>
