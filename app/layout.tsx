@@ -17,9 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
-        <div className="flex">{children}</div>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
