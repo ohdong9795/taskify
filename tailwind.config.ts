@@ -29,7 +29,8 @@ const config: Config = {
         base: '16px',
       },
       screens: {
-        sm: '375px',
+        mobile: '375px',
+        tablet: '744px',
       },
     },
   },
