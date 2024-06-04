@@ -1,13 +1,6 @@
-import LandingNav from '@/components/Nav/LandingNav';
-import Lainding from './landing/landing';
+// import LandingNav from '@/components/Nav/LandingNav';
+// import Lainding from './landing/landing';
 
 export default function Home() {
-  return (
-    <>
-      <LandingNav />
-      <div className=" relative">
-        <Lainding />
-      </div>
-    </>
-  );
+  return <div>테스트</div>;
 }
