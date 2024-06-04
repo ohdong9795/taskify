@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { PiEyeThin, PiEyeSlashThin } from 'react-icons/pi';
 
