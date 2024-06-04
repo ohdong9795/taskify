@@ -2,5 +2,5 @@
 // import Lainding from './landing/landing';
 
 export default function Home() {
-  return <div>test</div>;
+  return <div>테스트</div>;
 }
