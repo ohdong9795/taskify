@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  mode: 'jit',
   theme: {
     extend: {
       colors: {
@@ -21,6 +22,7 @@ const config: Config = {
         orange_FFA500: '#FFA500',
         blue_76A6EA: '#76A5EA',
         pink_E876EA: '#E876EA',
+        gray_D9D9D9: '#D9D9D9',
       },
       fontSize: {
         sm: '14px',
