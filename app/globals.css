@@ -16,3 +16,11 @@ body {
     text-wrap: balance;
   }
 }
+
+.example-container {
+  @apply rounded-t-lg bg-black_4B w-[378px] h-[260px] flex items-center justify-center;
+}
+
+.example-description {
+  @apply bg-black_17 text-white flex flex-col gap-[18px] p-[33px];
+}
