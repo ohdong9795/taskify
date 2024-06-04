@@ -22,10 +22,12 @@
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
+    "react/jsx-one-expression-per-line": "off",
     "object-curly-newline": "off",
     "operator-linebreak": "off",
     "implicit-arrow-linebreak": "off",
     "max-len": "off",
+    "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/label-has-associated-control": [
       2,
       {
@@ -35,5 +37,6 @@
         "depth": 2
       }
     ]
-  }
+  },
+  "ignorePatterns": ["next.config.mjs"]
 }
