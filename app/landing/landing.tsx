@@ -1,5 +1,5 @@
 import MainImage from '@/public/images/MainImage.svg';
-import Image from 'next/image';
+
 import Example1 from '@/public/images/Example1.svg';
 import Example2 from '@/public/images/Example2.svg';
 import Description01 from '@/public/images/Description01.svg';
@@ -10,7 +10,7 @@ export default function Lainding() {
   return (
     <div className=" bg-black flex flex-col items-center pt-[164px] w-full">
       <header className="flex flex-col items-center">
-        <Image src={MainImage} alt="랜딩페이지 메인이미지" />
+        <MainImage />
         <div className="flex items-center space-x-[28px] mt-[38px]">
           <p className=" text-white text-[76px] font-bold">새로운 일정 관리</p>
           <p className=" text-violet_5534DA text-[76px] font-bold">Taskify</p>
@@ -33,12 +33,12 @@ export default function Lainding() {
             </div>
           </div>
           <div className="col-start-2 row-start-2">
-            <Image src={Example1} alt="예시화면 1" />
+            <Example1 />
           </div>
         </section>
         <section className="bg-black_17 w-[1200px] h-[600px] grid grid-cols-2 gap-[60px] items-center pt-[98px] pl-[108px] rounded-lg">
           <div>
-            <Image src={Example2} alt="예시화면 2" />
+            <Example2 />
           </div>
           <div className="flex flex-col gap-[100px]">
             <h2 className="text-gray_9FA6B2 font-medium text-[22px]">Point 2</h2>
@@ -54,7 +54,7 @@ export default function Lainding() {
         <div className="flex gap-[33px]">
           <div className="flex flex-col ">
             <div className="rounded-t-lg bg-black_4B w-[378px] h-[260px] flex items-center justify-center">
-              <Image src={Description01} alt="설명1" className=" items-center" />
+              <Description01 className=" items-center" />
             </div>
             <div className="bg-black_17 text-white flex flex-col gap-[18px] p-[33px]">
               <div className="font-bold">대시보드 설정</div>
@@ -63,7 +63,7 @@ export default function Lainding() {
           </div>
           <div className="flex flex-col ">
             <div className="rounded-t-lg bg-black_4B w-[378px] h-[260px] flex items-center justify-center">
-              <Image src={Description02} alt="설명1" className=" items-center" />
+              <Description02 className=" items-center" />
             </div>
             <div className="bg-black_17 text-white flex flex-col gap-[18px] p-[33px]">
               <div className="font-bold">초대</div>
@@ -72,7 +72,7 @@ export default function Lainding() {
           </div>
           <div className="flex flex-col ">
             <div className="rounded-t-lg bg-black_4B w-[378px] h-[260px] flex items-center justify-center">
-              <Image src={Description03} alt="설명1" className=" items-center" />
+              <Description03 className=" items-center" />
             </div>
             <div className="bg-black_17 text-white flex flex-col gap-[18px] p-[33px]">
               <div className="font-bold">구성워</div>
