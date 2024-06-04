@@ -23,9 +23,9 @@ function Modal({ children }: { children: React.ReactNode }) {
     <dialog
       onClose={handleModalClose}
       ref={modalRef}
-      className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full overflow-auto bg-black bg-opacity-50 backdrop-blur"
+      className="flex items-center justify-center overflow-auto rounded-lg backdrop:bg-black backdrop:bg-opacity-70"
     >
-      <div className="relative py-8 mx-6 bg-white rounded-lg px-7">
+      <div className="relative py-8 bg-white px-7">
         <div>{children}</div>
         <button
           onClick={handleModalClose}
