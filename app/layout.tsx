@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 import 'modern-normalize/modern-normalize.css';
 import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+import ReactQueryProviders from '@/components/common/CustomReactQueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +21,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <div className="flex">{children}</div>
+        <ReactQueryProviders>{children}</ReactQueryProviders>
+        <ToastContainer />
       </body>
     </html>
   );
