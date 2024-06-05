@@ -2,6 +2,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { login } from '@/services/auth';
 import { useRouter } from 'next/navigation';
+import { useMutation } from 'react-query';
+import { toast } from 'react-toastify';
+import useAuthStore from '@/stores/authStore';
 import ErrorMsg from './ErrorMsg';
 import AuthInput from './AuthInput';
 
@@ -10,26 +13,33 @@ export default function LoginForm() {
     control,
     handleSubmit,
     formState: { errors },
-    setError,
   } = useForm({ mode: 'onBlur' });
+
+  const { setToken } = useAuthStore();
 
   const router = useRouter();
 
-  const submit = useCallback(async (data: any) => {
-    const result = await login({ email: data.email, password: data.password });
-    if ('errorCode' in result) {
-      if (result.errorCode === 400) {
-        const errorMsg = '이메일 형식으로 작성해주세요.';
-        setError('email', { message: errorMsg });
-      }
-      if (result.errorCode === 404) {
-        // modal 존재하지 않는 유저입니다.
-      }
-    } else {
-      // accessToken zustand 사용하기
+  const mutation = useMutation(login, {
+    onSuccess: (data) => {
+      setToken(data.accessToken);
       router.push('/mydashboard');
-    }
-  }, []);
+    },
+    onError: (error: any) => {
+      toast(error.message, {
+        position: 'top-center',
+        autoClose: 1500,
+        draggable: true,
+        theme: 'dark',
+      });
+    },
+  });
+
+  const submit = useCallback(
+    (data: any) => {
+      mutation.mutate({ email: data.email, password: data.password });
+    },
+    [mutation],
+  );
 
   return (
     <form onSubmit={handleSubmit(submit)}>

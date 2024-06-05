@@ -149,6 +149,22 @@ export default function RegisterForm() {
             <ErrorMsg msg={errors.passwordCheck.message} />
           )}
         </div>
+        <div>
+          <Controller
+            name="agreeCheckbox"
+            control={control}
+            rules={{ required: '이용약관에 동의해 주세요.' }}
+            render={({ field }) => (
+              <div className="flex items-center">
+                <AuthInput type="checkbox" id="agreeCheckbox" {...field} />
+                <span className="ml-[8px]"> 이용약관에 동의합니다. </span>
+              </div>
+            )}
+          />
+          {errors.agreeCheckbox && typeof errors.agreeCheckbox.message === 'string' && (
+            <ErrorMsg msg={errors.agreeCheckbox.message} />
+          )}
+        </div>
         <button className="w-full h-[50px] rounded-lg bg-gray_9FA6B2 text-[18px] text-white" type="submit">
           가입하기
         </button>

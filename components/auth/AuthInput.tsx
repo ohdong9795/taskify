@@ -1,10 +1,8 @@
-'use client';
-
 import { useState } from 'react';
 import { PiEyeThin, PiEyeSlashThin } from 'react-icons/pi';
 
 interface InputProps {
-  type: 'email' | 'password' | 'modal';
+  type: 'email' | 'password' | 'checkbox' | 'modal';
   id?: string;
   hasError?: boolean;
   placeholder?: string;
@@ -61,6 +59,18 @@ export default function Input({ type, id, hasError = false, placeholder, onBlur,
           <PiEyeThin className={`${visibleButton} w-[24px] h-[24px]`} onClick={togglePasswordType} />
         )}
       </div>
+    );
+  }
+
+  if (type === 'checkbox') {
+    return (
+      <input
+        type="checkbox"
+        className="w-[20px] h-[20px] rounded-[4px]"
+        onBlur={onBlur}
+        onChange={onChange}
+        value={value}
+      />
     );
   }
 

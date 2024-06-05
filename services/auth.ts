@@ -30,10 +30,14 @@ export const register = async ({
 };
 
 export const login = async ({ email, password }: { email: string; password: string }) => {
-  const response = await axios.post(`${BASE_URL}/auth/login`, {
-    email,
-    password,
-  });
+  try {
+    const response = await axios.post(`${BASE_URL}/auth/login`, {
+      email,
+      password,
+    });
 
-  return response.data;
+    return response.data;
+  } catch (error: any) {
+    throw new AxiosError(error.response.data.message);
+  }
 };
