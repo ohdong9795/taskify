@@ -6,7 +6,7 @@ export default function Example() {
   return (
     <article className="flex flex-col pt-[90px] gap-[36px] pb-[160px]">
       <div className="text-white font-bold text-[28px] ">생산성을 높이는 다양한 설정 ⚡️</div>
-      <div className="flex gap-[33px]">
+      <div className="flex flex-col lg:flex-row gap-[33px]">
         <div className="flex flex-col ">
           <div className="example-container">
             <Example01 className=" items-center" />
