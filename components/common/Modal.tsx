@@ -37,7 +37,7 @@ function Modal({ children }: { children: React.ReactNode }) {
         </button>
       </div>
     </dialog>,
-    document.getElementById('modal-root')
+    document.getElementById('modal-root')!,
   );
 }
 

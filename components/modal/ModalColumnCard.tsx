@@ -20,7 +20,7 @@ function ModalColumnCard() {
             quas.
           </p>
           <div className="relative flex justify-center w-full">
-            <CardImage alt="cardIamge" />
+            <CardImage />
           </div>
           <form className="flex flex-col gap-[10px] relative my-6">
             <label htmlFor="comment" className="font-medium text-black_333236">
