@@ -1,9 +1,9 @@
-import ColumnCard from '@/components/ColumnCard';
+import ModalColumnCard from '@/components/modal/ModalColumnCard';
 
 function Card() {
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <ColumnCard />
+      <ModalColumnCard />
     </div>
   );
 }

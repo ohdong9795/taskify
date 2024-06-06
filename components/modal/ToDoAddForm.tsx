@@ -1,5 +1,5 @@
+import Input from '@/components/common/Input';
 import ModalTitle from './ModalTitle';
-import Input from './common/Input';
 
 function ToDoAddForm() {
   return (

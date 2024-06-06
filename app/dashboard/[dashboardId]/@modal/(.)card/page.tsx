@@ -1,10 +1,10 @@
-import ColumnCard from '@/components/ColumnCard';
 import Modal from '@/components/common/Modal';
+import ModalColumnCard from '@/components/modal/ModalColumnCard';
 
 function Card() {
   return (
     <Modal>
-      <ColumnCard />
+      <ModalColumnCard />
     </Modal>
   );
 }

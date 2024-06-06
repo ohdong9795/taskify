@@ -1,14 +1,14 @@
-import SideBar from '@/components/(SideBar)/SideBar';
-import MyNav from '@/components/nav/DashboardNav';
+// import SideBar from '@/components/(SideBar)/SideBar';
+// import MyNav from '@/components/nav/DashboardNav';
 
 function DashboardLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <html lang="ko">
       <body>
         <div className="flex">
-          <SideBar />
+          {/* <SideBar /> */}
           <div className="w-full">
-            <MyNav />
+            {/* <MyNav /> */}
             {children}
             {modal}
           </div>
