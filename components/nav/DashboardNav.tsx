@@ -6,7 +6,7 @@ import Vector from '@/public/images/Vector.svg';
 import Image from 'next/image';
 import UserImage from '@/public/images/UserImage.svg';
 
-export default function MyNav() {
+export default function DashBoardNav() {
   return (
     <nav className="fixed top-0 left-0size-full h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px] z-50">
       <div>내 대시보드</div>
