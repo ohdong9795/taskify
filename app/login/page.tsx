@@ -1,5 +1,3 @@
-'use client';
-
 import LoginForm from '@/components/auth/LoginForm';
 import AuthHeader from '@/components/auth/AuthHeader';
 import AuthFooter from '@/components/auth/AuthFooter';

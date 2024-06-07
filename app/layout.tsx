@@ -4,7 +4,6 @@ import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import QueryProvider from '@/components/common/QueryProvider';
 import ToastProvider from '@/components/common/ToastProvider';
-import { ReactNode } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 interface RootLayoutProps {
-  children: ReactNode;
-  pageProps: {
+  children: React.ReactNode;
+  pageProps?: {
     dehydratedState: unknown;
   };
 }
