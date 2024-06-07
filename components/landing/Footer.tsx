@@ -1,5 +1,6 @@
 import { CiMail } from 'react-icons/ci';
 import { FaFacebookSquare, FaInstagram } from 'react-icons/fa';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -10,9 +11,15 @@ export default function Footer() {
         <div>FAQ</div>
       </div>
       <div className="flex gap-[20px] md:gap-[14px] text-white">
-        <CiMail className="w-[20px] h-[20px]" />
-        <FaFacebookSquare className="w-[20px] h-[20px]" />
-        <FaInstagram className="w-[20px] h-[20px]" />
+        <Link href="https://www.gmail.com">
+          <CiMail className="w-[20px] h-[20px] cursor-pointer" />
+        </Link>
+        <Link href="https://www.facebook.com">
+          <FaFacebookSquare className="w-[20px] h-[20px] cursor-pointer" />
+        </Link>
+        <Link href="https://www.instagram.com">
+          <FaInstagram className="w-[20px] h-[20px] cursor-pointer" />
+        </Link>
       </div>
     </div>
   );
