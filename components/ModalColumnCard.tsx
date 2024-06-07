@@ -3,7 +3,7 @@ import cardImage from '@/public/images/cardImage2.svg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import ModalTitle from './ModalTitle';
 
-function ColumnCard() {
+function ModalColumnCard() {
   return (
     <div className="max-w-[730px]">
       <header className="flex items-center justify-between h-8 mb-6">
@@ -77,4 +77,4 @@ function ColumnCard() {
   );
 }
 
-export default ColumnCard;
+export default ModalColumnCard;
