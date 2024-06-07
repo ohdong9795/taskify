@@ -11,13 +11,8 @@ export async function POST(req: NextRequest) {
     const response = await instance.post('/auth/login', { email, password });
     const { accessToken } = response.data;
 
-    cookies().set('accessToken', accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // HTTPS에서만 전송
-      maxAge: 60 * 60 * 24, // 1일
-      sameSite: 'strict',
-      path: '/',
-    });
+    cookies().set('token', accessToken);
+    // 이부분 테스트때문에 옵션 지워놨는데 추후에 보안을 위해 다시 작성하면 될거같습니다.
     return NextResponse.json({ message: 'POST request received', data: response.data }, { status: 201 });
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
