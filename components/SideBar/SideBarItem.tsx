@@ -1,4 +1,5 @@
-// SideBarItem.tsx
+'use client';
+
 import classnames from 'classnames';
 import { dashboardsStore } from '../../stores/dashboardsStore';
 import CrownLogo from '../../public/images/DashboardCrown.svg';
