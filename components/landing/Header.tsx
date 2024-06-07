@@ -1,15 +1,7 @@
-'use client';
-
 import MainImage from '@/public/images/MainImage.svg';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Description() {
-  const router = useRouter();
-
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
   return (
     <header className="flex flex-col items-center">
       <MainImage />
@@ -19,13 +11,11 @@ export default function Description() {
       </div>
       <div className="text-white mt-[24px]">서비스의 메인 설명이 들어갑니다.</div>
 
-      <button
-        onClick={handleLogin}
-        type="submit"
-        className="text-white mt-[66px] w-[280px] pt-[15px] pb-[14px] rounded-lg bg-violet_5534DA"
-      >
-        로그인하기
-      </button>
+      <Link href="./login">
+        <div className="text-white mt-[66px] w-[280px] pt-[15px] pb-[14px] rounded-lg bg-violet_5534DA text-center">
+          로그인하기
+        </div>
+      </Link>
     </header>
   );
 }
