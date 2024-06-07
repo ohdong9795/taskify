@@ -46,7 +46,7 @@ function SideBarList() {
         <ul className="mt-[15px]">
           {currentItems.map((item) => (
             <li className="mt-[10px]" key={item.id}>
-              {JSON.stringify(item)}
+              {item.name}
               {/* 여기에 받아온 입력 값을 하나씩 출력하면됨 */}
             </li>
           ))}
