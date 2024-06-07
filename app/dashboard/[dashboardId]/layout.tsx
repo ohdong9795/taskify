@@ -1,4 +1,4 @@
-import SideBar from '@/components/(SideBar)/SideBar';
+import SideBar from '@/components/SideBar/SideBar';
 import MyNav from '@/components/nav/DashboardNav';
 
 function DashboardLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {

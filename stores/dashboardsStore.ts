@@ -1,36 +1,38 @@
 import { create } from "zustand";
+import axios from 'axios';
 
-  export interface Dashboard {
-    id: number;
-    title: string;
-    color: string;
-    createdAt: string;
-    updatedAt: string;
-    createdByMe: boolean;
-    userId: number;
-  }
+export interface Dashboard {
+  id: number;
+  title: string;
+  color: string;
+  createdAt: string;
+  updatedAt: string;
+  createdByMe: boolean;
+  userId: number;
+}
 
-  export interface DashboardsStore {
-    cursorId: number;
-    totalCount: number;
-    dashboards: Dashboard[];
-  }
+export interface DashboardsStore {
+  cursorId: number;
+  totalCount: number;
+  dashboards: Dashboard[];
+  fetchDashboards: (page: number) => Promise<void>;
+}
 
-
-export const dashboardsStore = create<DashboardsStore>(() => ({
-    cursorId: 1,
-    totalCount: 10,
-    dashboards: [
-      {
-        id: 1,
-        title: "New Dashboard",
-        color: "blue",
-        createdAt: "2022-10-10T10:10:10.000Z",
-        updatedAt: "2022-10-10T10:10:10.000Z",
-        createdByMe: false,
-        userId: 2
-      }
-    ]
+export const dashboardsStore = create<DashboardsStore>((set) => ({
+  cursorId: 0,
+  totalCount: 0,
+  dashboards: [],
+  fetchDashboards: async (page = 0) => {
+    const { data } = await axios.get('/dashboards', {
+      params : { page },
+    });
+    set({
+      cursorId: data.cursorId,
+      totalCount: data.totalCount,
+      dashboards: data.dashboards,
+    });
+    return data.dashboards;
+  },
 }));
 
-// 주스턴드 스는법좀 물어보기
+// 주스탠드 사용법 물어보기.
