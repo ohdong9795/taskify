@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import cardImage from '@/public/images/cardImage2.svg';
+import CardImage from '@/public/images/cardImage2.svg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import ModalTitle from './ModalTitle';
 
@@ -21,7 +20,7 @@ function ModalColumnCard() {
             quas.
           </p>
           <div className="relative flex justify-center w-full">
-            <Image width={450} height={200} src={cardImage} alt="cardIamge" />
+            <CardImage />
           </div>
           <form className="flex flex-col gap-[10px] relative my-6">
             <label htmlFor="comment" className="font-medium text-black_333236">
