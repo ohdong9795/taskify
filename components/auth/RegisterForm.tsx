@@ -5,8 +5,17 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
+import FORM_OPTIONS from '@/constants/formOption';
 import ErrorMsg from './ErrorMsg';
 import AuthInput from './AuthInput';
+
+interface RegisterData {
+  email: string;
+  nickName: string;
+  password: string;
+  passwordCheck: string;
+  agreeCheckbox: string;
+}
 
 export default function RegisterForm() {
   const {
@@ -15,7 +24,7 @@ export default function RegisterForm() {
     formState: { errors },
     watch,
     setError,
-  } = useForm({ mode: 'onBlur' });
+  } = useForm<RegisterData>({ mode: 'onBlur' });
 
   const router = useRouter();
 
@@ -43,7 +52,7 @@ export default function RegisterForm() {
   });
 
   const submit = useCallback(
-    (data: any) => {
+    (data: RegisterData) => {
       mutation.mutate({ email: data.email, nickname: data.nickName, password: data.password });
     },
     [mutation],
@@ -53,23 +62,17 @@ export default function RegisterForm() {
     <form onSubmit={handleSubmit(submit)}>
       <div className="flex flex-col gap-[16px]">
         <div>
-          <label htmlFor="email">이메일</label>
+          <label htmlFor={FORM_OPTIONS.email.name}>이메일</label>
           <Controller
             control={control}
-            name="email"
-            rules={{
-              required: '이메일을 입력해 주세요.',
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: '올바른 이메일 주소가 아닙니다.',
-              },
-            }}
+            name={FORM_OPTIONS.email.name}
+            rules={FORM_OPTIONS.email.rules}
             render={({ field }) => (
               <AuthInput
-                id="email"
-                type="email"
+                id={FORM_OPTIONS.email.name}
+                usage="email"
                 hasError={errors.email !== undefined}
-                placeholder="이메일을 입력하세요"
+                placeholder={FORM_OPTIONS.email.placeholder}
                 {...field}
               />
             )}
@@ -80,16 +83,14 @@ export default function RegisterForm() {
           <label htmlFor="nickName">닉네임</label>
           <Controller
             control={control}
-            name="nickName"
-            rules={{
-              required: '닉네임을 입력해 주세요.',
-            }}
+            name={FORM_OPTIONS.nickName.name}
+            rules={FORM_OPTIONS.nickName.rules}
             render={({ field }) => (
               <AuthInput
-                id="nickName"
-                type="email"
+                id={FORM_OPTIONS.nickName.name}
+                usage="password"
                 hasError={errors.nickName !== undefined}
-                placeholder="닉네임을 입력하세요"
+                placeholder={FORM_OPTIONS.nickName.placeholder}
                 {...field}
               />
             )}
@@ -100,20 +101,14 @@ export default function RegisterForm() {
           <label htmlFor="password">비밀번호</label>
           <Controller
             control={control}
-            name="password"
-            rules={{
-              required: '비밀번호를 입력해 주세요.',
-              pattern: {
-                value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/,
-                message: '비밀번호는 영문, 숫자 조합 8자 이상 입력해 주세요.',
-              },
-            }}
+            name={FORM_OPTIONS.password.name}
+            rules={FORM_OPTIONS.password.rules}
             render={({ field }) => (
               <AuthInput
-                id="password"
-                type="password"
+                id={FORM_OPTIONS.password.name}
+                usage="password"
                 hasError={errors.password !== undefined}
-                placeholder="비밀번호를 입력하세요"
+                placeholder={FORM_OPTIONS.password.placeholder}
                 {...field}
               />
             )}
@@ -124,12 +119,12 @@ export default function RegisterForm() {
           <label htmlFor="password">비밀번호 확인</label>
           <Controller
             control={control}
-            name="passwordCheck"
+            name={FORM_OPTIONS.passwordCheck.name}
             rules={{
-              required: '비밀번호를 입력해 주세요.',
+              ...FORM_OPTIONS.passwordCheck.rules,
               validate: () => {
-                if (watch('password') !== watch('passwordCheck')) {
-                  return '비밀번호가 일치하지 않습니다';
+                if (watch(FORM_OPTIONS.password.name) !== watch(FORM_OPTIONS.passwordCheck.name)) {
+                  return FORM_OPTIONS.passwordCheck.validateMsg;
                 }
 
                 return true;
@@ -137,10 +132,10 @@ export default function RegisterForm() {
             }}
             render={({ field }) => (
               <AuthInput
-                id="passwordCheck"
-                type="password"
+                id={FORM_OPTIONS.passwordCheck.name}
+                usage="password"
                 hasError={errors.passwordCheck !== undefined}
-                placeholder="비밀번호와 일치하는 값을 입력해 주세요."
+                placeholder={FORM_OPTIONS.passwordCheck.placeholder}
                 {...field}
               />
             )}
@@ -151,12 +146,12 @@ export default function RegisterForm() {
         </div>
         <div>
           <Controller
-            name="agreeCheckbox"
             control={control}
-            rules={{ required: '이용약관에 동의해 주세요.' }}
+            name={FORM_OPTIONS.agreeCheckbox.name}
+            rules={FORM_OPTIONS.agreeCheckbox.rules}
             render={({ field }) => (
               <div className="flex items-center">
-                <AuthInput type="checkbox" id="agreeCheckbox" {...field} />
+                <AuthInput usage="checkbox" id={FORM_OPTIONS.agreeCheckbox.name} {...field} />
                 <span className="ml-[8px]"> 이용약관에 동의합니다. </span>
               </div>
             )}

@@ -4,19 +4,25 @@ import { login } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+import FORM_OPTIONS from '@/constants/formOption';
 import useAuthStore from '@/stores/authStore';
 import ErrorMsg from './ErrorMsg';
 import AuthInput from './AuthInput';
+
+interface LoginData {
+  email: string;
+  password: string;
+}
 
 export default function LoginForm() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+  } = useForm<LoginData>({ mode: 'onBlur' });
 
   const { setToken } = useAuthStore();
-
   const router = useRouter();
 
   const mutation = useMutation(login, {
@@ -24,7 +30,7 @@ export default function LoginForm() {
       setToken(data.accessToken);
       router.push('/mydashboard');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       toast(error.message, {
         position: 'top-center',
         autoClose: 1500,
@@ -35,7 +41,7 @@ export default function LoginForm() {
   });
 
   const submit = useCallback(
-    (data: any) => {
+    (data: LoginData) => {
       mutation.mutate({ email: data.email, password: data.password });
     },
     [mutation],
@@ -45,23 +51,17 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit(submit)}>
       <div className="flex flex-col gap-[16px]">
         <div>
-          <label htmlFor="email">이메일</label>
+          <label htmlFor={FORM_OPTIONS.email.name}>이메일</label>
           <Controller
             control={control}
-            name="email"
-            rules={{
-              required: '이메일을 입력해 주세요.',
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: '올바른 이메일 주소가 아닙니다.',
-              },
-            }}
+            name={FORM_OPTIONS.email.name}
+            rules={FORM_OPTIONS.email.rules}
             render={({ field }) => (
               <AuthInput
-                id="email"
-                type="email"
+                id={FORM_OPTIONS.email.name}
+                usage="email"
                 hasError={errors.email !== undefined}
-                placeholder="이메일을 입력하세요"
+                placeholder={FORM_OPTIONS.email.placeholder}
                 {...field}
               />
             )}
@@ -69,17 +69,17 @@ export default function LoginForm() {
           {errors.email && typeof errors.email.message === 'string' && <ErrorMsg msg={errors.email.message} />}
         </div>
         <div>
-          <label htmlFor="password">비밀번호</label>
+          <label htmlFor={FORM_OPTIONS.password.name}>비밀번호</label>
           <Controller
             control={control}
-            name="password"
-            rules={{ required: '비밀번호를 입력해 주세요.' }}
+            name={FORM_OPTIONS.password.name}
+            rules={FORM_OPTIONS.password.rules}
             render={({ field }) => (
               <AuthInput
-                id="password"
-                type="password"
+                id={FORM_OPTIONS.password.name}
+                usage="password"
                 hasError={errors.password !== undefined}
-                placeholder="비밀번호를 입력하세요"
+                placeholder={FORM_OPTIONS.password.placeholder}
                 {...field}
               />
             )}

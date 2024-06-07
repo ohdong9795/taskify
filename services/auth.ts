@@ -25,7 +25,7 @@ export const register = async ({
       throw new AxiosError(errorCode);
     }
 
-    throw new Error('An unexpected error occurred');
+    throw new AxiosError('An unexpected error occurred');
   }
 };
 
@@ -37,7 +37,11 @@ export const login = async ({ email, password }: { email: string; password: stri
     });
 
     return response.data;
-  } catch (error: any) {
-    throw new AxiosError(error.response.data.message);
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      throw new AxiosError(error.response.data.message);
+    }
+
+    throw new AxiosError('An unexpected error occurred');
   }
 };
