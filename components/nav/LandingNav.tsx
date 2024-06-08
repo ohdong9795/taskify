@@ -12,10 +12,10 @@ export default function LandingNav() {
         <Taskify className="w-[80px] h-[35px] text-white hidden md:block" />
       </div>
       <div className="flex flex-row gap-[36px] sm:gap-[20px]">
-        <Link href="./login">
+        <Link href="/login">
           <div className="text-sm sm:text-base text-white ">로그인</div>
         </Link>
-        <Link href="./signup">
+        <Link href="/signup">
           <div className="text-sm sm:text-base text-white ">회원가입</div>
         </Link>
       </div>

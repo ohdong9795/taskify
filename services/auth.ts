@@ -31,7 +31,7 @@ export const register = async ({
 
 export const login = async ({ email, password }: { email: string; password: string }) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auth/login`, {
+    const response = await axios.post('/api/login', {
       email,
       password,
     });

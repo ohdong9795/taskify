@@ -1,3 +1,5 @@
+'use client';
+
 import { Controller, useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { login } from '@/services/auth';
