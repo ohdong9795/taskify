@@ -16,31 +16,17 @@ function ToDoAddForm() {
             {/* 유저 데이터 적용 후 구현 */}
           </select>
         </div>
-        <ModalComponent title="제목" placeholder="제목을 입력하세요" />
-        {/* <div className="flex flex-col">
-          <label htmlFor="title" className="text-lg font-medium text-black_333236 mb-[10px]">
-            제목 *
-          </label>
-          <Input type="modal" id="title" placeholder="제목을 입력해 주세요" />
-        </div> */}
-        <div className="flex flex-col">
-          <label htmlFor="description" className="text-lg font-medium text-black_333236 mb-[10px]">
-            설명 *
-          </label>
-          <Input type="modal" id="description" placeholder="설명을 입력해 주세요" />
-        </div>
+        <ModalComponent title="제목 *" id="title" placeholder="제목을 입력하세요" htmlFor="title" />
+        <ModalComponent title="설명 *" id="description" placeholder="설명을 입력해 주세요" htmlFor="description" />
         <div className="flex flex-col">
           <label htmlFor="dueDate" className="text-lg font-medium text-black_333236 mb-[10px]">
             마감일
           </label>
           <input type="date" id="dueDate" />
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="tag" className="text-lg font-medium text-black_333236 mb-[10px]">
-            태그
-          </label>
-          <Input type="modal" id="tag" placeholder="입력 후 Enter" />
-        </div>
+
+        <ModalComponent title="태그" id="tag" placeholder="입력 후 Enter" htmlFor="tag" />
+
         <div className="flex flex-col">
           <label htmlFor="imageUpload" className="text-lg font-medium text-black_333236 mb-[10px]">
             이미지

@@ -3,7 +3,6 @@
 import { IoMdSettings } from 'react-icons/io';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Vector from '@/public/images/Vector.svg';
-
 import UserImage from '@/public/images/UserImage.svg';
 
 export default function DashBoardNav() {
