@@ -1,4 +1,4 @@
-import Column from '@/components/dashboard/Column';
+import Column from '@/components/Dashboard/Column';
 
 const sampleColumn = [
   {
