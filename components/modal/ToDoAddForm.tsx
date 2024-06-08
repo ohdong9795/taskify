@@ -1,5 +1,6 @@
 import Input from '@/components/common/Input';
 import ModalTitle from './ModalTitle';
+import ModalComponent from '../modal-input/ModalComponent';
 
 function ToDoAddForm() {
   return (
@@ -15,12 +16,13 @@ function ToDoAddForm() {
             {/* 유저 데이터 적용 후 구현 */}
           </select>
         </div>
-        <div className="flex flex-col">
+        <ModalComponent title="제목" placeholder="제목을 입력하세요" />
+        {/* <div className="flex flex-col">
           <label htmlFor="title" className="text-lg font-medium text-black_333236 mb-[10px]">
             제목 *
           </label>
           <Input type="modal" id="title" placeholder="제목을 입력해 주세요" />
-        </div>
+        </div> */}
         <div className="flex flex-col">
           <label htmlFor="description" className="text-lg font-medium text-black_333236 mb-[10px]">
             설명 *
