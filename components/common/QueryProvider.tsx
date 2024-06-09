@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 function makeQueryClient() {
   return new QueryClient({
@@ -26,15 +26,10 @@ function getQueryClient() {
 
 interface ProvidersProps {
   children: ReactNode;
-  dehydratedState: unknown;
 }
 
-export default function QueryProvider({ children, dehydratedState }: ProvidersProps) {
+export default function QueryProvider({ children }: ProvidersProps) {
   const queryClient = getQueryClient();
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={dehydratedState}>{children}</Hydrate>
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
