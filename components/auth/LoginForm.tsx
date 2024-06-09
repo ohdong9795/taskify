@@ -10,7 +10,7 @@ import { AxiosError } from 'axios';
 import FORM_OPTIONS from '@/constants/formOption';
 import useAuthStore from '@/stores/authStore';
 import ErrorMsg from './ErrorMsg';
-import AuthInput from './AuthInput';
+import AuthInput from './Input';
 
 interface LoginData {
   email: string;

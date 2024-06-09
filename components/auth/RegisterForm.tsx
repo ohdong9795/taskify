@@ -7,7 +7,7 @@ import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
 import FORM_OPTIONS from '@/constants/formOption';
 import ErrorMsg from './ErrorMsg';
-import AuthInput from './AuthInput';
+import AuthInput from './Input';
 
 interface RegisterData {
   email: string;
@@ -88,7 +88,7 @@ export default function RegisterForm() {
             render={({ field }) => (
               <AuthInput
                 id={FORM_OPTIONS.nickName.name}
-                usage="password"
+                usage="nickName"
                 hasError={errors.nickName !== undefined}
                 placeholder={FORM_OPTIONS.nickName.placeholder}
                 {...field}

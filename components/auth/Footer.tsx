@@ -4,7 +4,7 @@ function CustomDiv({ children }: { children: React.ReactNode }) {
   return <div className="w-full text-center mt-[16px]">{children}</div>;
 }
 
-export default function AuthFooter({ type }: { type: 'signin' | 'signup' }) {
+export default function Footer({ type }: { type: 'signin' | 'signup' }) {
   if (type === 'signin') {
     return (
       <CustomDiv>

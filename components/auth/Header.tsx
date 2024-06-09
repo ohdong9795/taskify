@@ -5,7 +5,7 @@ interface LoginHeaderProps {
   msg: string;
 }
 
-export default function AuthHeader({ msg }: LoginHeaderProps) {
+export default function Header({ msg }: LoginHeaderProps) {
   return (
     <>
       <div className="flex justify-center w-full">
