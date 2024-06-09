@@ -1,6 +1,5 @@
+import instance from '@/utils/axiosClient';
 import axios, { AxiosError } from 'axios';
-
-const BASE_URL = 'https://sp-taskify-api.vercel.app/5-4';
 
 export const register = async ({
   email,
@@ -12,7 +11,7 @@ export const register = async ({
   password: string;
 }) => {
   try {
-    const response = await axios.post(`${BASE_URL}/users`, {
+    const response = await instance.post('/users', {
       email,
       nickname,
       password,
