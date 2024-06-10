@@ -1,4 +1,5 @@
-import { GoDotFill, GoGear, GoPlus } from 'react-icons/go';
+import { GoDotFill, GoGear } from 'react-icons/go';
+import Button from './Button';
 
 interface ColumnProps {
   title: string;
@@ -20,13 +21,7 @@ function Column({ title, count }: ColumnProps) {
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <button
-        type="button"
-        className="w-80 flex h-10 bg-white border border-gray_D9D9D9 rounded-md justify-center items-center"
-        aria-label="addCard"
-      >
-        <GoPlus className="text-violet_5534DA" />
-      </button>
+      <Button text={null} />
       <ul>
         <li>할 일 카드</li>
       </ul>

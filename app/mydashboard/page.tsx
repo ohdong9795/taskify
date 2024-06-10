@@ -1,8 +1,8 @@
-import DashboardList from '@/components/DashboardList';
+import DashboardList from '@/components/Dashboard/DashboardList';
 import { DashboardData } from '@/types/user/dashboard';
 import { cookies } from 'next/headers';
 
-const URL = 'https://sp-taskify-api.vercel.app/5-4/dashboards?navigationMethod=infiniteScroll&page=1&size=10';
+const URL = 'https://sp-taskify-api.vercel.app/5-4/dashboards?navigationMethod=infiniteScroll&page=1&size=10'; // 추후에 환경변수로 사용
 
 async function getDashboards() {
   const cookieStore = cookies();
