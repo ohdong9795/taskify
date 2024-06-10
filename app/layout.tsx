@@ -14,16 +14,13 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  pageProps?: {
-    dehydratedState: unknown;
-  };
 }
 
-export default function RootLayout({ children, pageProps }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <QueryProvider dehydratedState={pageProps?.dehydratedState}>
+        <QueryProvider>
           <ToastProvider>{children}</ToastProvider>
         </QueryProvider>
       </body>

@@ -1,13 +1,13 @@
 import LoginForm from '@/components/auth/LoginForm';
-import AuthHeader from '@/components/auth/AuthHeader';
-import AuthFooter from '@/components/auth/AuthFooter';
+import Header from '@/components/auth/Header';
+import Footer from '@/components/auth/Footer';
 
 export default function Login() {
   return (
     <>
-      <AuthHeader msg="오늘도 만나서 반가워요!" />
+      <Header msg="오늘도 만나서 반가워요!" />
       <LoginForm />
-      <AuthFooter type="signin" />
+      <Footer type="signin" />
     </>
   );
 }
