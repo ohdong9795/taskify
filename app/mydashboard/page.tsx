@@ -1,25 +1,18 @@
-import DashboardList from '@/components/Dashboard/DashboardList';
-import { DashboardData } from '@/types/user/dashboard';
-import { cookies } from 'next/headers';
-
-const URL = 'https://sp-taskify-api.vercel.app/5-4/dashboards?navigationMethod=infiniteScroll&page=1&size=10'; // 추후에 환경변수로 사용
-
-async function getDashboards() {
-  const cookieStore = cookies();
-  const token = cookieStore.get('token');
-  const response = await fetch(URL, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token?.value}`,
-    },
-  });
-  const json = await response.json();
-  return json;
-}
+import InvitedDashboards from '@/components/Dashboard/InvitedDashboards';
+import MyDashboards from '@/components/Dashboard/MyDashboards';
+import { getDashboards, getInvitations } from '@/services/dashboardApi/server';
+import { DashboardData, InvitationData } from '@/types/user/dashboard';
 
 async function MyDashboardPage() {
   const dashboards: DashboardData = await getDashboards();
-  return <DashboardList dashboardData={dashboards} />;
+  const invitationData: InvitationData = await getInvitations();
+
+  return (
+    <main className="p-10 bg-gray_FAFAFA h-screen flex flex-col gap-10">
+      <MyDashboards dashboardData={dashboards} />
+      <InvitedDashboards invitationData={invitationData} />
+    </main>
+  );
 }
 
 export default MyDashboardPage;
