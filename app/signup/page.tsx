@@ -1,5 +1,3 @@
-'use client';
-
 import Footer from '@/components/auth/Footer';
 import Header from '@/components/auth/Header';
 import RegisterForm from '@/components/auth/RegisterForm';
