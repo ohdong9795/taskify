@@ -7,8 +7,9 @@ import DashboardLogo from '../../public/images/DashboardIcon.svg';
 
 export default function SideBarItem() {
   const dashboards = dashboardsStore((state) => state.dashboards);
+
   return (
-    <div>
+    <>
       {dashboards.slice(0, 15).map((dashboard) => {
         const colorClass = classnames({
           'text-green-500': dashboard.color === 'green',
@@ -26,6 +27,6 @@ export default function SideBarItem() {
           </div>
         );
       })}
-    </div>
+    </>
   );
 }
