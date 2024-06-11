@@ -76,6 +76,7 @@ export default function DashBoardNav() {
                 <Link href="/mypage">
                   <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">내정보</button>
                 </Link>
+                {/* 로그아웃 하는 기능 구현 */}
                 <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">로그아웃</button>
               </div>
             )}
