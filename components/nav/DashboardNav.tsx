@@ -8,9 +8,11 @@ import Vector from '@/public/images/Vector.svg';
 import UserImage from '@/public/images/UserImage.svg';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function DashBoardNav() {
   const [title, setTitle] = useState('');
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const pathName = usePathname();
   const isDashboard = pathName.includes('/dashboard');
   const isMyPage = pathName === '/mypage';
@@ -24,6 +26,10 @@ export default function DashBoardNav() {
       setTitle('내 대시보드');
     }
   }, [pathName, isDashboard, isMyPage]);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!isDropdownVisible);
+  };
 
   return (
     <nav className="fixed top-0 left-0 size-full h-[70px] bg-white shrink-0 flex self-end tablet:justify-between items-center px-[40px] z-50">
@@ -58,7 +64,21 @@ export default function DashBoardNav() {
           <div className="flex flex-row items-center gap-[12px] ">
             {/* 유저 프로필 넣으면 됩니다. */}
             <UserImage />
-            <div className="hidden mobile:flex">이용자명</div>
+
+            <button className="hidden mobile:flex" onClick={toggleDropdown}>
+              이용자명
+            </button>
+            {isDropdownVisible && (
+              <div className="absolute top-[50px] right-2 bg-white border border-gray-200 rounded-md shadow-lg py-2">
+                <Link href="/mydashboard">
+                  <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">내 대시보드</button>
+                </Link>
+                <Link href="/mypage">
+                  <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">내정보</button>
+                </Link>
+                <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">로그아웃</button>
+              </div>
+            )}
           </div>
         </div>
       </div>
