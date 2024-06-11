@@ -1,12 +1,12 @@
-import ModalTitle from '../ModalTitle';
-import ModalComponent from '../../modal-input/ModalComponent';
+import Input from './Input';
+import Title from './Title';
 
 function InviteForm() {
   return (
     <div className="max-w-[540px]">
-      <ModalTitle title="초대하기" />
+      <Title title="초대하기" />
       <form className="flex flex-col relative">
-        <ModalComponent
+        <Input
           title="이메일"
           htmlFor="InviteMember"
           id="InviteMember"
