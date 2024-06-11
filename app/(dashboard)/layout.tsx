@@ -1,10 +1,8 @@
-// import SideBar from '@/components/(SideBar)/SideBar';
 import DashBoardNav from '@/components/nav/DashboardNav';
 
-function DashboardLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+function MyDashboardLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <div className="flex">
-      {/* <SideBar /> */}
       <div className="w-full">
         <DashBoardNav />
         {children}
@@ -15,4 +13,4 @@ function DashboardLayout({ children, modal }: { children: React.ReactNode; modal
   );
 }
 
-export default DashboardLayout;
+export default MyDashboardLayout;
