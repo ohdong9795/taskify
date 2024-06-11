@@ -1,25 +1,24 @@
 import { create } from 'zustand';
-
-interface ModalState {
-  status: boolean;
-  name: string;
-}
+import { persist } from 'zustand/middleware';
 
 interface AuthStore {
   accessToken: string | null;
   setToken: (accessToken: string) => void;
   clearToken: () => void;
-  modal: ModalState;
-  setModal: (modal: ModalState) => void;
 }
 
-const useAuthStore = create<AuthStore>((set) => ({
-  accessToken: null,
-  setToken: (accessToken: string) => set({ accessToken }),
-  clearToken: () => set({ accessToken: null }),
-  modal: { status: false, name: '' },
-  setModal: (modal: ModalState) => set({ modal }),
-}));
+const useAuthStore = create(
+  persist<AuthStore>(
+    (set) => ({
+      accessToken: null,
+      setToken: (accessToken: string) => set({ accessToken }),
+      clearToken: () => set({ accessToken: null }),
+    }),
+    {
+      name: 'accessTokenStorage',
+      getStorage: () => sessionStorage,
+    },
+  ),
+);
 
 export default useAuthStore;
-
