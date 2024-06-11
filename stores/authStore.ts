@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface AuthStore {
   accessToken: string | null;
@@ -6,10 +7,18 @@ interface AuthStore {
   clearToken: () => void;
 }
 
-const useAuthStore = create<AuthStore>((set) => ({
-  accessToken: null,
-  setToken: (accessToken: string) => set({ accessToken }),
-  clearToken: () => set({ accessToken: null }),
-}));
+const useAuthStore = create(
+  persist<AuthStore>(
+    (set) => ({
+      accessToken: null,
+      setToken: (accessToken: string) => set({ accessToken }),
+      clearToken: () => set({ accessToken: null }),
+    }),
+    {
+      name: 'accessTokenStorage',
+      getStorage: () => sessionStorage,
+    },
+  ),
+);
 
 export default useAuthStore;
