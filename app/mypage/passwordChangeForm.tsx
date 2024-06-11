@@ -62,55 +62,55 @@ export default function PasswordChangeForm() {
     };
   
     return (
-      <form className="mobile:w-[28.4rem] tablet:w-[54.4rem] flex flex-col ml-[1.7rem] w-[62rem] h-[45rem] bg-white rounded-lg justify-center align-center px-[2.8rem] justify-around">
-        <div className="text-zinc-800 text-[2.4rem] font-bold font-['Pretendard']">
+      <form className="mobile:w-[28.4] tablet:w-[54.4] flex flex-col ml-[1.7] w-[62] h-[45] bg-white rounded-lg justify-center align-center px-[2.8] justify-around">
+        <div className="text-zinc-800 text-[2.4] font-bold font-['Pretendard']">
           비밀번호 변경
         </div>
         <div className="flex flex-col">
           <label
-            className="text-zinc-800 text-[1.8rem] font-medium font-['Pretendard']"
+            className="text-zinc-800 text-[1.8] font-medium font-['Pretendard']"
             htmlFor="CurrentPassword"
           >
             현재 비밀번호
           </label>
           <input
             id="CurrentPassword"
-            className="basicinput mb-[2rem]"
+            className="basicinput mb-[2]"
             type="password"
             placeholder="현재 비밀번호 입력"
             onChange={handleCurrentPassword}
           />
           <label
-            className="text-zinc-800 text-[1.8rem] font-medium font-['Pretendard']"
+            className="text-zinc-800 text-[1.8] font-medium font-['Pretendard']"
             htmlFor="NewPassword"
           >
             새 비밀번호
           </label>
           <input
             id="NewPassword"
-            className="basicinput placeholder-gray-400 mb-[2rem]"
+            className="basicinput placeholder-gray-400 mb-[2]"
             type="password"
             placeholder="새 비밀번호 입력"
             onChange={handleNewPasswordChange}
           />
           <label
-            className="text-zinc-800 text-[1.8rem] font-medium font-['Pretendard']"
+            className="text-zinc-800 text-[1.8] font-medium font-['Pretendard']"
             htmlFor="NewPasswordConfirm"
           >
             새 비밀번호 확인
           </label>
           <input
             id="NewPasswordConfirm"
-            className="basicinput text-gray-400 font-['Pretendard'] mb-[2rem]"
+            className="basicinput text-gray-400 font-['Pretendard'] mb-[2]"
             type="password"
             placeholder="새 비밀번호 입력"
             onChange={handleConfirmNewPasswordChange}
             onBlur={handleBlur}
           />
-          {showError && <p className="text-red-500 text-[1.2rem]">{showError}</p>}
+          {showError && <p className="text-red-500 text-[1.2]">{showError}</p>}
           <Button
             variant="primary"
-            customStyles="w-[8.4rem] h-[3.2rem] text-[1.4rem] rounded-[0.4rem] ml-auto mb-[2rem]"
+            customStyles="w-[8.4] h-[3.2] text-[1.4] rounded-[0.4] ml-auto mb-[2]"
             type="button"
             onClick={handlePostPassword}
             disabled={!password || !newPassword || !confirmNewPassword}
