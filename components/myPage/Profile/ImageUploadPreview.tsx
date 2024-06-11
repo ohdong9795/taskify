@@ -3,7 +3,7 @@
 import instance from '@/utils/axiosClient';
 
 import Button from '@/components/common/Button/Button';
-import Input from '@/components/common/Input';
+import Input from '@/components/auth/Input';
 
 import Image from 'next/image';
 import { useCallback, useState } from 'react';
@@ -14,8 +14,8 @@ interface ProfileProps {
 }
 
 export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Element {
-  const [preview, setPreview] = useState<string | null>(Profile.profileImageUrl);
-  const [nickname, setNickname] = useState<string | null>(Profile.nickname);
+  const [preview, setPreview] = useState<string>(Profile.profileImageUrl);
+  const [nickname, setNickname] = useState<string>(Profile.nickname);
 
   const onUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -42,7 +42,7 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (nickname && preview) {
-        instance.put('/user/profile', {
+        instance.put('/users/me', {
           nickname,
           profileImageUrl: preview,
         });
@@ -61,9 +61,9 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
         </div>
         <div>
           <p>이메일</p>
-          <Input type="email" placeholder={Profile.email} disabled />
+          <Input usage="email" placeholder={Profile.email} disabled />
           <p>닉네임</p>
-          <Input type="email" placeholder={Profile.nickname} onChange={onNicknameChange} />
+          <Input usage="nickName" placeholder={Profile.nickname} onChange={onNicknameChange} />
         </div>
       </div>
       <Button className="mt-10" variant="primary" isActive>

@@ -11,7 +11,7 @@ const getCookie = () => {
 async function getUserProfile() {
   const token = getCookie();
   try {
-    const { data } = await instance.get('/user/me', {
+    const { data } = await instance.get('/users/me', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token?.value}`,

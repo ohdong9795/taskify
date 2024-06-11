@@ -1,3 +1,5 @@
+'use client';
+
 import { Controller, useForm } from 'react-hook-form';
 import { register } from '@/services/auth';
 import { useRouter } from 'next/navigation';
