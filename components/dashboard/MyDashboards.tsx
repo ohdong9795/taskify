@@ -3,7 +3,8 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import { DashboardData } from '@/types/user/dashboard';
-import postCreateDashboard from '@/services/dashboardApi/client';
+import Modal, { ModalHandles } from '@/components/Modal';
+import DashboardAddForm from '@/components/Modal/components/DashboardAddForm';
 import Button from './Button';
 
 interface MyDashboardsProps {
@@ -12,10 +13,11 @@ interface MyDashboardsProps {
 
 function MyDashboards({ dashboardData }: MyDashboardsProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<ModalHandles>(null);
   const { dashboards } = dashboardData;
 
-  const handleCreateDashboard = () => {
-    postCreateDashboard({ title: 'Test', color: '#000000' });
+  const handleOpenModal = () => {
+    modalRef.current?.open();
   };
 
   return (
@@ -32,10 +34,12 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
           </li>
         ))}
         <li>
-          <Button text="새로운 대시보드" ref={buttonRef} handleClick={handleCreateDashboard} />
-          {/* 현재는 포스트 요청을 수행하는 버튼이지만 모달 여는 버튼으로 변경 예정입니다. */}
+          <Button text="새로운 대시보드" ref={buttonRef} handleClick={handleOpenModal} />
         </li>
       </ul>
+      <Modal ref={modalRef}>
+        <DashboardAddForm />
+      </Modal>
     </section>
   );
 }

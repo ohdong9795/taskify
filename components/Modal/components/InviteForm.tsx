@@ -1,5 +1,5 @@
-import ModalTitle from './ModalTitle';
-import ModalComponent from '../modal-input/ModalComponent';
+import ModalTitle from '../ModalTitle';
+import ModalComponent from '../../modal-input/ModalComponent';
 
 function InviteForm() {
   return (
