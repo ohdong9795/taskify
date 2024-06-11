@@ -1,12 +1,14 @@
 'use client';
 
-import PasswordChangeForm from "./passwordChangeForm";
+import DashBoardNav from '@/components/nav/DashboardNav';
+import PasswordChangeForm from './passwordChangeForm';
 
 export default function MyPage() {
-  return <div>
-    
-    test
-
-    <PasswordChangeForm />
-    </div>;
+  return (
+    <div>
+      <DashBoardNav />
+      test
+      <PasswordChangeForm />
+    </div>
+  );
 }
