@@ -1,8 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import React from 'react';
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Button from './Button';
+
 
 
 
@@ -27,14 +28,14 @@ export default function PaginationButtons({
   isEnd
 }: PaginationButtonsProps) {
   const contatinerStyle = isSidebar
-    ? 'flex tablet:flex-col-reverse items-center desktop:gap-[1.6rem] tablet:gap-[1.4rem] gap-[1.2rem]'
-    : 'flex items-center tablet:gap-[1.6rem] gap-[1.2rem]';
+    ? 'flex tablet:flex-col-reverse items-center desktop:gap-[1.6] tablet:gap-[1.4] gap-[1.2]'
+    : 'flex items-center tablet:gap-[1.6] gap-[1.2]';
   const buttonStyle = isSidebar
-    ? 'tablet:w-[4rem] w-[2rem] tablet:h-[4rem] h-[2rem]'
-    : 'tablet:w-[4rem] w-[3.6rem] tablet:h-[4rem] h-[3.6rem]';
+    ? 'tablet:w-[4] w-[2] tablet:h-[4] h-[2]'
+    : 'tablet:w-[4] w-[3.6] tablet:h-[4] h-[3.6]';
   const spanStyle = isSidebar
-    ? 'tablet:text-[1.4rem] hidden tablet:block'
-    : 'tablet:text-[1.4rem] text-[1.2rem]';
+    ? 'tablet:text-[1.4] hidden tablet:block'
+    : 'tablet:text-[1.4] text-[1.2]';
 
   return (
     <div className={contatinerStyle}>
@@ -46,25 +47,25 @@ export default function PaginationButtons({
           variant="secondary"
           customStyles={
             isStart
-              ? `${buttonStyle} rounded-l-[0.4rem] shadow opacity-30`
-              : `${buttonStyle} rounded-l-[0.4rem] shadow`
+              ? `${buttonStyle} rounded-l-[0.4] shadow opacity-30`
+              : `${buttonStyle} rounded-l-[0.4] shadow`
           }
           type="button"
           onClick={handleBackwardButtonClick}
         >
-          <Image src="/images/arrow-backward-white.svg" alt="뒤로 가기" />
+          <IoIosArrowBack aria-label="뒤로 가기" />
         </Button>
         <Button
           variant="secondary"
           customStyles={
             isEnd
-              ? `${buttonStyle} rounded-r-[0.4rem] shadow opacity-30`
-              : `${buttonStyle} rounded-r-[0.4rem] shadow`
+              ? `${buttonStyle} rounded-r-[0.4] shadow opacity-30`
+              : `${buttonStyle} rounded-r-[0.4] shadow`
           }
           type="button"
           onClick={handleForwardButtonClick}
         >
-          <Image src="/images/arrow-forward-white.svg" alt="앞으로 가기" />
+          <IoIosArrowForward aria-label="앞으로 가기" />
         </Button>
       </div>
     </div>
