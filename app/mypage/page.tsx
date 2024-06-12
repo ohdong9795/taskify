@@ -1,6 +1,6 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import getUserProfile from '@/services/myPageApi/server';
-import ImageUploadPreview from '@/components/myPage/Profile/ImageUploadPreview';
+import ImageUploadPreview from '@/components/MyPage/Profile/ImageUploadPreview';
 import { User } from '@/types/user/user';
 import PasswordChangeForm from './passwordChangeForm';
 
