@@ -1,10 +1,11 @@
 import clientInstance from '@/utils/axiosClient';
-import serverInstance from '@/utils/axiosServer';
 
-export default function getInstance() {
-  const isServerSide = typeof window === 'undefined';
+const getInstance = async () => {
+  if (typeof window === 'undefined') {
+    const { default: serverInstance } = await import('@/utils/axiosServer');
+    return serverInstance;
+  }
+  return clientInstance;
+};
 
-  const instance = isServerSide ? serverInstance : clientInstance;
-
-  return instance;
-}
+export default getInstance;

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AuthStore {
   accessToken: string | null;
@@ -16,7 +16,7 @@ const useAuthStore = create(
     }),
     {
       name: 'accessTokenStorage',
-      getStorage: () => sessionStorage,
+      storage: createJSONStorage(() => sessionStorage),
     },
   ),
 );
