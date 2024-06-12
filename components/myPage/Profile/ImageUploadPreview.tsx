@@ -24,6 +24,7 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
 
     const file = e.target.files[0];
     const formData = new FormData();
+
     formData.append('image', file);
 
     try {
