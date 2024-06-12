@@ -1,12 +1,12 @@
 import CardImage from '@/public/images/cardImage2.svg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import ModalTitle from './ModalTitle';
+import Title from './Title';
 
 function ModalColumnCard() {
   return (
     <div className="max-w-[730px]">
       <header className="flex items-center justify-between h-8 mb-6">
-        <ModalTitle title="새로운 일정 관리 Taskify" />
+        <Title title="새로운 일정 관리 Taskify" />
         <button type="button" className="mr-14" aria-label="dropdown">
           <BsThreeDotsVertical className="w-[24px] h-[24px]" />
         </button>
