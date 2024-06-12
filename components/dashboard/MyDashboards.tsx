@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Link from 'next/link';
+import { GoDotFill } from 'react-icons/go';
 import { DashboardData } from '@/types/user/dashboard';
 import Modal, { ModalHandles } from '@/components/Modal';
 import DashboardAddForm from '@/components/Modal/views/DashboardAddForm';
@@ -23,12 +24,13 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
   return (
     <section>
       <ul className="flex gap-3">
-        {dashboards.map(({ title, id }) => (
+        {dashboards.map(({ title, id, color }) => (
           <li key={id}>
             <Link
               href={`/dashboard/${id}`}
               className="w-80 flex h-10 bg-white border border-gray_D9D9D9 rounded-lg justify-center items-center px-25 py-6 font-semibold text-black_333236 gap-3"
             >
+              <GoDotFill className="mr-2" style={{ color }} />
               {title}
             </Link>
           </li>

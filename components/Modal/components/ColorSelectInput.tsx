@@ -1,5 +1,8 @@
+'use client';
+
 import { forwardRef } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
+import { FaCheck } from 'react-icons/fa6';
 
 const colors = [
   { name: 'green-500', code: '#22c55e' },
@@ -21,22 +24,21 @@ interface ColorSelectInputProps {
 }
 
 const ColorSelectInput = forwardRef<HTMLInputElement, ColorSelectInputProps>(({ field }, ref) => (
-  <div className="flex gap-1 mt-7">
+  <div className="flex gap-[10px] mt-7">
     {colors.map(({ name, code }) => (
-      <label key={name} aria-label="color" className="flex flex-col items-center cursor-pointer">
+      <label key={name} aria-label={name} className="flex flex-col items-center cursor-pointer relative">
         <input
           ref={ref}
-          id="color"
+          id={name}
           name="color"
           type="radio"
           value={code}
           checked={field.value === code}
           className="hidden"
           onChange={() => field.onChange(code)}
-          // checked={selectedColor === color.code}
-          // onChange={handleColorChange}
         />
-        <div className={`w-10 h-10 rounded-full `} style={{ backgroundColor: code }} />
+        <div className="w-[30px] h-[30px] rounded-full" style={{ backgroundColor: code }} />
+        {field.value === code && <FaCheck className="absolute text-white top-2 left-1.1" />}
       </label>
     ))}
   </div>
