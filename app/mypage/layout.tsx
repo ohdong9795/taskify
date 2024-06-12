@@ -3,9 +3,9 @@
 
 function MyPageLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
-      <body>{children}</body>
-    </html>
+    <div>
+      <div>{children}</div>
+    </div>
   );
 }
 
