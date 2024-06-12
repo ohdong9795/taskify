@@ -1,5 +1,5 @@
 import clientInstance from '@/utils/axiosClient';
-import { createCardCommon, getCardsCommon, updateCardCommon, getCardByIdCommon, updateCardByIdCommon } from '../common';
+import { createCardCommon, getCardsCommon, updateCardCommon, getCardByIdCommon, deleteCardByIdCommon } from '../common';
 
 export const createCard = (body: {
   assigneeUserId: number;
@@ -27,4 +27,4 @@ export const updateCard = (body: {
 
 export const getCardById = (query: { cardId: number }) => getCardByIdCommon(clientInstance, query);
 
-export const updateCardById = (query: { cardId: number }) => updateCardByIdCommon(clientInstance, query);
+export const deleteCardById = (query: { cardId: number }) => deleteCardByIdCommon(clientInstance, query);

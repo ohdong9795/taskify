@@ -110,7 +110,7 @@ export const getCardByIdCommon = async (instance: AxiosInstance, { cardId }: { c
   }
 };
 
-export const updateCardByIdCommon = async (instance: AxiosInstance, { cardId }: { cardId: number }) => {
+export const deleteCardByIdCommon = async (instance: AxiosInstance, { cardId }: { cardId: number }) => {
   try {
     const response = await instance.delete(`/cards/${cardId}`);
     return response.data;
