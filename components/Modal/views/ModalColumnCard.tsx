@@ -1,6 +1,6 @@
 import CardImage from '@/public/images/cardImage2.svg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import Title from './Title';
+import Title from '@/components/Modal/components/Title';
 
 function ModalColumnCard() {
   return (
