@@ -2,10 +2,10 @@
 
 import instance from '@/utils/axiosClient';
 
-import Button from '@/components/common/Button/Button';
 import Input from '@/components/auth/Input';
 
 import Image from 'next/image';
+import { FaPlus } from 'react-icons/fa';
 import { useCallback, useState } from 'react';
 import { User } from '@/types/user/user';
 
@@ -61,23 +61,37 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
   );
 
   return (
-    <form onSubmit={handleClick}>
-      <h2>프로필</h2>
-      <div className="flex">
-        <div className="bg-slate-700 w-40 h-40">
-          {preview && <Image src={preview} alt="프로필 이미지가 들어가요" width={160} height={160} />}
-          <input type="file" accept="image/*" onChange={onUploadImage} />
-        </div>
-        <div>
-          <p>이메일</p>
-          <Input usage="email" placeholder={Profile.email} disabled />
-          <p>닉네임</p>
-          <Input usage="nickName" placeholder={Profile.nickname} onChange={onNicknameChange} />
+    <form
+      onSubmit={handleClick}
+      className="flex flex-col bg-white w-[620px] h-[355px] ml-[20px] mt-[24px] rounded-lg mb-[12px]"
+    >
+      <div className="ml-[28px] mt-[32px]">
+        <h2 className="text-[24px] text-black_333236 font-bold mb-[32px]">프로필</h2>
+        <div className="flex">
+          <label
+            htmlFor="profileImageUpload"
+            className="flex items-center justify-center bg-gray_F5F5F5 w-[182px] h-[182px] "
+          >
+            {preview && <Image src={preview} alt="프로필 이미지가 들어가요" width={160} height={160} />}
+            <FaPlus className="w-[20px] h-[20px] text-violet_5534DA" />
+            <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
+          </label>
+          <div className="w-[366px] h-[178px] ml-[16px] pb-[4px]">
+            <p className="font-medium text-black_333236 text-[18px] mb-[10px]">이메일</p>
+            <Input usage="email" placeholder={Profile.email} disabled style={{ height: '48px' }} />
+            <p className="font-medium text-black_333236 text-[18px] mb-[10px] mt-[20px]">닉네임</p>
+            <Input
+              usage="nickName"
+              placeholder={Profile.nickname}
+              onChange={onNicknameChange}
+              style={{ height: '48px' }}
+            />
+          </div>
         </div>
       </div>
-      <Button className="mt-10" variant="primary" isActive>
-        버튼입니다.
-      </Button>
+      <div className="flex justify-end items-end h-screen">
+        <button className=" bg-violet_5534DA w-[84px] h-[32px] text-white mr-[28px] mb-[28px] rounded">저장</button>
+      </div>
     </form>
   );
 }

@@ -23,6 +23,7 @@ const config: Config = {
         blue_76A6EA: '#76A5EA',
         pink_E876EA: '#E876EA',
         gray_D9D9D9: '#D9D9D9',
+        gray_F5F5F5: '#F5F5F5',
       },
       fontSize: {
         sm: '14px',
