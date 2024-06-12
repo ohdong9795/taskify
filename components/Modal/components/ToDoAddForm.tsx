@@ -1,10 +1,10 @@
-import ModalTitle from './ModalTitle';
-import ModalComponent from '../modal-input/ModalComponent';
+import Input from './Input';
+import Title from './Title';
 
 function ToDoAddForm() {
   return (
     <div className="max-w-[540px]">
-      <ModalTitle title="할 일 생성" />
+      <Title title="할 일 생성" />
       <form className="flex flex-col gap-8">
         <div className="flex flex-col">
           <label htmlFor="manager" className="text-lg font-medium text-black_333236 mb-[10px]">
@@ -15,8 +15,8 @@ function ToDoAddForm() {
             {/* 유저 데이터 적용 후 구현 */}
           </select>
         </div>
-        <ModalComponent title="제목 *" id="title" placeholder="제목을 입력하세요" htmlFor="title" />
-        <ModalComponent title="설명 *" id="description" placeholder="설명을 입력해 주세요" htmlFor="description" />
+        <Input title="제목 *" id="title" placeholder="제목을 입력하세요" htmlFor="title" />
+        <Input title="설명 *" id="description" placeholder="설명을 입력해 주세요" htmlFor="description" />
         <div className="flex flex-col">
           <label htmlFor="dueDate" className="text-lg font-medium text-black_333236 mb-[10px]">
             마감일
@@ -24,7 +24,7 @@ function ToDoAddForm() {
           <input type="date" id="dueDate" />
         </div>
 
-        <ModalComponent title="태그" id="tag" placeholder="입력 후 Enter" htmlFor="tag" />
+        <Input title="태그" id="tag" placeholder="입력 후 Enter" htmlFor="tag" />
 
         <div className="flex flex-col">
           <label htmlFor="imageUpload" className="text-lg font-medium text-black_333236 mb-[10px]">
