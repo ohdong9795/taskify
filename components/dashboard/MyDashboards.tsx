@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { DashboardData } from '@/types/user/dashboard';
 import Modal, { ModalHandles } from '@/components/Modal';
-import DashboardAddForm from '@/components/Modal/components/DashboardAddForm';
+import DashboardAddForm from '@/components/Modal/views/DashboardAddForm';
 import Button from './Button';
 
 interface MyDashboardsProps {

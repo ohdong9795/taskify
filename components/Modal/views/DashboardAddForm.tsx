@@ -1,18 +1,21 @@
 'use client';
 
 import postCreateDashboard from '@/services/dashboardApi/client';
-import { Controller, useForm } from 'react-hook-form';
-import Title from './Title';
-import Input from './Input';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import Title from '@/components/Modal/components/Title';
+import Input from '@/components/Modal/components/Input';
+import ColorSelectInput from '@/components/Modal/components/ColorSelectInput';
 
-const COLOR_OPTIONS = [{ green: '#7ac555' }, { purple: '#760DDE' }];
+interface FormValues {
+  newDashboardName: string;
+  color: string;
+}
 
 function DashboardAddForm() {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control } = useForm<FormValues>();
 
-  const handlePost = (data) => {
-    console.log(data);
-    // postCreateDashboard({title});
+  const handlePost: SubmitHandler<FormValues> = ({ newDashboardName, color }) => {
+    postCreateDashboard({ title: newDashboardName, color });
   };
 
   return (
@@ -32,16 +35,9 @@ function DashboardAddForm() {
             />
           )}
         />
-        <select className="flex gap-1 mt-7">
-          {/* 대시보드 색상 선택하는 라디오 인풋도 필요할 것 같습니다 */}
-          <option className="w-8 h-8 rounded-full cursor-pointer bg-green_7AC555">
-            <input type="text" id="color" name="dashboardColor" value="color" />
-          </option>
-        </select>
+        <Controller control={control} name="color" render={({ field }) => <ColorSelectInput field={field} />} />
         {/* 버튼 완료되면 추후 수정 */}
-        <div className="mt-7">
-          <button type="submit">생성</button>
-        </div>
+        <button type="submit">생성</button>
       </form>
     </div>
   );
