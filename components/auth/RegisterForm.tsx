@@ -1,5 +1,7 @@
+'use client';
+
 import { Controller, useForm } from 'react-hook-form';
-import { register } from '@/services/auth';
+import { createUser } from '@/services/client/users';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -28,7 +30,7 @@ export default function RegisterForm() {
 
   const router = useRouter();
 
-  const mutation = useMutation(register, {
+  const mutation = useMutation(createUser, {
     onSuccess: () => {
       const successCallback = () => {
         router.push('/login');

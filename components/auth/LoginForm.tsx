@@ -2,7 +2,7 @@
 
 import { Controller, useForm } from 'react-hook-form';
 import { useCallback } from 'react';
-import { login } from '@/services/auth';
+import { login } from '@/services/client/auth';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
