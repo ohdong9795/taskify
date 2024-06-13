@@ -1,5 +1,4 @@
-import instance from '@/utils/axiosServer';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
@@ -8,12 +7,13 @@ export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
   try {
-    const response = await instance.post('/auth/login', { email, password });
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, { email, password });
     const { accessToken } = response.data;
 
     cookies().set('token', accessToken, {
       httpOnly: true,
       sameSite: 'strict',
+      maxAge: 3600 * 24,
     });
 
     return NextResponse.json(
