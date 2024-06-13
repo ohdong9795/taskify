@@ -1,21 +1,30 @@
 'use client';
 
-import postCreateDashboard from '@/services/dashboardApi/client';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
 import ColorSelectInput from '@/components/Modal/components/ColorSelectInput';
+import { Dashboard } from '@/types/user/dashboard';
+import { updateDashboard } from '@/services/client/dashboards';
 
 interface FormValues {
   newDashboardName: string;
   color: string;
 }
 
-function DashboardAddForm() {
+interface DashboardAddFormProps {
+  handleReload: (item: Dashboard) => void;
+  handleCloseModal: () => void;
+}
+
+function DashboardAddForm({ handleReload, handleCloseModal }: DashboardAddFormProps) {
   const { handleSubmit, control } = useForm<FormValues>();
 
-  const handlePost: SubmitHandler<FormValues> = ({ newDashboardName, color }) => {
-    postCreateDashboard({ title: newDashboardName, color });
+  const handlePost: SubmitHandler<FormValues> = async ({ newDashboardName, color }) => {
+    const item = await updateDashboard({ title: newDashboardName, color });
+
+    handleReload(item);
+    handleCloseModal();
   };
 
   return (
@@ -37,7 +46,9 @@ function DashboardAddForm() {
         />
         <Controller control={control} name="color" render={({ field }) => <ColorSelectInput field={field} />} />
         {/* 버튼 완료되면 추후 수정 */}
-        <button type="submit">생성</button>
+        <button className="bg-violet_5534DA text-white rounded-lg py-[14px] px-[46px] text-center" type="submit">
+          생성
+        </button>
       </form>
     </div>
   );

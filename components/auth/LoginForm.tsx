@@ -24,11 +24,12 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginData>({ mode: 'onBlur' });
 
-  const { setToken } = useAuthStore();
+  const { setUser, setToken } = useAuthStore();
   const router = useRouter();
 
   const mutation = useMutation(login, {
     onSuccess: (data) => {
+      setUser(data.user);
       setToken(data.accessToken);
       router.push('/mydashboard');
     },
