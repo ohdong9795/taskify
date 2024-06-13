@@ -1,12 +1,20 @@
-'use client';
+import { IoIosArrowBack } from 'react-icons/io';
+import getUserProfile from '@/services/myPageApi/server';
+import ImageUploadPreview from '@/components/MyPage/Profile/ImageUploadPreview';
+import { User } from '@/types/user/user';
+import PasswordChangeForm from './passwordChangeForm';
 
-import PasswordChangeForm from "./passwordChangeForm";
+export default async function MyPage() {
+  const Profile: User = await getUserProfile();
 
-export default function MyPage() {
-  return <div>
-    
-    test
-
-    <PasswordChangeForm />
-    </div>;
+  return (
+    <div>
+      <div className="flex">
+        <IoIosArrowBack />
+        <span>돌아가기</span>
+      </div>
+      <ImageUploadPreview Profile={Profile} />
+      <PasswordChangeForm />
+    </div>
+  );
 }
