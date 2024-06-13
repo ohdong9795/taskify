@@ -63,7 +63,7 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
   return (
     <form
       onSubmit={handleClick}
-      className="flex flex-col bg-white w-[620px] h-[355px] ml-[20px] mt-[24px] rounded-lg mb-[12px]"
+      className="flex flex-col bg-white w-[620px] tablet:w-[544px] mobile:w-[284px] h-[355px] mobile:h-[422px] ml-[20px] mt-[24px] rounded-lg mb-[12px] "
     >
       <div className="ml-[28px] mt-[32px]">
         <h2 className="text-[24px] text-black_333236 font-bold mb-[32px]">프로필</h2>
@@ -76,7 +76,7 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
             <FaPlus className="w-[20px] h-[20px] text-violet_5534DA" />
             <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
           </label>
-          <div className="w-[366px] h-[178px] ml-[16px] pb-[4px]">
+          <div className="w-[366px] tablet:w-[290px] h-[178px] ml-[16px] pb-[4px]">
             <p className="font-medium text-black_333236 text-[18px] mb-[10px]">이메일</p>
             <Input usage="email" placeholder={Profile.email} disabled style={{ height: '48px' }} />
             <p className="font-medium text-black_333236 text-[18px] mb-[10px] mt-[20px]">닉네임</p>
