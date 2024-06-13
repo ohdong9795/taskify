@@ -60,18 +60,18 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
     [nickname, preview],
   );
 
+  const formStyle =
+    'flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] t:h-[355px] m:h-[422px] ml-[20px] mt-[24px] rounded-lg mb-[12px] ';
+  const labelStyle = 'flex items-center justify-center bg-gray_F5F5F5 t:w-[182px] t:h-[182px] m:w-[100px] m:h-[100px]';
+  const buttonStyle =
+    'bg-violet_5534DA w-[84px] h-[32px] m:h-[28px] text-white mr-[28px]  m:mr-[20px] mb-[28px] m:mb-[20px] font-medium rounded text-[12px]';
+
   return (
-    <form
-      onSubmit={handleClick}
-      className="flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] t:h-[355px] m:h-[422px] ml-[20px] mt-[24px] rounded-lg mb-[12px] "
-    >
+    <form onSubmit={handleClick} className={formStyle}>
       <div className="t:ml-[28px] t:mt-[32px] m:ml-[20px] m:mt-[28px]">
         <h2 className="text-[24px] text-black_333236 font-bold mb-[32px] m:mb-[24px]">프로필</h2>
         <div className="t:flex">
-          <label
-            htmlFor="profileImageUpload"
-            className="flex items-center justify-center bg-gray_F5F5F5 t:w-[182px] t:h-[182px] m:w-[100px] m:h-[100px]"
-          >
+          <label htmlFor="profileImageUpload" className={labelStyle}>
             {preview && <Image src={preview} alt="프로필 이미지가 들어가요" width={160} height={160} />}
             <FaPlus className="w-[20px] h-[20px] text-violet_5534DA" />
             <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
@@ -92,9 +92,7 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
         </div>
       </div>
       <div className="flex justify-end items-end h-screen">
-        <button className=" bg-violet_5534DA w-[84px] h-[32px] m:h-[28px] text-white mr-[28px]  m:mr-[20px] mb-[28px] m:mb-[20px] font-medium rounded text-[12px]">
-          저장
-        </button>
+        <button className={buttonStyle}>저장</button>
       </div>
     </form>
   );
