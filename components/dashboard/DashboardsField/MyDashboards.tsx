@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { GoChevronRight, GoDotFill } from 'react-icons/go';
-import { Dashboard, DashboardData } from '@/types/user/dashboard';
+import { DashboardData } from '@/types/user/dashboard';
 import Modal, { ModalHandles } from '@/components/Modal';
 import DashboardAddForm from '@/components/Modal/views/DashboardAddForm';
 import useDataStore from '@/stores/dataStore';
-import Button from './Button';
+import ModalOpenButton from '@/components/Modal/components/ModalOpenButton';
 
 interface MyDashboardsProps {
   dashboardData: DashboardData;
@@ -16,17 +16,12 @@ interface MyDashboardsProps {
 function MyDashboards({ dashboardData }: MyDashboardsProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<ModalHandles>(null);
-  const { setDashboards } = useDataStore();
-  const { dashboards } = dashboardData;
-  const [items, setItems] = useState<Dashboard[]>(dashboards);
+  const { dashboards: initialData } = dashboardData;
+  const { dashboards, setDashboards } = useDataStore();
 
   useEffect(() => {
-    setDashboards(items);
-  }, [items, setDashboards]);
-
-  const handleReload = (item: Dashboard) => {
-    setItems((preItems) => [item, ...preItems]);
-  };
+    setDashboards(initialData);
+  }, [initialData, setDashboards]);
 
   const handleOpenModal = () => {
     modalRef.current?.open();
@@ -38,9 +33,9 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
 
   return (
     <section>
-      <Button text="새로운 대시보드" ref={buttonRef} handleClick={handleOpenModal} />
+      <ModalOpenButton text="새로운 대시보드" ref={buttonRef} handleClick={handleOpenModal} />
       <ul className="flex flex-wrap gap-3">
-        {items.map(({ title, id, color }) => (
+        {dashboards?.map(({ title, id, color }) => (
           <li key={id} className="">
             <Link
               href={`/dashboard/${id}`}
@@ -56,7 +51,7 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
         ))}
       </ul>
       <Modal ref={modalRef}>
-        <DashboardAddForm handleReload={handleReload} handleCloseModal={handleCloseModal} />
+        <DashboardAddForm handleCloseModal={handleCloseModal} />
       </Modal>
     </section>
   );

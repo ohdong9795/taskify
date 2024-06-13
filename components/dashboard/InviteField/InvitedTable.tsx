@@ -2,16 +2,25 @@
 
 import { updateInvitation } from '@/services/client/invitations';
 import { Invitation } from '@/types/user/dashboard';
+import { useRouter } from 'next/navigation';
 
-function InvitedTable({ invitations }: { invitations: Invitation[] }) {
-  const handleAccept = (invitationId: number, inviteAccepted: boolean) => {
-    updateInvitation({ invitationId, inviteAccepted });
+interface InvitedTableProp {
+  invitations: Invitation[];
+}
+
+function InvitedTable({ invitations }: InvitedTableProp) {
+  const router = useRouter();
+
+  const handleAccept = async (invitationId: number, inviteAccepted: boolean) => {
+    await updateInvitation({ invitationId, inviteAccepted });
+
+    router.refresh();
   };
 
   return (
-    <table className="text-left">
+    <table className="table-fixed w-full">
       <thead>
-        <tr className="text-gray_9FA6B2 font-normal">
+        <tr className="text-left text-gray_9FA6B2">
           <th>이름</th>
           <th>초대자</th>
           <th>수락 여부</th>
@@ -19,7 +28,7 @@ function InvitedTable({ invitations }: { invitations: Invitation[] }) {
       </thead>
       <tbody>
         {invitations.map(({ inviter, id, dashboard }) => (
-          <tr key={id}>
+          <tr key={id} className="border-b">
             <th>{dashboard.title}</th>
             <th>{inviter.nickname}</th>
             <th>

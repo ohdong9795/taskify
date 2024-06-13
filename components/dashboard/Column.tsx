@@ -1,5 +1,5 @@
 import { GoDotFill, GoGear } from 'react-icons/go';
-import Button from './Button';
+import Button from '../Modal/components/ModalOpenButton';
 
 interface ColumnProps {
   title: string;

@@ -16,12 +16,7 @@ function InvitedDashboards({ invitationData }: InvitedDashboardsProps) {
     <section>
       <div className="p-7 flex flex-col gap-5 w-full bg-white rounded-lg">
         <h1 className="font-bold text-2xl text-black_333236">초대받은 대시보드</h1>
-        {invitations.length === 0 ? (
-          <div className="flex flex-col justify-center items-center m-32">
-            <EmptyInvite />
-            <span className="text-gray_9FA6B2 mt-3">아직 초대받은 대시보드가 없어요</span>
-          </div>
-        ) : (
+        {invitations.length > 0 ? (
           <>
             <form className="w-full relative">
               <input
@@ -35,6 +30,11 @@ function InvitedDashboards({ invitationData }: InvitedDashboardsProps) {
             </form>
             <InvitedTable invitations={invitations} />
           </>
+        ) : (
+          <div className="flex flex-col justify-center items-center m-32">
+            <EmptyInvite />
+            <span className="text-gray_9FA6B2 mt-3">아직 초대받은 대시보드가 없어요</span>
+          </div>
         )}
       </div>
     </section>
