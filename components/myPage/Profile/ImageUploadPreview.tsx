@@ -63,23 +63,25 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
   return (
     <form
       onSubmit={handleClick}
-      className="flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] h-[355px] m:h-[422px] ml-[20px] mt-[24px] rounded-lg mb-[12px] "
+      className="flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] t:h-[355px] m:h-[422px] ml-[20px] mt-[24px] rounded-lg mb-[12px] "
     >
-      <div className="ml-[28px] mt-[32px]">
-        <h2 className="text-[24px] text-black_333236 font-bold mb-[32px]">프로필</h2>
-        <div className="flex">
+      <div className="ml-[28px] mt-[32px] m:ml-[20px] m:mt-[28px]">
+        <h2 className="text-[24px] text-black_333236 font-bold mb-[32px] m:mb-[24px]">프로필</h2>
+        <div className="t:flex">
           <label
             htmlFor="profileImageUpload"
-            className="flex items-center justify-center bg-gray_F5F5F5 w-[182px] h-[182px] "
+            className="flex items-center justify-center bg-gray_F5F5F5 w-[182px] h-[182px] m:w-[100px] m:h-[100px]"
           >
             {preview && <Image src={preview} alt="프로필 이미지가 들어가요" width={160} height={160} />}
             <FaPlus className="w-[20px] h-[20px] text-violet_5534DA" />
             <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
           </label>
-          <div className="p:w-[366px] t:w-[290px] p:h-[178px] ml-[16px] pb-[4px]">
-            <p className="font-medium text-black_333236 text-[18px] mb-[10px]">이메일</p>
+          <div className="p:w-[366px] t:w-[290px] m:w-[244px] h-[178px] ml-[16px] m:ml-0 mt-[24px] pb-[4px] m:pb-0">
+            <p className="font-medium text-black_333236 text-[18px] m:text-[16px] mb-[10px]">이메일</p>
             <Input usage="email" placeholder={Profile.email} disabled style={{ height: '48px' }} />
-            <p className="font-medium text-black_333236 text-[18px] mb-[10px] mt-[20px]">닉네임</p>
+            <p className="font-medium text-black_333236 text-[18px] m:text-[16px] mb-[10px] mt-[20px] m:mt-[16px]">
+              닉네임
+            </p>
             <Input
               usage="nickName"
               placeholder={Profile.nickname}
@@ -90,7 +92,9 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
         </div>
       </div>
       <div className="flex justify-end items-end h-screen">
-        <button className=" bg-violet_5534DA w-[84px] h-[32px] text-white mr-[28px] mb-[28px] rounded">저장</button>
+        <button className=" bg-violet_5534DA w-[84px] h-[32px] m:h-[28px] text-white mr-[28px]  m:mr-[20px] mb-[28px] m:mb-[20px] font-medium rounded text-[12px]">
+          저장
+        </button>
       </div>
     </form>
   );
