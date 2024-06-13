@@ -10,10 +10,15 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
+import Modal, { ModalHandles } from '../Modal';
+import Button from './Button';
+import InviteForm from '../Modal/views/InviteForm';
 
 export default function DashBoardNav() {
   const [title, setTitle] = useState('');
   const dropdownRef = useRef<DropdownHandle>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<ModalHandles>(null);
   const pathName = usePathname();
   const isDashboard = pathName.includes('/dashboard');
   const isMyPage = pathName === '/mypage';
@@ -32,6 +37,10 @@ export default function DashBoardNav() {
     dropdownRef.current?.toggle();
   };
 
+  const handleOpenModal = () => {
+    modalRef.current?.open();
+  };
+
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
       <div className="font-bold hidden md:block">{title}</div>
@@ -45,13 +54,9 @@ export default function DashBoardNav() {
               <IoMdSettings className="hidden sm:flex" />
               관리
             </button>
-            <button
-              type="button"
-              className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
-            >
-              <MdOutlineAddBox className="hidden sm:flex" />
-              초대하기
-            </button>
+            <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal} />
+
+            <MdOutlineAddBox className="hidden sm:flex" />
           </div>
         ) : null}
         <div className="flex flex-row items-center gap-[32px]">
@@ -82,6 +87,9 @@ export default function DashBoardNav() {
           </div>
         </div>
       </div>
+      <Modal ref={modalRef}>
+        <InviteForm />
+      </Modal>
     </nav>
   );
 }
