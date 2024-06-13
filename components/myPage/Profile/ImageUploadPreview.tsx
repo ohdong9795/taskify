@@ -65,21 +65,21 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
       onSubmit={handleClick}
       className="flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] t:h-[355px] m:h-[422px] ml-[20px] mt-[24px] rounded-lg mb-[12px] "
     >
-      <div className="ml-[28px] mt-[32px] m:ml-[20px] m:mt-[28px]">
+      <div className="t:ml-[28px] t:mt-[32px] m:ml-[20px] m:mt-[28px]">
         <h2 className="text-[24px] text-black_333236 font-bold mb-[32px] m:mb-[24px]">프로필</h2>
         <div className="t:flex">
           <label
             htmlFor="profileImageUpload"
-            className="flex items-center justify-center bg-gray_F5F5F5 w-[182px] h-[182px] m:w-[100px] m:h-[100px]"
+            className="flex items-center justify-center bg-gray_F5F5F5 t:w-[182px] t:h-[182px] m:w-[100px] m:h-[100px]"
           >
             {preview && <Image src={preview} alt="프로필 이미지가 들어가요" width={160} height={160} />}
             <FaPlus className="w-[20px] h-[20px] text-violet_5534DA" />
             <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
           </label>
-          <div className="p:w-[366px] t:w-[290px] m:w-[244px] h-[178px] ml-[16px] m:ml-0 mt-[24px] pb-[4px] m:pb-0">
-            <p className="font-medium text-black_333236 text-[18px] m:text-[16px] mb-[10px]">이메일</p>
+          <div className="p:w-[366px] t:w-[290px] m:w-[244px] h-[178px] t:ml-[16px] m:ml-0 t:mt-0 m:mt-[24px] pb-[4px] m:pb-0">
+            <p className="font-medium text-black_333236 t:text-[18px] m:text-[16px] mb-[10px]">이메일</p>
             <Input usage="email" placeholder={Profile.email} disabled style={{ height: '48px' }} />
-            <p className="font-medium text-black_333236 text-[18px] m:text-[16px] mb-[10px] mt-[20px] m:mt-[16px]">
+            <p className="font-medium text-black_333236 t:text-[18px] m:text-[16px] mb-[10px] mt-[20px] m:mt-[16px]">
               닉네임
             </p>
             <Input
