@@ -8,7 +8,7 @@ import Vector from '@/public/images/Vector.svg';
 import UserImage from '@/public/images/UserImage.svg';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Dropdown from '../common/Dropdwon';
 
 export default function DashBoardNav() {
   const [title, setTitle] = useState('');
@@ -32,8 +32,8 @@ export default function DashBoardNav() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 size-full h-[70px] bg-white shrink-0 flex self-end tablet:justify-between items-center px-[40px] z-50">
-      <div className="font-bold hidden tablet:block">{title}</div>
+    <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
+      <div className="font-bold hidden md:block">{title}</div>
       <div className="flex flex-row items-center gap-[40px]">
         {isDashboard ? (
           <div className="flex flex-row items-center gap-[16px]">
@@ -65,21 +65,10 @@ export default function DashBoardNav() {
             {/* 유저 프로필 넣으면 됩니다. */}
             <UserImage />
 
-            <button className="hidden mobile:flex" onClick={toggleDropdown}>
+            <button className="hidden sm:flex" onClick={toggleDropdown}>
               이용자명
             </button>
-            {isDropdownVisible && (
-              <div className="absolute top-[50px] right-2 bg-white border border-gray-200 rounded-md shadow-lg py-2">
-                <Link href="/mydashboard">
-                  <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">내 대시보드</button>
-                </Link>
-                <Link href="/mypage">
-                  <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">내정보</button>
-                </Link>
-                {/* 로그아웃 하는 기능 구현 */}
-                <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">로그아웃</button>
-              </div>
-            )}
+            {isDropdownVisible && <Dropdown />}
           </div>
         </div>
       </div>
