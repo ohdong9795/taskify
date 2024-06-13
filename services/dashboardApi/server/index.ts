@@ -48,5 +48,3 @@ export async function getInvitations() {
     throw new AxiosError('An unexpected error occurred');
   }
 }
-
-
