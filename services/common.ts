@@ -294,7 +294,7 @@ export const getDashboardByIdCommon = async (instance: AxiosInstance, query: { d
 
 export const updateDashboardCommon = async (
   instance: AxiosInstance,
-  body: { dashboardId: number; title: number; color: string },
+  body: { dashboardId?: number; title: string; color: string },
 ) => {
   try {
     const response = await instance.put(`/dashboards/${body.dashboardId}`, {
@@ -373,7 +373,7 @@ export const deleteDashboardInvitationCommon = async (
 // Invitations
 export const getInvitationsCommon = async (
   instance: AxiosInstance,
-  query: { size?: number; cursorId?: number; title: string },
+  query: { size?: number; cursorId?: number; title?: string },
 ) => {
   try {
     const queryString = buildQueryString(query);

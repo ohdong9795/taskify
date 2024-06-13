@@ -1,11 +1,11 @@
 'use client';
 
-import postCreateDashboard from '@/services/dashboardApi/client';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
 import ColorSelectInput from '@/components/Modal/components/ColorSelectInput';
 import { Dashboard } from '@/types/user/dashboard';
+import { updateDashboard } from '@/services/client/dashboards';
 
 interface FormValues {
   newDashboardName: string;
@@ -21,7 +21,7 @@ function DashboardAddForm({ handleReload, handleCloseModal }: DashboardAddFormPr
   const { handleSubmit, control } = useForm<FormValues>();
 
   const handlePost: SubmitHandler<FormValues> = async ({ newDashboardName, color }) => {
-    const item = await postCreateDashboard({ title: newDashboardName, color });
+    const item = await updateDashboard({ title: newDashboardName, color });
 
     handleReload(item);
     handleCloseModal();
