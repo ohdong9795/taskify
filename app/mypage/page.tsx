@@ -1,7 +1,7 @@
-import getUserProfile from '@/services/server/userProfile';
-import ImageUploadPreview from '@/components/MyPage/Profile/ImageUploadPreview';
+import getUserProfile from '@/services/myPageApi/server';
+import ImageUploadPreview from '@/components/myPage/Profile/ImageUploadPreview';
 import { User } from '@/types/user/user';
-import BackIcon from '@/components/MyPage/Profile/BackIcon';
+import BackIcon from '@/components/myPage/Profile/BackIcon';
 import PasswordChangeForm from './passwordChangeForm';
 
 export default async function MyPage() {
