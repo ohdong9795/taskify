@@ -294,7 +294,7 @@ export const getDashboardByIdCommon = async (instance: AxiosInstance, query: { d
 
 export const updateDashboardCommon = async (
   instance: AxiosInstance,
-  body: { dashboardId?: number; title: string; color: string },
+  body: { dashboardId: number; title: string; color: string },
 ) => {
   try {
     const response = await instance.put(`/dashboards/${body.dashboardId}`, {
@@ -396,6 +396,7 @@ export const updateInvitationCommon = async (
     const response = await instance.put(`/invitations/${body.invitationId}`, {
       inviteAccepted: body.inviteAccepted,
     });
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
