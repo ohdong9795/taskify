@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef } from 'react';
 
 const layout = 'rounded-lg border border-solid px-[16px] py-[15px] focus:outline-1 focus:outline';

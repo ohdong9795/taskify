@@ -1,7 +1,7 @@
 'use client';
 
 import { Controller, useForm } from 'react-hook-form';
-import { createUser } from '@/services/users';
+import { createUser } from '@/services/client/users';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';

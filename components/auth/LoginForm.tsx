@@ -1,8 +1,8 @@
 'use client';
 
 import { Controller, useForm } from 'react-hook-form';
-import { useCallback, useEffect } from 'react';
-import { login } from '@/services/auth';
+import { useCallback } from 'react';
+import { login } from '@/services/client/auth';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
@@ -24,18 +24,14 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginData>({ mode: 'onBlur' });
 
-  const { accessToken, setToken } = useAuthStore();
+  const { setUser, setToken } = useAuthStore();
   const router = useRouter();
-
-  useEffect(() => {
-    if (accessToken) {
-      router.push('/mydashboard');
-    }
-  }, [accessToken, router]);
 
   const mutation = useMutation(login, {
     onSuccess: (data) => {
+      setUser(data.user);
       setToken(data.accessToken);
+      router.push('/mydashboard');
     },
     onError: (error: AxiosError) => {
       toast(error.message, {

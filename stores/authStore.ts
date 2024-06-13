@@ -1,9 +1,20 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
+
+interface User {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImageUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface AuthStore {
   accessToken: string | null;
+  user: User | null;
   setToken: (accessToken: string) => void;
+  setUser: (user: User) => void;
   clearToken: () => void;
 }
 
@@ -13,10 +24,13 @@ const useAuthStore = create(
       accessToken: null,
       setToken: (accessToken: string) => set({ accessToken }),
       clearToken: () => set({ accessToken: null }),
+      user: null,
+      setUser: (user: User) => set({ user }),
+      clearUser: () => set({ user: null }),
     }),
     {
       name: 'accessTokenStorage',
-      getStorage: () => sessionStorage,
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
