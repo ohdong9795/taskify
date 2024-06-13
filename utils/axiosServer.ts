@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
 
 const serverInstance = axios.create({
@@ -8,6 +8,9 @@ const serverInstance = axios.create({
 serverInstance.interceptors.request.use(
   (config) => {
     const token = cookies().get('token');
+    if (!token) {
+      return Promise.reject(new AxiosError('Unauthorized', '401'));
+    }
     if (token && config.headers) {
       config.headers.set('Authorization', `Bearer ${token.value}`);
     }

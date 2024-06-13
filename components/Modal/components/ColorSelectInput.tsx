@@ -24,7 +24,7 @@ interface ColorSelectInputProps {
 }
 
 const ColorSelectInput = forwardRef<HTMLInputElement, ColorSelectInputProps>(({ field }, ref) => (
-  <div className="flex gap-[10px] mt-7">
+  <div className="flex gap-[10px] my-7">
     {colors.map(({ name, code }) => (
       <label key={name} aria-label={name} className="flex flex-col items-center cursor-pointer relative">
         <input

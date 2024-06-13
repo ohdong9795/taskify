@@ -1,12 +1,11 @@
-function MyPageLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+// import MyNav from '@/components/nav/MyNav';
+// import SideBar from '@/components/SideBar/SideBar';
+
+function MyPageLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
-      <body>
-        {children}
-        {modal}
-        <div id="modal-root" />
-      </body>
-    </html>
+    <div>
+      <div>{children}</div>
+    </div>
   );
 }
 
