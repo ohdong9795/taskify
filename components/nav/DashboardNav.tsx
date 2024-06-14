@@ -6,10 +6,13 @@ import { IoMdSettings } from 'react-icons/io';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Vector from '@/public/images/Vector.svg';
 import UserImage from '@/public/images/UserImage.svg';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
+import axios from 'axios';
+import useDataStore from '@/stores/dataStore';
+import Image from 'next/image';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal, { ModalHandles } from '../Modal';
 import Button from './Button';
@@ -22,24 +25,32 @@ export default function DashBoardNav() {
   const modalRef = useRef<ModalHandles>(null);
   const pathName = usePathname();
   const dashboardId = parseInt(pathName.slice(11, 15), 10);
+  const router = useRouter();
+  const { dashboards } = useDataStore();
 
-  const isDashboard = pathName.includes('/dashboard');
+  const isDashboard = pathName.includes(`/dashboard/${dashboardId}`);
   const isMyPage = pathName === '/mypage';
-  const { clearToken, clearUser } = useAuthStore();
+
+  const findDashboard = dashboards?.find((dashboard) => dashboard.id === dashboardId);
+
+  const { clearToken, clearUser, user } = useAuthStore();
   const handleLogout = () => {
     clearToken();
     clearUser();
+    localStorage.clear();
+    axios.get('/api/logout');
+    router.push('/');
   };
 
   useEffect(() => {
     if (isDashboard) {
-      setTitle('store 데이터'); // 채워주세요.
+      setTitle(findDashboard?.title ?? '');
     } else if (isMyPage) {
       setTitle('계정관리');
     } else {
       setTitle('내 대시보드');
     }
-  }, [pathName, isDashboard, isMyPage]);
+  }, [pathName, isDashboard, isMyPage, findDashboard]);
 
   const toggleDropdown = () => {
     dropdownRef.current?.toggle();
@@ -55,16 +66,16 @@ export default function DashBoardNav() {
       <div className="flex flex-row items-center gap-[40px]">
         {isDashboard ? (
           <div className="flex flex-row items-center gap-[16px]">
-            <button
-              type="button"
+            <Link
+              href={`/dashboard/${dashboardId}/edit`}
               className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
             >
               <IoMdSettings className="hidden t:flex" />
               관리
-            </button>
-            <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal} />
-
-            <MdOutlineAddBox className="hidden t:flex" />
+            </Link>
+            <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal}>
+              <MdOutlineAddBox className="hidden t:flex" />
+            </Button>
           </div>
         ) : null}
         <div className="flex flex-row items-center gap-[32px]">
@@ -76,11 +87,23 @@ export default function DashBoardNav() {
             </>
           ) : null}
           <div className="flex flex-row items-center gap-[12px]">
-            {/* 유저 프로필 넣으면 됩니다. */}
-            <UserImage onClick={toggleDropdown} />
+            <div>
+              {user?.profileImageUrl ? (
+                <Image
+                  src={user?.profileImageUrl}
+                  width={38}
+                  height={38}
+                  alt="사용자 이미지"
+                  className="rounded-full "
+                  onClick={toggleDropdown}
+                />
+              ) : (
+                <UserImage onClick={toggleDropdown} />
+              )}
+            </div>
 
             <button className="hidden t:flex" onClick={toggleDropdown}>
-              이용자명
+              {user?.nickname}
             </button>
             <Dropdown ref={dropdownRef}>
               <Link href="/mydashboard" className="block w-full px-4 py-2 text-left hover:bg-gray-100">
@@ -89,7 +112,6 @@ export default function DashBoardNav() {
               <Link href="/mypage" className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 내정보
               </Link>
-              {/* 로그아웃 하는 기능 구현 */}
               <button onClick={handleLogout} className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 로그아웃
               </button>
