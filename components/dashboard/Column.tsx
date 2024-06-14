@@ -1,5 +1,12 @@
+'use client';
+
+import { useRef } from 'react';
+import Modal, { ModalHandles } from '@/components/Modal';
+
 import { GoDotFill, GoGear } from 'react-icons/go';
 import Button from './Button';
+
+import ToDoAddForm from '../Modal/views/ToDoAddForm';
 
 interface ColumnProps {
   title: string;
@@ -7,6 +14,17 @@ interface ColumnProps {
 }
 
 function Column({ title, count }: ColumnProps) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<ModalHandles>(null);
+
+  const handleOpenModal = () => {
+    modalRef.current?.open();
+  };
+
+  // const handleCloseModal = () => {
+  //   modalRef.current?.close();
+  // };
+
   return (
     <>
       <header className="flex items-center justify-between mb-6">
@@ -21,10 +39,13 @@ function Column({ title, count }: ColumnProps) {
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <Button text={null} />
+      <Button text={null} ref={buttonRef} handleClick={handleOpenModal} />
       <ul>
         <li>할 일 카드</li>
       </ul>
+      <Modal ref={modalRef}>
+        <ToDoAddForm />
+      </Modal>
     </>
   );
 }

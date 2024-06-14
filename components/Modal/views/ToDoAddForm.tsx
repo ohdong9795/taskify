@@ -1,12 +1,15 @@
+'use client';
+
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
+import ModalImageInput from '../components/ModalImageInput';
 
 function ToDoAddForm() {
   return (
-    <div className="max-w-[540px]">
+    <div className="max-w-[540px] max-h-[907px]">
       <Title title="할 일 생성" />
       <form className="flex flex-col gap-8">
-        <div className="flex flex-col">
+        <div className="flex flex-col w-[217px]">
           <label htmlFor="manager" className="text-lg font-medium text-black_333236 mb-[10px]">
             담당자
           </label>
@@ -24,12 +27,7 @@ function ToDoAddForm() {
           <input type="date" id="dueDate" />
         </div>
         <Input text="태그" id="tag" placeholder="입력 후 Enter" />
-        <div className="flex flex-col">
-          <label htmlFor="imageUpload" className="text-lg font-medium text-black_333236 mb-[10px]">
-            이미지
-          </label>
-          <input type="file" id="imageUpload" accept="image/*" />
-        </div>
+        <ModalImageInput />
         {/* 버튼 완료되면 추후 수정 */}
         <div className="mt-7">
           <button type="submit">취소</button>

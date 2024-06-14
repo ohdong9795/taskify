@@ -15,7 +15,7 @@ const sampleColumn = [
 
 function Dashboard() {
   return (
-    <main className="bg-gray_FAFAFA h-full pt-[70px]">
+    <main className="bg-gray_FAFAFA h-[1080px] pt-[70px]">
       <ul className="flex h-full">
         {sampleColumn.map(({ title, count }) => (
           <li key={title} className="p-5 border-r border-r-gray_EE flex flex-col">
