@@ -117,7 +117,7 @@ export default function DashBoardNav() {
                           alt={member.nickname}
                           width={38}
                           height={38}
-                          className=" rounded-full border-white"
+                          className=" rounded-full border-white border-2"
                         />
                       ) : (
                         <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-gray-200 border-2 border-white text-gray-700 font-bold ">
