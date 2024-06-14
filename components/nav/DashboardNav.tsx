@@ -43,7 +43,7 @@ export default function DashBoardNav() {
 
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
-      <div className="font-bold hidden md:block">{title}</div>
+      <div className="font-bold hidden t:block">{title}</div>
       <div className="flex flex-row items-center gap-[40px]">
         {isDashboard ? (
           <div className="flex flex-row items-center gap-[16px]">
@@ -51,12 +51,12 @@ export default function DashBoardNav() {
               type="button"
               className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
             >
-              <IoMdSettings className="hidden sm:flex" />
+              <IoMdSettings className="hidden t:flex" />
               관리
             </button>
             <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal} />
 
-            <MdOutlineAddBox className="hidden sm:flex" />
+            <MdOutlineAddBox className="hidden t:flex" />
           </div>
         ) : null}
         <div className="flex flex-row items-center gap-[32px]">
@@ -71,7 +71,7 @@ export default function DashBoardNav() {
             {/* 유저 프로필 넣으면 됩니다. */}
             <UserImage onClick={toggleDropdown} />
 
-            <button className="hidden sm:flex" onClick={toggleDropdown}>
+            <button className="hidden t:flex" onClick={toggleDropdown}>
               이용자명
             </button>
             <Dropdown ref={dropdownRef}>

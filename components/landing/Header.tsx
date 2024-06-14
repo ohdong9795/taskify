@@ -5,7 +5,7 @@ export default function Description() {
   return (
     <header className="flex flex-col items-center">
       <MainImage />
-      <div className="flex flex-col md:flex-row items-center space-x-[28px] mt-[38px]">
+      <div className="flex flex-col t:flex-row items-center space-x-[28px] mt-[38px]">
         <p className=" text-white text-[76px] font-bold">새로운 일정 관리</p>
         <p className=" text-violet_5534DA text-[76px] font-bold">Taskify</p>
       </div>
