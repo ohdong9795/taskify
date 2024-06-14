@@ -25,6 +25,7 @@ export default function DashBoardNav() {
 
   const isDashboard = pathName.includes('/dashboard');
   const isMyPage = pathName === '/mypage';
+
   const { clearToken, clearUser } = useAuthStore();
   const handleLogout = () => {
     clearToken();
@@ -62,9 +63,9 @@ export default function DashBoardNav() {
               <IoMdSettings className="hidden t:flex" />
               관리
             </button>
-            <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal} />
-
-            <MdOutlineAddBox className="hidden t:flex" />
+            <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal}>
+              <MdOutlineAddBox className="hidden t:flex" />
+            </Button>
           </div>
         ) : null}
         <div className="flex flex-row items-center gap-[32px]">
