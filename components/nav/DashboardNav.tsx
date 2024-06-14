@@ -7,7 +7,10 @@ import UserImage from '@/public/images/UserImage.svg';
 
 export default function DashBoardNav() {
   return (
-    <nav className="fixed top-0 left-0 size-full h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px] z-50">
+    <nav
+      style={{ width: 'calc(100% - 250px)' }}
+      className="fixed top-0 left-[250px] h-[70px] bg-white shrink-0 flex justify-between items-center px-[40px] z-50"
+    >
       <div>내 대시보드</div>
       <div className="flex flex-row items-center gap-[40px]">
         <div className="flex flex-row items-center gap-[16px]">

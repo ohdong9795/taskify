@@ -1,15 +1,41 @@
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
+import { createColumn } from '@/services/client/columns';
+import { Controller, useForm } from 'react-hook-form';
+import { ColumnType } from '@/types/user/column';
 
-function ColumnAddForm() {
+interface ColumnAddFormProps {
+  dashboardId: number;
+  handleReload: (col: ColumnType) => void;
+  handleCloseModal: () => void;
+}
+
+interface FormValues {
+  title: string;
+}
+
+function ColumnAddForm({ dashboardId, handleReload, handleCloseModal }: ColumnAddFormProps) {
+  const { control, handleSubmit } = useForm<FormValues>();
+
+  const submit = async (data: FormValues) => {
+    const col = await createColumn({ title: data.title, dashboardId });
+    handleReload(col);
+    handleCloseModal();
+  };
+
   return (
     <div className="max-w-[540px]">
       <Title title="새 컬럼 생성" />
-      <form className="flex flex-col">
-        <Input text="이름" id="newColumnName" placeholder="새로운 컬럼 이름" />
-        {/* 버튼 완료되면 추후 수정 */}
-        <div className="mt-7">
-          <button type="submit">취소</button>
+      <form onSubmit={handleSubmit(submit)} className="flex flex-col">
+        <Controller
+          control={control}
+          name="title"
+          render={({ field }) => <Input text="이름" id="newColumnName" placeholder="새로운 컬럼 이름" {...field} />}
+        />
+        <div className="mt-7 flex justify-end gap-3">
+          <button type="button" onClick={handleCloseModal}>
+            취소
+          </button>
           <button type="submit">생성</button>
         </div>
       </form>
