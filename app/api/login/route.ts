@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: 'POST request received', accessToken: response.data.accessToken },
+      { message: 'POST request received', accessToken: response.data.accessToken, user: response.data.user },
       { status: 201 },
     );
   } catch (error) {
