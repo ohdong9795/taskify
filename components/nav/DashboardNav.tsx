@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
 import axios from 'axios';
-
+import useDataStore from '@/stores/dataStore';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal, { ModalHandles } from '../Modal';
 import Button from './Button';
@@ -25,11 +25,14 @@ export default function DashBoardNav() {
   const pathName = usePathname();
   const dashboardId = parseInt(pathName.slice(11, 15), 10);
   const router = useRouter();
+  const { dashboards } = useDataStore();
 
-  const isDashboard = pathName.includes('/dashboard');
+  const isDashboard = pathName.includes(`/dashboard/${dashboardId}`);
   const isMyPage = pathName === '/mypage';
 
-  const { clearToken, clearUser } = useAuthStore();
+  const findDashboard = dashboards?.find((dashboard) => dashboard.id === dashboardId);
+
+  const { clearToken, clearUser, user } = useAuthStore();
   const handleLogout = () => {
     clearToken();
     clearUser();
@@ -40,13 +43,13 @@ export default function DashBoardNav() {
 
   useEffect(() => {
     if (isDashboard) {
-      setTitle('store 데이터'); // 채워주세요.
+      setTitle(findDashboard?.title ?? '');
     } else if (isMyPage) {
       setTitle('계정관리');
     } else {
       setTitle('내 대시보드');
     }
-  }, [pathName, isDashboard, isMyPage]);
+  }, [pathName, isDashboard, isMyPage, findDashboard]);
 
   const toggleDropdown = () => {
     dropdownRef.current?.toggle();
@@ -55,6 +58,8 @@ export default function DashBoardNav() {
   const handleOpenModal = () => {
     modalRef.current?.open();
   };
+
+  // console.log(user?.nickname);
 
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
@@ -83,11 +88,12 @@ export default function DashBoardNav() {
             </>
           ) : null}
           <div className="flex flex-row items-center gap-[12px]">
-            {/* 유저 프로필 넣으면 됩니다. */}
-            <UserImage onClick={toggleDropdown} />
+            <div className="rounded-full w-[38px] h-[38px]">
+              {user ? user?.profileImageUrl : <UserImage onClick={toggleDropdown} />}
+            </div>
 
             <button className="hidden t:flex" onClick={toggleDropdown}>
-              이용자명
+              {user?.nickname}
             </button>
             <Dropdown ref={dropdownRef}>
               <Link href="/mydashboard" className="block w-full px-4 py-2 text-left hover:bg-gray-100">
@@ -96,7 +102,6 @@ export default function DashBoardNav() {
               <Link href="/mypage" className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 내정보
               </Link>
-              {/* 로그아웃 하는 기능 구현 */}
               <button onClick={handleLogout} className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 로그아웃
               </button>
