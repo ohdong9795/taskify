@@ -12,6 +12,7 @@ import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
 import axios from 'axios';
 import useDataStore from '@/stores/dataStore';
+import Image from 'next/image';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal, { ModalHandles } from '../Modal';
 import Button from './Button';
@@ -59,21 +60,19 @@ export default function DashBoardNav() {
     modalRef.current?.open();
   };
 
-  // console.log(user?.nickname);
-
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
       <div className="font-bold hidden t:block">{title}</div>
       <div className="flex flex-row items-center gap-[40px]">
         {isDashboard ? (
           <div className="flex flex-row items-center gap-[16px]">
-            <button
-              type="button"
+            <Link
+              href={`/dashboard/${dashboardId}/edit`}
               className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
             >
               <IoMdSettings className="hidden t:flex" />
               관리
-            </button>
+            </Link>
             <Button text="초대하기" ref={buttonRef} handleClick={handleOpenModal}>
               <MdOutlineAddBox className="hidden t:flex" />
             </Button>
@@ -88,8 +87,19 @@ export default function DashBoardNav() {
             </>
           ) : null}
           <div className="flex flex-row items-center gap-[12px]">
-            <div className="rounded-full w-[38px] h-[38px]">
-              {user ? user?.profileImageUrl : <UserImage onClick={toggleDropdown} />}
+            <div>
+              {user?.profileImageUrl ? (
+                <Image
+                  src={user?.profileImageUrl}
+                  width={38}
+                  height={38}
+                  alt="사용자 이미지"
+                  className="rounded-full "
+                  onClick={toggleDropdown}
+                />
+              ) : (
+                <UserImage onClick={toggleDropdown} />
+              )}
             </div>
 
             <button className="hidden t:flex" onClick={toggleDropdown}>
