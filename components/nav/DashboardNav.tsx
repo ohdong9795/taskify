@@ -6,10 +6,12 @@ import { IoMdSettings } from 'react-icons/io';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Vector from '@/public/images/Vector.svg';
 import UserImage from '@/public/images/UserImage.svg';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
+import axios from 'axios';
+
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal, { ModalHandles } from '../Modal';
 import Button from './Button';
@@ -22,6 +24,7 @@ export default function DashBoardNav() {
   const modalRef = useRef<ModalHandles>(null);
   const pathName = usePathname();
   const dashboardId = parseInt(pathName.slice(11, 15), 10);
+  const router = useRouter();
 
   const isDashboard = pathName.includes('/dashboard');
   const isMyPage = pathName === '/mypage';
@@ -30,6 +33,9 @@ export default function DashBoardNav() {
   const handleLogout = () => {
     clearToken();
     clearUser();
+    localStorage.clear();
+    axios.get('/api/logout');
+    router.push('/');
   };
 
   useEffect(() => {
