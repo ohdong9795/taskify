@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Dashboard } from '@/stores/dashboardsStore';
-import { colors } from '@/constants/dashboardColors';
 import Link from 'next/link';
 import CrownLogo from '../../public/images/DashboardCrown.svg';
 import DashboardLogo from '../../public/images/DashboardIcon.svg';
@@ -19,19 +18,15 @@ export default function SideBarItem({ dashboards }: { dashboards: Dashboard[] | 
   return (
     <>
       <div className="flex flex-col gap-3">
-        {paginatedDashboards?.map((dashboard) => {
-          const colorClass = `text-${colors[dashboard.color]}`;
-
-          return (
-            <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id}>
-              <div className="flex items-center gap-1">
-                <DashboardLogo className={colorClass} />
-                <p className={colorClass}>{dashboard.title}</p>
-                {dashboard.createdByMe && <CrownLogo className={colorClass} />}
-              </div>
-            </Link>
-          );
-        })}
+        {paginatedDashboards?.map((dashboard) => (
+          <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id}>
+            <div className="flex items-center gap-1">
+              <DashboardLogo style={{ color: dashboard.color }} />
+              <p>{dashboard.title}</p>
+              {dashboard.createdByMe && <CrownLogo />}
+            </div>
+          </Link>
+        ))}
       </div>
       <div>
         <button onClick={() => setPage((prevPage) => prevPage - 1)} disabled={page === 1}>

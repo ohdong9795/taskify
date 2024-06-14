@@ -41,7 +41,7 @@ export const createCardCommon = async (
     description: string;
     dueDate: string;
     tags: string[];
-    imageUrl: string;
+    imageUrl?: string;
   },
 ) => {
   try {
@@ -82,7 +82,7 @@ export const updateCardCommon = async (
     description: string;
     dueDate: string;
     tags: string[];
-    imageUrl: string;
+    imageUrl?: string;
   },
 ) => {
   try {
@@ -124,7 +124,7 @@ export const deleteCardByIdCommon = async (instance: AxiosInstance, { cardId }: 
 };
 
 // Columns
-export const createColumnCommon = async (instance: AxiosInstance, body: { title: number; dashboardId: number }) => {
+export const createColumnCommon = async (instance: AxiosInstance, body: { title: string; dashboardId: number }) => {
   try {
     const response = await instance.post('/columns', body);
     return response.data;
