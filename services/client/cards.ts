@@ -9,7 +9,7 @@ export const createCard = (body: {
   description: string;
   dueDate: string;
   tags: string[];
-  imageUrl: string;
+  imageUrl?: string;
 }) => createCardCommon(clientInstance, body);
 
 export const getCards = (query: { size?: number; cursorId?: number; columnId: number }) =>
@@ -22,7 +22,7 @@ export const updateCard = (body: {
   description: string;
   dueDate: string;
   tags: string[];
-  imageUrl: string;
+  imageUrl?: string;
 }) => updateCardCommon(clientInstance, body);
 
 export const getCardById = (query: { cardId: number }) => getCardByIdCommon(clientInstance, query);
