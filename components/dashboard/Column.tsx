@@ -1,12 +1,28 @@
 import { GoDotFill, GoGear } from 'react-icons/go';
-import Button from '../Modal/components/ModalOpenButton';
+import { useRef } from 'react';
+import Button from './Button';
+import Modal, { ModalHandles } from '../Modal';
+import ColumnEditForm from '../Modal/views/ColumnEditForm';
 
 interface ColumnProps {
+  id: number;
   title: string;
   count: number;
+  onUpdate: (id: number, title: string) => void;
+  onDelete: (id: number) => void;
 }
 
-function Column({ title, count }: ColumnProps) {
+function Column({ id, title, count, onUpdate, onDelete }: ColumnProps) {
+  const modalRef = useRef<ModalHandles>(null);
+
+  const handleOpenModal = () => {
+    modalRef.current?.open();
+  };
+
+  const handleCloseModal = () => {
+    modalRef.current?.close();
+  };
+
   return (
     <>
       <header className="flex items-center justify-between mb-6">
@@ -17,14 +33,20 @@ function Column({ title, count }: ColumnProps) {
             {count}
           </div>
         </div>
-        <button type="button" aria-label="edit">
+        <button type="button" aria-label="edit" onClick={handleOpenModal}>
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <Button text={null} />
-      <ul>
-        <li>할 일 카드</li>
-      </ul>
+      <Button handleClick={() => {}} text={null} />
+      <Modal ref={modalRef}>
+        <ColumnEditForm
+          id={id}
+          title={title}
+          handleCloseModal={handleCloseModal}
+          onUpdate={onUpdate}
+          onDelete={onDelete}
+        />
+      </Modal>
     </>
   );
 }

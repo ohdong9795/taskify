@@ -50,6 +50,7 @@ export default function DashBoardNav() {
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
       <div className="font-bold hidden t:block">{title}</div>
+      <div>내 대시보드</div>
       <div className="flex flex-row items-center gap-[40px]">
         {isDashboard ? (
           <div className="flex flex-row items-center gap-[16px]">

@@ -1,28 +1,28 @@
-import Column from '@/components/Dashboard/Column';
+import Content from '@/components/dashboard/Content';
+import { getCards } from '@/services/server/cards';
+import { getColumns } from '@/services/server/columns';
+import { CardData, ColumnCard, ColumnData } from '@/types/user/column';
 
-const sampleColumn = [
-  {
-    title: 'To Do',
-    count: 0,
-    cards: [],
-  },
-  {
-    title: 'On Progress',
-    count: 2,
-    cards: ['card1', 'card2'],
-  },
-];
+interface DashboardPageProps {
+  params: {
+    dashboardId: string;
+  };
+}
 
-function Dashboard() {
+async function Dashboard({ params }: DashboardPageProps) {
+  const dashboardId = Number(params.dashboardId);
+
+  const columnsData: ColumnData = await getColumns({ dashboardId });
+  const data: ColumnCard[] = await Promise.all(
+    columnsData.data.map(async (col) => {
+      const card: CardData = await getCards({ columnId: col.id });
+      return { ...col, ...card };
+    }),
+  );
+
   return (
     <main className="bg-gray_FAFAFA h-full pt-[70px]">
-      <ul className="flex h-full">
-        {sampleColumn.map(({ title, count }) => (
-          <li key={title} className="p-5 border-r border-r-gray_EE flex flex-col">
-            <Column title={title} count={count} />
-          </li>
-        ))}
-      </ul>
+      <Content dashboardId={dashboardId} data={data} />
     </main>
   );
 }
