@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { IoIosArrowBack } from "react-icons/io";
-
+import { IoIosArrowBack } from 'react-icons/io';
 
 export default function ReturnButton() {
   const router = useRouter();
@@ -18,10 +17,7 @@ export default function ReturnButton() {
       type="button"
       onClick={handleButtonClick}
     >
-      <IoIosArrowBack
-        className="tablet:w-[2] tablet:h-[2] w-[1.8] h-[1.8]"
-        aria-label="뒤로 가기"
-      />
+      <IoIosArrowBack className="tablet:w-[2] tablet:h-[2] w-[1.8] h-[1.8]" aria-label="뒤로 가기" />
       돌아가기
     </button>
   );
