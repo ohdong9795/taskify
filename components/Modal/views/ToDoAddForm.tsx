@@ -2,7 +2,7 @@
 
 import { useForm, Controller } from 'react-hook-form';
 
-import { ColumnType, MemberData } from '@/types/user/column';
+import { MemberData } from '@/types/user/column';
 import { createCard } from '@/services/client/cards';
 
 import Title from '@/components/Modal/components/Title';
@@ -14,7 +14,7 @@ interface ColumnAddFormProps {
   dashboardId: number;
   memberData: MemberData;
   handleCloseModal: () => void;
-  handleReload: (col: ColumnType) => void;
+  refreshCards: (id: number) => void;
 }
 
 interface FormValues {
@@ -28,7 +28,7 @@ interface FormValues {
   imageUrl?: string;
 }
 
-function ToDoAddForm({ dashboardId, columnId, handleCloseModal, handleReload, memberData }: ColumnAddFormProps) {
+function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refreshCards }: ColumnAddFormProps) {
   const { control, handleSubmit, setValue } = useForm<FormValues>();
   const handleImageUpload = (url: string) => {
     setValue('imageUrl', url);
@@ -46,8 +46,8 @@ function ToDoAddForm({ dashboardId, columnId, handleCloseModal, handleReload, me
     };
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
-    const col = await createCard(body);
-    handleReload(col);
+    await createCard(body);
+    refreshCards(columnId);
     handleCloseModal();
   };
 
