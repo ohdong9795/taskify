@@ -2,7 +2,7 @@
 
 const nextConfig = {
   images: {
-    domains: ['sprint-fe-project.s3.ap-northeast-2.amazonaws.com'],
+    remotePatterns: [{ protocol: 'https', hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com' }],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
