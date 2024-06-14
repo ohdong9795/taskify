@@ -4,9 +4,9 @@ import { useRef, useState } from 'react';
 import { ColumnType, ColumnCard } from '@/types/user/column';
 import Modal, { ModalHandles } from '../Modal';
 import ColumnAddForm from '../Modal/views/ColumnAddForm';
-import Button from './Button';
 import Column from './Column';
 import Card from './Card';
+import ModalOpenButton from '../Modal/components/ModalOpenButton';
 
 interface ContentProps {
   dashboardId: number;
@@ -59,7 +59,7 @@ export default function Content({ dashboardId, data }: ContentProps) {
             {cards?.map((card) => <Card key={card.id} data={card} />)}
           </li>
         ))}
-        <Button text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
+        <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
       </ul>
       <Modal ref={modalRef}>
         <ColumnAddForm dashboardId={dashboardId} handleReload={handleReload} handleCloseModal={handleCloseModal} />

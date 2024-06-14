@@ -1,8 +1,8 @@
 import { GoDotFill, GoGear } from 'react-icons/go';
 import { useRef } from 'react';
-import Button from './Button';
 import Modal, { ModalHandles } from '../Modal';
 import ColumnEditForm from '../Modal/views/ColumnEditForm';
+import ModalOpenButton from '../Modal/components/ModalOpenButton';
 
 interface ColumnProps {
   id: number;
@@ -37,7 +37,7 @@ function Column({ id, title, count, onUpdate, onDelete }: ColumnProps) {
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <Button handleClick={() => {}} text={null} />
+      <ModalOpenButton handleClick={() => {}} text={null} />
       <Modal ref={modalRef}>
         <ColumnEditForm
           id={id}
