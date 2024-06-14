@@ -6,3 +6,9 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Assignee {
+  profileImageUrl: string;
+  nickname: string;
+  id: number;
+}

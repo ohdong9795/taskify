@@ -1,4 +1,5 @@
 import Content from '@/components/dashboard/Content';
+import { getMembers } from '@/services/server/members';
 import { getCards } from '@/services/server/cards';
 import { getColumns } from '@/services/server/columns';
 import { CardData, ColumnCard, ColumnData } from '@/types/user/column';
@@ -19,10 +20,11 @@ async function Dashboard({ params }: DashboardPageProps) {
       return { ...col, ...card };
     }),
   );
+  const memberData = await getMembers({ dashboardId });
 
   return (
     <main className="bg-gray_FAFAFA h-full pt-[70px]">
-      <Content dashboardId={dashboardId} data={data} />
+      <Content dashboardId={dashboardId} data={data} memberData={memberData} />
     </main>
   );
 }
