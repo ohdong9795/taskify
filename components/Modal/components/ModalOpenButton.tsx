@@ -8,7 +8,7 @@ interface ButtonProps {
   handleClick: () => void;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ text, handleClick }, ref) => (
+const ModalOpenButton = forwardRef<HTMLButtonElement, ButtonProps>(({ text, handleClick }, ref) => (
   <button
     ref={ref}
     type="button"
@@ -22,6 +22,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ text, handleClick }
   </button>
 ));
 
-Button.displayName = 'Button';
+ModalOpenButton.displayName = 'ModalOpenButton';
 
-export default Button;
+export default ModalOpenButton;

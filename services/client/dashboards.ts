@@ -17,7 +17,7 @@ export const getDashboards = (query: { navigationMethod: string; cursorId?: numb
 
 export const getDashboardById = (query: { dashboardId: number }) => getDashboardByIdCommon(clientInstance, query);
 
-export const updateDashboard = (body: { dashboardId?: number; title: string; color: string }) =>
+export const updateDashboard = (body: { dashboardId: number; title: string; color: string }) =>
   updateDashboardCommon(clientInstance, body);
 
 export const deleteDashboard = (query: { dashboardId: number }) => deleteDashboardCommon(clientInstance, query);
