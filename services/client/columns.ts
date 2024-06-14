@@ -1,7 +1,7 @@
 import clientInstance from '@/utils/axiosClient';
 import { createColumnCommon, getColumnsCommon, updateColumnCommon, deleteColumnCommon } from '../common';
 
-export const createColumn = (body: { title: number; dashboardId: number }) => createColumnCommon(clientInstance, body);
+export const createColumn = (body: { title: string; dashboardId: number }) => createColumnCommon(clientInstance, body);
 
 export const getColumns = (query: { dashboardId: number }) => getColumnsCommon(clientInstance, query);
 
