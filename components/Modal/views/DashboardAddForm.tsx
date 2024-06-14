@@ -1,30 +1,30 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { createDashboard } from '@/services/client/dashboards';
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
 import ColorSelectInput from '@/components/Modal/components/ColorSelectInput';
-import { Dashboard } from '@/types/user/dashboard';
-import { updateDashboard } from '@/services/client/dashboards';
 
 interface FormValues {
   newDashboardName: string;
   color: string;
 }
 
-interface DashboardAddFormProps {
-  handleReload: (item: Dashboard) => void;
+interface DashboardAddFormProp {
   handleCloseModal: () => void;
 }
 
-function DashboardAddForm({ handleReload, handleCloseModal }: DashboardAddFormProps) {
+function DashboardAddForm({ handleCloseModal }: DashboardAddFormProp) {
+  const router = useRouter();
   const { handleSubmit, control } = useForm<FormValues>();
 
   const handlePost: SubmitHandler<FormValues> = async ({ newDashboardName, color }) => {
-    const item = await updateDashboard({ title: newDashboardName, color });
+    await createDashboard({ title: newDashboardName, color });
 
-    handleReload(item);
     handleCloseModal();
+    router.refresh();
   };
 
   return (

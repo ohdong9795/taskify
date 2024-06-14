@@ -1,20 +1,55 @@
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
+import { deleteColumn, updateColumn } from '@/services/client/columns';
+import { Controller, useForm } from 'react-hook-form';
 
-function ColumnEditForm() {
+interface ColumnAddFormProps {
+  id: number;
+  title: string;
+  handleCloseModal: () => void;
+  onUpdate: (id: number, title: string) => void;
+  onDelete: (id: number) => void;
+}
+
+interface FormValues {
+  title: string;
+}
+
+function ColumnEditForm({ id, title, handleCloseModal, onUpdate, onDelete }: ColumnAddFormProps) {
+  const { control, handleSubmit } = useForm<FormValues>();
+
+  const handleDelete = async () => {
+    await deleteColumn({ columnId: id });
+    onDelete(id);
+    handleCloseModal();
+  };
+
+  const handleUpdate = async (data: FormValues) => {
+    await updateColumn({ columnId: id, title: data.title });
+    onUpdate(id, data.title);
+    handleCloseModal();
+  };
+
   return (
     <div className="max-w-[540px]">
       <Title title="컬럼 관리" />
-      <form className="flex flex-col relative">
-        <Input text="이름" id="EditColumnName" />
-        {/* placeholder로는 현재 컬럼 명의 이름을 넣어주면 됩니다 */}
-
-        {/* 버튼 완료되면 추후 수정 */}
-        <div className="mt-7">
-          <button type="submit">취소</button>
+      <form className="flex flex-col relative" onSubmit={handleSubmit(handleUpdate)}>
+        <Controller
+          control={control}
+          name="title"
+          render={({ field }) => <Input text="이름" placeholder={title} {...field} />}
+        />
+        <div className="mt-7 flex justify-end gap-3">
+          <button type="button" onClick={handleCloseModal}>
+            취소
+          </button>
           <button type="submit">변경</button>
         </div>
-        <button type="submit" className="absolute bottom-0 text-gray_9FA6B2 font-normal text-sm underline">
+        <button
+          type="button"
+          className="absolute bottom-0 text-gray_9FA6B2 font-normal text-sm underline"
+          onClick={handleDelete}
+        >
           삭제하기
         </button>
       </form>
