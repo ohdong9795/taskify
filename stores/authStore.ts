@@ -16,6 +16,7 @@ interface AuthStore {
   setToken: (accessToken: string) => void;
   setUser: (user: User) => void;
   clearToken: () => void;
+  clearUser: () => void;
 }
 
 const useAuthStore = create(

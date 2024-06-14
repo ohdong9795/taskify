@@ -8,6 +8,7 @@ import Vector from '@/public/images/Vector.svg';
 import UserImage from '@/public/images/UserImage.svg';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal, { ModalHandles } from '../Modal';
@@ -22,6 +23,11 @@ export default function DashBoardNav() {
   const pathName = usePathname();
   const isDashboard = pathName.includes('/dashboard');
   const isMyPage = pathName === '/mypage';
+  const { clearToken, clearUser } = useAuthStore();
+  const handleLogout = () => {
+    clearToken();
+    clearUser();
+  };
 
   useEffect(() => {
     if (isDashboard) {
@@ -82,7 +88,9 @@ export default function DashBoardNav() {
                 내정보
               </Link>
               {/* 로그아웃 하는 기능 구현 */}
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">로그아웃</button>
+              <button onClick={handleLogout} className="block w-full px-4 py-2 text-left hover:bg-gray-100">
+                로그아웃
+              </button>
             </Dropdown>
           </div>
         </div>

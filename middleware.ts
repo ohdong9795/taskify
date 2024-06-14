@@ -18,8 +18,8 @@ export function middleware(req: NextRequest) {
   }
 
   if (!token) {
-    // 토큰이 없는 경우 로그인 페이지로 리다이렉트
-    return NextResponse.redirect(new URL('/login', req.url));
+    // 토큰이 없는 경우  페이지로 리다이렉트
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   // 토큰이 있는 경우 요청을 그대로 진행
