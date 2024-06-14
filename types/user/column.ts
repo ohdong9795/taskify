@@ -45,3 +45,20 @@ export interface ColumnCard extends ColumnType {
 export interface Fail {
   message: string;
 }
+
+
+export interface MemberType {
+  id: number;
+  userId: number;
+  email: string;
+  nickname: string;
+  profileImageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  isOwner: boolean;
+}
+
+export interface MemberData {
+  members: MemberType[];
+  totalCount: number;
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { ColumnType, ColumnCard } from '@/types/user/column';
+import { ColumnType, ColumnCard, MemberData } from '@/types/user/column';
 import Modal, { ModalHandles } from '../Modal';
 import ColumnAddForm from '../Modal/views/ColumnAddForm';
 import Column from './Column';
@@ -11,9 +11,10 @@ import ModalOpenButton from '../Modal/components/ModalOpenButton';
 interface ContentProps {
   dashboardId: number;
   data: ColumnCard[];
+  memberData: MemberData;
 }
 
-export default function Content({ dashboardId, data }: ContentProps) {
+export default function Content({ dashboardId, data, memberData }: ContentProps) {
   const [columns, setColumns] = useState(data);
   const modalRef = useRef<ModalHandles>(null);
 
@@ -51,10 +52,13 @@ export default function Content({ dashboardId, data }: ContentProps) {
           <li key={id} className="p-5 border-r border-r-gray_EE flex flex-col">
             <Column
               id={id}
+              dashboardId={dashboardId}
               title={title}
+              memberData={memberData}
               count={totalCount}
               onUpdate={handleUpdateColumn}
               onDelete={handleDeleteColumn}
+              handleReload={handleReload}
             />
             {cards?.map((card) => <Card key={card.id} data={card} />)}
           </li>

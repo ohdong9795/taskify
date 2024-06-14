@@ -71,9 +71,14 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
       <div className="t:ml-[28px] t:mt-[32px] m:ml-[20px] m:mt-[28px]">
         <h2 className="text-[24px] text-black_333236 font-bold mb-[32px] m:mb-[24px]">프로필</h2>
         <div className="t:flex">
-          <label htmlFor="profileImageUpload" className={labelStyle}>
+          <label
+            htmlFor="profileImageUpload"
+            className={`${labelStyle} relative flex justify-center items-center group`}
+          >
             {preview && <Image src={preview} alt="프로필 이미지가 들어가요" width={160} height={160} />}
-            <FaPlus className="w-[20px] h-[20px] text-violet_5534DA" />
+            <FaPlus
+              className={`w-[20px] h-[20px] text-violet_5534DA absolute ${preview ? 'opacity-0 group-hover:opacity-100' : ''}`}
+            />
             <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
           </label>
           <div className="p:w-[366px] t:w-[290px] m:w-[244px] h-[178px] t:ml-[16px] m:ml-0 t:mt-0 m:mt-[24px] pb-[4px] m:pb-0">
