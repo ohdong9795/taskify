@@ -1,31 +1,40 @@
 'use client';
 
-import { useRef } from 'react';
-import Modal, { ModalHandles } from '@/components/Modal';
-
 import { GoDotFill, GoGear } from 'react-icons/go';
 import { useRef } from 'react';
+import { ColumnType, MemberData } from '@/types/user/column';
 import Modal, { ModalHandles } from '../Modal';
 import ColumnEditForm from '../Modal/views/ColumnEditForm';
 import ModalOpenButton from '../Modal/components/ModalOpenButton';
+import ToDoAddForm from '../Modal/views/ToDoAddForm';
 
 interface ColumnProps {
   id: number;
+  dashboardId: number;
   title: string;
   count: number;
+  memberData: MemberData;
+  handleReload: (col: ColumnType) => void;
   onUpdate: (id: number, title: string) => void;
   onDelete: (id: number) => void;
 }
 
-function Column({ id, title, count, onUpdate, onDelete }: ColumnProps) {
+function Column({ id, title, count, onUpdate, onDelete, dashboardId, handleReload, memberData }: ColumnProps) {
   const modalRef = useRef<ModalHandles>(null);
+  const toDoAddModalRef = useRef<ModalHandles>(null);
 
   const handleOpenModal = () => {
     modalRef.current?.open();
   };
-
   const handleCloseModal = () => {
     modalRef.current?.close();
+  };
+
+  const handleOpenToDoAddModal = () => {
+    toDoAddModalRef.current?.open();
+  };
+  const handleCloseToDoAddModal = () => {
+    toDoAddModalRef.current?.close();
   };
 
   return (
@@ -42,7 +51,7 @@ function Column({ id, title, count, onUpdate, onDelete }: ColumnProps) {
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <ModalOpenButton handleClick={() => {}} text={null} />
+      <ModalOpenButton handleClick={handleOpenToDoAddModal} text={null} />
       <Modal ref={modalRef}>
         <ColumnEditForm
           id={id}
@@ -50,6 +59,15 @@ function Column({ id, title, count, onUpdate, onDelete }: ColumnProps) {
           handleCloseModal={handleCloseModal}
           onUpdate={onUpdate}
           onDelete={onDelete}
+        />
+      </Modal>
+      <Modal ref={toDoAddModalRef}>
+        <ToDoAddForm
+          columnId={id}
+          dashboardId={dashboardId}
+          handleCloseModal={handleCloseToDoAddModal}
+          handleReload={handleReload}
+          memberData={memberData}
         />
       </Modal>
     </>
