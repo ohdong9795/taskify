@@ -13,7 +13,7 @@ import ModalImageInput from '../components/ModalImageInput';
 interface ColumnAddFormProps {
   columnId: number;
   handleCloseModal: () => void;
-  refreshCards: (addCard?: boolean) => void;
+  refreshCards: () => void;
 }
 
 interface FormValues {
@@ -67,7 +67,7 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
     await createCard(body);
-    refreshCards(true);
+    refreshCards();
     handleCloseModal();
   };
 

@@ -14,7 +14,7 @@ async function Dashboard({ params }: DashboardPageProps) {
   const dashboardId = Number(params.dashboardId);
 
   const columnsData: ColumnData = await getColumns({ dashboardId });
-  const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id }));
+  const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
   const cardsDataArray: CardData[] = await Promise.all(cardsPromises);
   const memberData = await getMembers({ dashboardId });
 

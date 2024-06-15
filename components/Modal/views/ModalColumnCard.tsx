@@ -7,6 +7,7 @@ import { deleteCardById } from '@/services/client/cards';
 import { createComment, getComments } from '@/services/client/comments';
 import Image from 'next/image';
 import { useDashboard } from '@/contexts/DashboardContext';
+import Profile from '@/components/nav/Profile';
 import Comment from '../components/Comment';
 
 interface ModalColumnCardProps {
@@ -139,17 +140,17 @@ function ModalColumnCard({ data, onOpenEditModal, onClose }: ModalColumnCardProp
         <section className="col-span-1">
           <div className="p-4 border rounded-lg border-gray_D9">
             <span className="text-xs font-semibold text-black_333236">담당자</span>
-            <div className="flex text-sm font-normal text-black_333236">
-              <div className="mr-2">
-                {data.assignee.profileImageUrl && (
-                  <Image src={data.assignee.profileImageUrl} width={34} height={34} alt="프로필 이미지" />
-                )}
-              </div>
+            <div className="flex items-center text-sm font-normal text-black_333236 h-[38px] mt-[11px] mb-[22px]">
+              {data.assignee.profileImageUrl && (
+                <div className="mr-2">
+                  <Profile imageUrl={data.assignee.profileImageUrl} />
+                </div>
+              )}
               <span>{data.assignee.nickname}</span>
             </div>
             <div>
               <span className="text-xs font-semibold text-black_333236">마감일</span>
-              <div className="text-sm font-normal text-black_333236">{data.dueDate}</div>
+              <div className="text-sm font-normal text-black_333236 mt-2">{data.dueDate}</div>
             </div>
           </div>
         </section>

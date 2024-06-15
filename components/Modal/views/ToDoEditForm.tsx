@@ -11,7 +11,7 @@ import ModalImageInput from '../components/ModalImageInput';
 interface ToDoEditFormProps {
   cardData: CardType;
   handleCloseModal: () => void;
-  refreshCards: (addCard?: boolean) => void;
+  refreshCards: () => void;
 }
 
 interface FormValues {

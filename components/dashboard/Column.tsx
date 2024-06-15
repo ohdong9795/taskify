@@ -27,9 +27,12 @@ function Column({ data, cardsData, onUpdate, onDelete }: ColumnProps) {
     handleCloseModal: handleCloseToDoAddModal,
   } = useModal();
 
-  const handleRefreshCards = async (addCard = false) => {
-    const newSize = (cards?.cards.length ?? 0) + (addCard ? 1 : 0);
-    const result = await getCards({ columnId: data.id, size: newSize });
+  // const handleAddCardSuccess = async (card: CardType) => {
+  //   setCards;
+  // };
+
+  const handleRefreshCards = async () => {
+    const result = await getCards({ columnId: data.id, size: 1000 });
     setCards(result);
   };
 
@@ -47,8 +50,8 @@ function Column({ data, cardsData, onUpdate, onDelete }: ColumnProps) {
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <ModalOpenButton handleClick={handleOpenToDoAddModal} text={null} />
-      <ol className="overflow-y-scroll w-[314px]">
+      <ModalOpenButton full handleClick={handleOpenToDoAddModal} text={null} />
+      <ol className="overflow-y-scroll w-[314px] max-h-[800px]">
         {cards?.cards.map((card) => <Card key={card.id} data={card} refreshCards={handleRefreshCards} />)}
       </ol>
       <Modal ref={modalRef}>
