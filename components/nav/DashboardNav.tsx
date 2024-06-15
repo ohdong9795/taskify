@@ -13,7 +13,7 @@ import Link from 'next/link';
 import useDataStore from '@/stores/dataStore';
 import Image from 'next/image';
 import MembersProfile from './MembersProfile';
-import Dropdown, { DropdownHandle } from '../common/Dropdwon';
+import Dropdown, { DropdownHandle } from '../common/Dropdown';
 import Modal from '../Modal';
 import Button from './Button';
 import InviteForm from '../Modal/views/InviteForm';
