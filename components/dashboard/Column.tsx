@@ -1,40 +1,36 @@
 'use client';
 
 import { GoDotFill, GoGear } from 'react-icons/go';
-import { useRef } from 'react';
-import { MemberData } from '@/types/user/column';
-import Modal, { ModalHandles } from '../Modal';
+import useModal from '@/hooks/useModal';
+import { CardData, ColumnType } from '@/types/user/column';
+import { useState } from 'react';
+import { getCards } from '@/services/client/cards';
+import Modal from '../Modal';
 import ColumnEditForm from '../Modal/views/ColumnEditForm';
 import ModalOpenButton from '../Modal/components/ModalOpenButton';
 import ToDoAddForm from '../Modal/views/ToDoAddForm';
+import Card from './Card';
 
 interface ColumnProps {
-  id: number;
-  dashboardId: number;
-  title: string;
-  count: number;
-  memberData: MemberData;
+  data: ColumnType;
+  cardsData: CardData | null;
   onUpdate: (id: number, title: string) => void;
   onDelete: (id: number) => void;
-  refreshCards: (id: number) => void;
 }
 
-function Column({ id, title, count, onUpdate, onDelete, dashboardId, memberData, refreshCards }: ColumnProps) {
-  const modalRef = useRef<ModalHandles>(null);
-  const toDoAddModalRef = useRef<ModalHandles>(null);
+function Column({ data, cardsData, onUpdate, onDelete }: ColumnProps) {
+  const [cards, setCards] = useState<CardData | null>(cardsData);
+  const { modalRef, handleOpenModal, handleCloseModal } = useModal();
+  const {
+    modalRef: toDoAddModalRef,
+    handleOpenModal: handleOpenToDoAddModal,
+    handleCloseModal: handleCloseToDoAddModal,
+  } = useModal();
 
-  const handleOpenModal = () => {
-    modalRef.current?.open();
-  };
-  const handleCloseModal = () => {
-    modalRef.current?.close();
-  };
-
-  const handleOpenToDoAddModal = () => {
-    toDoAddModalRef.current?.open();
-  };
-  const handleCloseToDoAddModal = () => {
-    toDoAddModalRef.current?.close();
+  const handleRefreshCards = async (addCard = false) => {
+    const newSize = (cards?.cards.length ?? 0) + (addCard ? 1 : 0);
+    const result = await getCards({ columnId: data.id, size: newSize });
+    setCards(result);
   };
 
   return (
@@ -42,9 +38,9 @@ function Column({ id, title, count, onUpdate, onDelete, dashboardId, memberData,
       <header className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <GoDotFill className="text-violet_5534DA mr-2" />
-          <h1 className="text-black_333236 font-bold text-lg mr-3">{title}</h1>
+          <h1 className="text-black_333236 font-bold text-lg mr-3">{data.title}</h1>
           <div className="w-5 h-5 rounded p-3 bg-gray_EE flex justify-center items-center font-medium text-xs text-gray_787486">
-            {count}
+            {cards?.totalCount}
           </div>
         </div>
         <button type="button" aria-label="edit" onClick={handleOpenModal}>
@@ -52,23 +48,20 @@ function Column({ id, title, count, onUpdate, onDelete, dashboardId, memberData,
         </button>
       </header>
       <ModalOpenButton handleClick={handleOpenToDoAddModal} text={null} />
+      <ol className="overflow-y-scroll w-[314px]">
+        {cards?.cards.map((card) => <Card key={card.id} data={card} refreshCards={handleRefreshCards} />)}
+      </ol>
       <Modal ref={modalRef}>
         <ColumnEditForm
-          id={id}
-          title={title}
+          id={data.id}
+          title={data.title}
           handleCloseModal={handleCloseModal}
           onUpdate={onUpdate}
           onDelete={onDelete}
         />
       </Modal>
       <Modal ref={toDoAddModalRef}>
-        <ToDoAddForm
-          columnId={id}
-          dashboardId={dashboardId}
-          handleCloseModal={handleCloseToDoAddModal}
-          memberData={memberData}
-          refreshCards={refreshCards}
-        />
+        <ToDoAddForm columnId={data.id} handleCloseModal={handleCloseToDoAddModal} refreshCards={handleRefreshCards} />
       </Modal>
     </div>
   );

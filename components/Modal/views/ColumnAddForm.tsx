@@ -6,7 +6,7 @@ import { ColumnType } from '@/types/user/column';
 
 interface ColumnAddFormProps {
   dashboardId: number;
-  handleReload: (col: ColumnType) => void;
+  onSuccess: (col: ColumnType) => void;
   handleCloseModal: () => void;
 }
 
@@ -14,12 +14,12 @@ interface FormValues {
   title: string;
 }
 
-function ColumnAddForm({ dashboardId, handleReload, handleCloseModal }: ColumnAddFormProps) {
+function ColumnAddForm({ dashboardId, onSuccess, handleCloseModal }: ColumnAddFormProps) {
   const { control, handleSubmit } = useForm<FormValues>();
 
   const submit = async (data: FormValues) => {
     const col = await createColumn({ title: data.title, dashboardId });
-    handleReload(col);
+    onSuccess(col);
     handleCloseModal();
   };
 

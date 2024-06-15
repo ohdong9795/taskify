@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import { deleteCardById } from '@/services/client/cards';
 import { createComment, getComments } from '@/services/client/comments';
 import Image from 'next/image';
+import { useDashboard } from '@/contexts/DashboardContext';
 import Comment from '../components/Comment';
 
 interface ModalColumnCardProps {
   data: CardType;
-  dashboardId: number;
+  onOpenEditModal: () => void;
   onClose: () => void;
 }
 
@@ -32,7 +33,8 @@ interface CommentsType {
   ];
 }
 
-function ModalColumnCard({ data, dashboardId, onClose }: ModalColumnCardProps) {
+function ModalColumnCard({ data, onOpenEditModal, onClose }: ModalColumnCardProps) {
+  const { dashboardId } = useDashboard();
   const dropdownRef = useRef<DropdownHandle>(null);
   const [comments, setComments] = useState<CommentsType | null>(null);
   const [comment, setComment] = useState('');
@@ -86,7 +88,13 @@ function ModalColumnCard({ data, dashboardId, onClose }: ModalColumnCardProps) {
           <BsThreeDotsVertical className="w-[24px] h-[24px]" />
         </button>
         <Dropdown ref={dropdownRef}>
-          <span className="block w-full px-4 py-2 text-left hover:bg-gray-100">수정하기</span>
+          <button
+            type="button"
+            onClick={onOpenEditModal}
+            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+          >
+            수정하기
+          </button>
           <button type="button" onClick={handleDelete} className="block w-full px-4 py-2 text-left hover:bg-gray-100">
             삭제하기
           </button>

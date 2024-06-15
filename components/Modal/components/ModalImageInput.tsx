@@ -10,10 +10,11 @@ import { FaPlus } from 'react-icons/fa';
 interface ModalImageInputProps {
   columnId: number;
   onImageUpload: (url: string) => void;
+  imageUrl?: string;
 }
 
-export default function ModalImageInput({ columnId, onImageUpload }: ModalImageInputProps) {
-  const [preview, setPreview] = useState<File | string | null>(null);
+export default function ModalImageInput({ columnId, imageUrl, onImageUpload }: ModalImageInputProps) {
+  const [preview, setPreview] = useState<File | string | null>(imageUrl ?? null);
 
   const onUploadImage = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {

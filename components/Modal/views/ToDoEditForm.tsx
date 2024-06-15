@@ -1,17 +1,15 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import dayjs from 'dayjs';
-import { createCard } from '@/services/client/cards';
+import { CardType } from '@/types/user/column';
+import { updateCard } from '@/services/client/cards';
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
-import Dropdown, { DropdownHandle } from '@/components/common/Dropdown';
 import { useDashboard } from '@/contexts/DashboardContext';
 import ModalImageInput from '../components/ModalImageInput';
 
-interface ColumnAddFormProps {
-  columnId: number;
+interface ToDoEditFormProps {
+  cardData: CardType;
   handleCloseModal: () => void;
   refreshCards: (addCard?: boolean) => void;
 }
@@ -27,38 +25,33 @@ interface FormValues {
   imageUrl?: string;
 }
 
-function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddFormProps) {
-  const { control, handleSubmit, setValue } = useForm<FormValues>();
+interface UpdateCardBody extends FormValues {
+  cardId: number;
+}
+
+export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards }: ToDoEditFormProps) {
   const { dashboardId, memberData } = useDashboard();
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
-  const dropdownRef = useRef<DropdownHandle>(null);
-  const toggleDropdown = () => {
-    dropdownRef.current?.toggle();
-  };
-
-  const options = ['상', '중', '하', '프론트', '백엔드', '일반', '프로젝트'];
-
-  const handleSelectItem = (item: string) => {
-    let newSelectedItems;
-    if (selectedItems.includes(item)) {
-      newSelectedItems = selectedItems.filter((selectedItem) => selectedItem !== item);
-    } else {
-      newSelectedItems = [...selectedItems, item];
-    }
-    setSelectedItems(newSelectedItems);
-    setValue('tags', newSelectedItems);
-  };
-
+  const { control, handleSubmit, setValue } = useForm<FormValues>({
+    defaultValues: {
+      assigneeUserId: cardData.assignee.id,
+      title: cardData.title,
+      description: cardData.description,
+      dueDate: cardData.dueDate,
+      tags: cardData.tags,
+      imageUrl: cardData.imageUrl,
+      dashboardId,
+      columnId: cardData.columnId,
+    },
+  });
   const handleImageUpload = (url: string) => {
     setValue('imageUrl', url);
   };
-
   const submit = async (data: FormValues) => {
-    const body: FormValues = {
+    const body: UpdateCardBody = {
+      cardId: cardData.id,
       assigneeUserId: Number(data.assigneeUserId),
       dashboardId,
-      columnId,
+      columnId: cardData.columnId,
       title: data.title,
       description: data.description,
       dueDate: data.dueDate,
@@ -66,14 +59,14 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
     };
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
-    await createCard(body);
-    refreshCards(true);
+    await updateCard(body);
+    refreshCards();
     handleCloseModal();
   };
 
   return (
     <div className="max-w-[540px] max-h-[907px]">
-      <Title title="할 일 생성" />
+      <Title title="할 일 수정" />
       <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-8">
         <Controller
           control={control}
@@ -83,7 +76,7 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
               <select {...field}>
                 <option value="">이름을 입력해 주세요</option>
                 {memberData.members.map((member) => (
-                  <option key={member.id} value={member.userId}>
+                  <option key={member.id} value={member.userId} selected={cardData.assignee.id === member.userId}>
                     {member.nickname}
                   </option>
                 ))}
@@ -107,15 +100,15 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
           render={({ field }) => (
             <div className="flex flex-col">
               <label htmlFor="dueDate" className="text-lg font-medium text-black_333236 mb-[10px]">
-                날짜
+                마감일
               </label>
               <input
                 type="datetime-local"
                 id="dueDate"
-                value={field.value ? dayjs(field.value).format('YYYY-MM-DDTHH:mm') : ''}
+                value={field.value ? field.value.replace(' ', 'T') : ''}
                 onChange={(e) => {
-                  const { value } = e.target;
-                  field.onChange(dayjs(value).format('YYYY-MM-DD HH:mm'));
+                  const value = e.target.value.replace('T', ' ');
+                  field.onChange(value);
                 }}
               />
             </div>
@@ -125,39 +118,29 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
           control={control}
           name="tags"
           render={({ field }) => (
-            <>
-              <button type="button" onClick={toggleDropdown} onKeyDown={toggleDropdown}>
-                <Input
-                  text="태그"
-                  id="tag"
-                  placeholder="입력 후 Enter, 쉼표로 구분"
-                  {...field}
-                  value={selectedItems.join(' ')}
-                  readOnly
-                  onFocus={(e) => e.target.blur()}
-                />
-              </button>
-              <Dropdown ref={dropdownRef}>
-                {options.map((option) => (
-                  <span
-                    key={option}
-                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => handleSelectItem(option)}
-                    onKeyDown={() => handleSelectItem(option)}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    {option}
-                  </span>
-                ))}
-              </Dropdown>
-            </>
+            <Input
+              text="태그"
+              id="tag"
+              placeholder="입력 후 Enter, 쉼표로 구분"
+              {...field}
+              onChange={(e) => {
+                const tagsArray = e.target.value.split(',').map((tag) => tag.trim());
+                field.onChange(tagsArray);
+              }}
+            />
           )}
         />
         <Controller
           control={control}
           name="imageUrl"
-          render={({ field }) => <ModalImageInput columnId={columnId} onImageUpload={handleImageUpload} {...field} />}
+          render={({ field }) => (
+            <ModalImageInput
+              imageUrl={cardData.imageUrl}
+              columnId={cardData.columnId}
+              onImageUpload={handleImageUpload}
+              {...field}
+            />
+          )}
         />
         <div className="mt-7">
           <button type="button" onClick={handleCloseModal}>
@@ -169,5 +152,3 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
     </div>
   );
 }
-
-export default ToDoAddForm;
