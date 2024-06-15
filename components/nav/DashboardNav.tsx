@@ -66,14 +66,9 @@ export default function DashBoardNav() {
         <div className="flex items-center gap-[12px] border-l px-8 border-gray_D9D9D9">
           <div>
             {user?.profileImageUrl ? (
-              <Image
-                src={user?.profileImageUrl}
-                width={38}
-                height={38}
-                alt="사용자 이미지"
-                className="rounded-full "
-                onClick={toggleDropdown}
-              />
+              <div className="relative w-[38px] h-[38px]">
+                <Image src={user?.profileImageUrl} alt={user.nickname} fill className="rounded-full object-cover" />
+              </div>
             ) : (
               <UserImage onClick={toggleDropdown} />
             )}
