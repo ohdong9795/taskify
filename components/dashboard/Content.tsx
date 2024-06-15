@@ -74,8 +74,8 @@ export default function Content({ dashboardId, data, memberData }: ContentProps)
   };
 
   return (
-    <>
-      <ul className="flex h-full">
+    <div className="w-full overflow-x-auto">
+      <ul className="flex w-full h-full">
         {columns?.map(({ id, title, totalCount, cards }) => (
           <li key={id} className="p-5 border-r border-r-gray_EE flex flex-col gap-5">
             <Column
@@ -93,11 +93,13 @@ export default function Content({ dashboardId, data, memberData }: ContentProps)
             ))}
           </li>
         ))}
-        <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
+        <div className="w-80">
+          <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
+        </div>
       </ul>
       <Modal ref={modalRef}>
         <ColumnAddForm dashboardId={dashboardId} handleReload={handleReload} handleCloseModal={handleCloseModal} />
       </Modal>
-    </>
+    </div>
   );
 }
