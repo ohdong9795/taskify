@@ -1,14 +1,15 @@
 import { Suspense } from 'react';
 import DashboardsField from '@/components/Dashboard/DashboardsField';
 import InviteField from '@/components/Dashboard/InviteField';
+import Loading from '../loading';
 
 async function MyDashboardPage() {
   return (
-    <main className="mt-[70px] p-10 bg-gray_FAFAFA h-screen flex flex-col gap-10">
-      <Suspense fallback={<h1>Loading...</h1>}>
+    <main className="p-10 bg-gray_FAFAFA h-full flex flex-col flex-wrap overflow-scroll gap-10 w-full">
+      <Suspense fallback={<Loading />}>
         <DashboardsField />
       </Suspense>
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<Loading />}>
         <InviteField />
       </Suspense>
     </main>

@@ -61,7 +61,7 @@ export default function DashBoardNav() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] z-50">
+    <nav className="w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px]">
       <div className="font-bold hidden t:block">{title}</div>
       <div className="flex flex-row items-center gap-[40px]">
         {isDashboard ? (

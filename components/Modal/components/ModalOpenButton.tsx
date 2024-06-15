@@ -12,11 +12,11 @@ const ModalOpenButton = forwardRef<HTMLButtonElement, ButtonProps>(({ text, hand
   <button
     ref={ref}
     type="button"
-    className="w-80 flex h-10 bg-white border border-gray_D9D9D9 rounded-lg justify-center items-center px-25 py-6 font-semibold text-black_333236 gap-3"
+    className="py-2 px-4 flex bg-violet_5534DA text-white border border-gray_D9D9D9 rounded-3xl justify-center items-center font-semibold gap-3 mb-4"
     onClick={handleClick}
   >
     {text}
-    <div className="w-5 h-5 bg-violet-100 flex justify-center items-center rounded">
+    <div className="w-4 h-4 bg-violet-100 flex justify-center items-center rounded">
       <GoPlus className="text-violet_5534DA" />
     </div>
   </button>
