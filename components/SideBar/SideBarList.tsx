@@ -2,7 +2,6 @@
 
 import { useRef } from 'react';
 import useDataStore from '@/stores/dataStore';
-import { Dashboard } from '@/stores/dashboardsStore';
 import SideBtn from '../../public/images/sideMenuButton.svg';
 import Modal, { ModalHandles } from '../Modal';
 import DashboardAddForm from '../Modal/views/DashboardAddForm';
@@ -10,15 +9,7 @@ import SideBarItem from './SideBarItem';
 
 function SideBarList() {
   const modalRef = useRef<ModalHandles>(null);
-  const { dashboards, setDashboards } = useDataStore();
-
-  const handleReload = (item: Dashboard) => {
-    if (dashboards) {
-      setDashboards([item, ...dashboards]);
-    } else {
-      setDashboards([item]);
-    }
-  };
+  const { dashboards } = useDataStore();
 
   const handleOpenModal = () => {
     modalRef.current?.open();
@@ -38,7 +29,7 @@ function SideBarList() {
         <SideBarItem dashboards={dashboards} />
       </div>
       <Modal ref={modalRef}>
-        <DashboardAddForm handleReload={handleReload} handleCloseModal={handleCloseModal} />
+        <DashboardAddForm handleCloseModal={handleCloseModal} />
       </Modal>
     </div>
   );
