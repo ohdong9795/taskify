@@ -13,7 +13,7 @@ import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
 import useDataStore from '@/stores/dataStore';
 import Image from 'next/image';
-import { getMembers } from '@/services/client/members';
+import MemberImage from './MemberImage';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal from '../Modal';
 import Button from './Button';
@@ -60,6 +60,7 @@ export default function DashBoardNav() {
         {(isMyPage && '계정관리') || (isDashboard && currentDashboard?.title) || '나의 대시보드'}
       </div>
       <div className="flex flex-row items-center gap-[40px]">
+
         {isDashboard && (
           <>
             <div className="flex flex-row items-center gap-[16px]">
