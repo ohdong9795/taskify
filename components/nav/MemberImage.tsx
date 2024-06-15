@@ -51,7 +51,7 @@ function MemberImage({ dashboardId, nickname }: MemberImageProps) {
                 />
               ) : (
                 <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-gray-200 border-2 border-white text-gray-700 font-bold">
-                  {member.nickname.charAt(0)}
+                  {member.email.charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
