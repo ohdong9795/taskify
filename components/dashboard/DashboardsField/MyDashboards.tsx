@@ -39,7 +39,7 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
             <li key={id} className="mx-auto">
               <Link
                 href={`/dashboard/${id}`}
-                className="w-[330px] h-[70px] flex bg-white border border-gray_D9D9D9 rounded-lg justify-between items-center px-5 py-7 font-semibold text-black_333236 gap-3"
+                className="w-[330px] h-[70px] flex bg-white border border-gray_D9D9D9 rounded-lg justify-between items-center px-5 py-7 font-semibold text-black_333236 gap-3 hover:bg-gray-300"
               >
                 <div className="flex items-center">
                   <GoDotFill className="mr-2" style={{ color }} />
