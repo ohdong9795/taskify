@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -17,6 +18,7 @@ interface AuthStore {
   setUser: (user: User) => void;
   clearToken: () => void;
   clearUser: () => void;
+  setLogout: () => void;
 }
 
 const useAuthStore = create(
@@ -28,6 +30,15 @@ const useAuthStore = create(
       user: null,
       setUser: (user: User) => set({ user }),
       clearUser: () => set({ user: null }),
+      setLogout: async () => {
+        localStorage.clear();
+        set({ user: null, accessToken: null });
+        try {
+          await axios.get('/api/logout');
+        } catch (error) {
+          throw new AxiosError();
+        }
+      },
     }),
     {
       name: 'accessTokenStorage',
