@@ -13,27 +13,11 @@ import Link from 'next/link';
 import axios from 'axios';
 import useDataStore from '@/stores/dataStore';
 import Image from 'next/image';
-import { getMembers } from '@/services/client/members';
+import MemberImage from './MemberImage';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal, { ModalHandles } from '../Modal';
 import Button from './Button';
 import InviteForm from '../Modal/views/InviteForm';
-
-interface MembersType {
-  members: [
-    {
-      id: number;
-      userId: number;
-      email: string;
-      nickname: string;
-      profileImageUrl: string;
-      createdAt: string;
-      updatedAt: string;
-      isOwner: boolean;
-    },
-  ];
-  totalCount: number;
-}
 
 export default function DashBoardNav() {
   const [title, setTitle] = useState('');
@@ -58,15 +42,6 @@ export default function DashBoardNav() {
     axios.get('/api/logout');
     router.push('/');
   };
-
-  const [members, setMembers] = useState<MembersType | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      const result = await getMembers({ dashboardId });
-      setMembers(result);
-    })();
-  }, [dashboardId]);
 
   useEffect(() => {
     if (isDashboard) {
@@ -107,31 +82,8 @@ export default function DashBoardNav() {
         <div className="flex flex-row items-center gap-[32px]">
           {isDashboard ? (
             <>
-              <div className="flex items-center">
-                {members ? (
-                  members.members
-                    .filter((member) => member.nickname !== user?.nickname)
-                    .map((member, index) => (
-                      <div key={member.id} className={`relative ${index > 0 ? '-ml-3' : ''}`}>
-                        {member.profileImageUrl ? (
-                          <Image
-                            src={member.profileImageUrl}
-                            alt={member.nickname}
-                            width={38}
-                            height={38}
-                            className=" rounded-full border-white border-2"
-                          />
-                        ) : (
-                          <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-gray-200 border-2 border-white text-gray-700 font-bold ">
-                            {member.nickname.charAt(0)}
-                          </div>
-                        )}
-                      </div>
-                    ))
-                ) : (
-                  <UserImage />
-                )}
-              </div>
+              <MemberImage dashboardId={dashboardId} nickname={user?.nickname} />
+
               <Vector />
             </>
           ) : null}
