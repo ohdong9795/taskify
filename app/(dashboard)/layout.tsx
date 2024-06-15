@@ -3,9 +3,9 @@ import DashBoardNav from '@/components/nav/DashboardNav';
 
 function DashboardLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <SideBar />
-      <div className="w-full relative overflow-x-hidden">
+      <div className="relative w-full">
         <DashBoardNav />
         {children}
         {modal}

@@ -41,7 +41,7 @@ export default function DashBoardNav() {
   };
 
   return (
-    <nav className="w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] border-b border-gray_D9D9D9">
+    <nav className="fixed w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] border-b border-gray_D9D9D9">
       <div className="hidden font-bold t:block">
         {(isMyPage && '계정관리') || (isDashboard && currentDashboard?.title) || '나의 대시보드'}
       </div>
