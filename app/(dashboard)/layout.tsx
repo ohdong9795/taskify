@@ -5,7 +5,7 @@ function DashboardLayout({ children, modal }: { children: React.ReactNode; modal
   return (
     <div className="flex">
       <SideBar />
-      <div className="w-full overflow-x-hidden">
+      <div className="w-full relative overflow-x-hidden">
         <DashBoardNav />
         {children}
         {modal}

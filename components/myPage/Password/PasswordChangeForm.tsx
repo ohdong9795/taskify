@@ -17,7 +17,14 @@ interface PasswordFormInputs {
 }
 
 export default function PasswordChangeForm() {
-  const { control, handleSubmit, watch, formState: { errors }, setError } = useForm<PasswordFormInputs>({ mode: 'onBlur' });
+  const { control, handleSubmit, watch, formState: { errors }, setError, reset } = useForm<PasswordFormInputs>({
+    mode: 'onBlur',
+    defaultValues: {
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+  });
 
   const mutation = useMutation(
     updatePassword,
@@ -29,6 +36,7 @@ export default function PasswordChangeForm() {
           draggable: true,
           theme: 'dark',
         });
+        reset(); // 입력 필드 초기화
       },
       onError: (error: AxiosError) => {
         toast('비밀번호 변경 중 오류가 발생했습니다.', {
@@ -109,7 +117,7 @@ export default function PasswordChangeForm() {
                 id="confirmNewPassword"
                 className="basicinput text-gray-400 font-['Pretendard'] mb-[2rem]"
                 type="password"
-                placeholder="새 비밀번호 입력"
+                placeholder="새 비밀번호 다시입력"
                 {...field}
               />
             )}
