@@ -13,7 +13,7 @@ import Link from 'next/link';
 import useDataStore from '@/stores/dataStore';
 import Image from 'next/image';
 import MembersProfile from './MembersProfile';
-import Dropdown, { DropdownHandle } from '../common/Dropdwon';
+import Dropdown, { DropdownHandle } from '../common/Dropdown';
 import Modal from '../Modal';
 import Button from './Button';
 import InviteForm from '../Modal/views/InviteForm';
@@ -41,14 +41,14 @@ export default function DashBoardNav() {
   };
 
   return (
-    <nav className="w-full h-[70px] bg-white shrink-0 flex self-end justify-between items-center px-[40px] border-b border-gray_D9D9D9">
+    <nav className="fixed w-full h-[70px] bg-white flex justify-between items-center px-[40px] border-b border-gray_D9D9D9">
       <div className="hidden font-bold t:block">
         {(isMyPage && '계정관리') || (isDashboard && currentDashboard?.title) || '나의 대시보드'}
       </div>
-      <div className="flex flex-row items-center gap-[40px]">
+      <div className="flex items-center gap-[40px]">
         {isDashboard && (
           <>
-            <div className="flex flex-row items-center gap-[16px]">
+            <div className="flex items-center gap-[16px]">
               <Link
                 href={`/dashboard/${dashboardId}/edit`}
                 className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
@@ -63,7 +63,7 @@ export default function DashBoardNav() {
             <MembersProfile dashboardId={dashboardId} nickname={user?.nickname} isDashboard={isDashboard} />
           </>
         )}
-        <div className="flex flex-row items-center gap-[12px] border-l px-8 border-gray_D9D9D9">
+        <div className="flex items-center gap-[12px] border-l px-8 border-gray_D9D9D9">
           <div>
             {user?.profileImageUrl ? (
               <Image

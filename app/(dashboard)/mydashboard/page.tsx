@@ -5,7 +5,7 @@ import Loading from '../loading';
 
 async function MyDashboardPage() {
   return (
-    <main className="p-10 bg-gray_FAFAFA h-full flex flex-col flex-wrap overflow-scroll gap-10 w-full">
+    <main className="px-10 pb-10 bg-gray_FAFAFA h-full flex flex-col overflow-scroll gap-10 w-full pt-[110px]">
       <Suspense fallback={<Loading />}>
         <DashboardsField />
       </Suspense>
