@@ -5,15 +5,14 @@
 import useModal from '@/hooks/useModal';
 import { IoMdSettings } from 'react-icons/io';
 import { MdOutlineAddBox } from 'react-icons/md';
-import { Member } from '@/types/user/members';
 import UserImage from '@/public/images/UserImage.svg';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import useAuthStore from '@/stores/authStore';
 import Link from 'next/link';
 import useDataStore from '@/stores/dataStore';
 import Image from 'next/image';
-import MemberImage from './MemberImage';
+import MembersProfile from './MembersProfile';
 import Dropdown, { DropdownHandle } from '../common/Dropdwon';
 import Modal from '../Modal';
 import Button from './Button';
@@ -31,19 +30,6 @@ export default function DashBoardNav() {
   const isDashboard = pathName.includes(`/dashboard/${dashboardId}`);
   const isMyPage = pathName === '/mypage';
   const currentDashboard = dashboards?.find((dashboard) => dashboard.id === dashboardId);
-  const [membersData, setMembersData] = useState<Member[] | null>(null);
-
-  const fetchMembers = useCallback(async () => {
-    const result = await getMembers({ dashboardId });
-    const { members } = result;
-    setMembersData(members);
-  }, [dashboardId]);
-
-  useEffect(() => {
-    if (isDashboard) {
-      fetchMembers();
-    }
-  }, [isDashboard, fetchMembers]);
 
   const toggleDropdown = () => {
     dropdownRef.current?.toggle();
@@ -60,7 +46,6 @@ export default function DashBoardNav() {
         {(isMyPage && '계정관리') || (isDashboard && currentDashboard?.title) || '나의 대시보드'}
       </div>
       <div className="flex flex-row items-center gap-[40px]">
-
         {isDashboard && (
           <>
             <div className="flex flex-row items-center gap-[16px]">
@@ -75,31 +60,7 @@ export default function DashBoardNav() {
                 <MdOutlineAddBox className="hidden t:flex" />
               </Button>
             </div>
-            <div className="flex items-center">
-              {membersData ? (
-                membersData
-                  .filter((member) => member.nickname !== user?.nickname)
-                  .map((member, index) => (
-                    <div key={member.id} className={`relative ${index > 0 ? '-ml-3' : ''}`}>
-                      {member.profileImageUrl ? (
-                        <Image
-                          src={member.profileImageUrl}
-                          alt={member.nickname}
-                          width={38}
-                          height={38}
-                          className="border-2 border-white rounded-full "
-                        />
-                      ) : (
-                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-gray-200 border-2 border-white text-gray-700 font-bold ">
-                          {member.nickname.charAt(0)}
-                        </div>
-                      )}
-                    </div>
-                  ))
-              ) : (
-                <UserImage />
-              )}
-            </div>
+            <MembersProfile dashboardId={dashboardId} nickname={user?.nickname} isDashboard={isDashboard} />
           </>
         )}
         <div className="flex flex-row items-center gap-[12px] border-l px-8 border-gray_D9D9D9">
