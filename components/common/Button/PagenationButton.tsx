@@ -28,14 +28,14 @@ export default function PaginationButtons({
   isEnd
 }: PaginationButtonsProps) {
   const contatinerStyle = isSidebar
-    ? 'flex tablet:flex-col-reverse items-center desktop:gap-[1.6] tablet:gap-[1.4] gap-[1.2]'
-    : 'flex items-center tablet:gap-[1.6] gap-[1.2]';
+    ? 'flex tablet:flex-col-reverse items-center desktop:gap-[1.6rem] tablet:gap-[1.4rem] gap-[1.2rem]'
+    : 'flex items-center tablet:gap-[1.6rem] gap-[1.2rem]';
   const buttonStyle = isSidebar
-    ? 'tablet:w-[4] w-[2] tablet:h-[4] h-[2]'
-    : 'tablet:w-[4] w-[3.6] tablet:h-[4] h-[3.6]';
+    ? 'tablet:w-[4rem] w-[2rem] tablet:h-[4rem] h-[2rem]'
+    : 'tablet:w-[4rem] w-[3.6rem] tablet:h-[4rem] h-[3.6rem]';
   const spanStyle = isSidebar
-    ? 'tablet:text-[1.4] hidden tablet:block'
-    : 'tablet:text-[1.4] text-[1.2]';
+    ? 'tablet:text-[1.4rem] hidden tablet:block'
+    : 'tablet:text-[1.4rem] text-[1.2rem]';
 
   return (
     <div className={contatinerStyle}>
@@ -47,8 +47,8 @@ export default function PaginationButtons({
           variant="secondary"
           customStyles={
             isStart
-              ? `${buttonStyle} rounded-l-[0.4] shadow opacity-30`
-              : `${buttonStyle} rounded-l-[0.4] shadow`
+              ? `${buttonStyle} rounded-l-[0.4rem] shadow opacity-30`
+              : `${buttonStyle} rounded-l-[0.4rem] shadow`
           }
           type="button"
           onClick={handleBackwardButtonClick}
@@ -59,8 +59,8 @@ export default function PaginationButtons({
           variant="secondary"
           customStyles={
             isEnd
-              ? `${buttonStyle} rounded-r-[0.4] shadow opacity-30`
-              : `${buttonStyle} rounded-r-[0.4] shadow`
+              ? `${buttonStyle} rounded-r-[0.4rem] shadow opacity-30`
+              : `${buttonStyle} rounded-r-[0.4rem] shadow`
           }
           type="button"
           onClick={handleForwardButtonClick}
