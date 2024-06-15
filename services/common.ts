@@ -75,7 +75,17 @@ export const getCardsCommon = async (
 
 export const updateCardCommon = async (
   instance: AxiosInstance,
-  body: {
+  {
+    cardId,
+    columnId,
+    assigneeUserId,
+    title,
+    description,
+    dueDate,
+    tags,
+    imageUrl,
+  }: {
+    cardId: number;
     columnId: number;
     assigneeUserId: number;
     title: string;
@@ -86,7 +96,15 @@ export const updateCardCommon = async (
   },
 ) => {
   try {
-    const response = await instance.put(`/cards/${body.columnId}`, body);
+    const response = await instance.put(`/cards/${cardId}`, {
+      columnId,
+      assigneeUserId,
+      title,
+      description,
+      dueDate,
+      tags,
+      imageUrl,
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

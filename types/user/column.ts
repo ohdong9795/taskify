@@ -36,16 +36,9 @@ export interface CardData {
   cards: CardType[];
 }
 
-export interface ColumnCard extends ColumnType {
-  cards: CardType[];
-  totalCount: number;
-  cursorId: number | null;
-}
-
 export interface Fail {
   message: string;
 }
-
 
 export interface MemberType {
   id: number;

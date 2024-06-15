@@ -16,6 +16,7 @@ export const getCards = (query: { size?: number; cursorId?: number; columnId: nu
   getCardsCommon(clientInstance, query);
 
 export const updateCard = (body: {
+  cardId: number;
   columnId: number;
   assigneeUserId: number;
   title: string;
