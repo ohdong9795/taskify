@@ -1,12 +1,15 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import dayjs from 'dayjs';
 
 import { MemberData } from '@/types/user/column';
 import { createCard } from '@/services/client/cards';
 
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
+import Dropdown, { DropdownHandle } from '@/components/common/Dropdown';
 import ModalImageInput from '../components/ModalImageInput';
 
 interface ColumnAddFormProps {
@@ -30,6 +33,26 @@ interface FormValues {
 
 function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refreshCards }: ColumnAddFormProps) {
   const { control, handleSubmit, setValue } = useForm<FormValues>();
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const dropdownRef = useRef<DropdownHandle>(null);
+  const toggleDropdown = () => {
+    dropdownRef.current?.toggle();
+  };
+
+  const options = ['상', '중', '하', '프론트', '백엔드', '일반', '프로젝트'];
+
+  const handleSelectItem = (item: string) => {
+    let newSelectedItems;
+    if (selectedItems.includes(item)) {
+      newSelectedItems = selectedItems.filter((selectedItem) => selectedItem !== item);
+    } else {
+      newSelectedItems = [...selectedItems, item];
+    }
+    setSelectedItems(newSelectedItems);
+    setValue('tags', newSelectedItems);
+  };
+
   const handleImageUpload = (url: string) => {
     setValue('imageUrl', url);
   };
@@ -92,10 +115,10 @@ function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refr
               <input
                 type="datetime-local"
                 id="dueDate"
-                value={field.value ? field.value.replace(' ', 'T') : ''}
+                value={field.value ? dayjs(field.value).format('YYYY-MM-DDTHH:mm') : ''}
                 onChange={(e) => {
-                  const value = e.target.value.replace('T', ' ');
-                  field.onChange(value);
+                  const { value } = e.target;
+                  field.onChange(dayjs(value).format('YYYY-MM-DD HH:mm'));
                 }}
               />
             </div>
@@ -105,16 +128,33 @@ function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refr
           control={control}
           name="tags"
           render={({ field }) => (
-            <Input
-              text="태그"
-              id="tag"
-              placeholder="입력 후 Enter, 쉼표로 구분"
-              {...field}
-              onChange={(e) => {
-                const tagsArray = e.target.value.split(',').map((tag) => tag.trim());
-                field.onChange(tagsArray);
-              }}
-            />
+            <>
+              <button type="button" onClick={toggleDropdown} onKeyDown={toggleDropdown}>
+                <Input
+                  text="태그"
+                  id="tag"
+                  placeholder="입력 후 Enter, 쉼표로 구분"
+                  {...field}
+                  value={selectedItems.join(' ')}
+                  readOnly
+                  onFocus={(e) => e.target.blur()}
+                />
+              </button>
+              <Dropdown ref={dropdownRef}>
+                {options.map((option) => (
+                  <span
+                    key={option}
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => handleSelectItem(option)}
+                    onKeyDown={() => handleSelectItem(option)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    {option}
+                  </span>
+                ))}
+              </Dropdown>
+            </>
           )}
         />
         <Controller
