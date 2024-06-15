@@ -1,7 +1,7 @@
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import Title from '@/components/Modal/components/Title';
 import { CardType } from '@/types/user/column';
-import Dropdown, { DropdownHandle } from '@/components/common/Dropdwon';
+import Dropdown, { DropdownHandle } from '@/components/common/Dropdown';
 import { useEffect, useRef, useState } from 'react';
 import { deleteCardById } from '@/services/client/cards';
 import { createComment, getComments } from '@/services/client/comments';
