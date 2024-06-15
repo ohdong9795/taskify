@@ -30,7 +30,7 @@ function InvitedDashboards({ invitationData }: InvitedDashboardsProps) {
 
   return (
     <section>
-      <div className="p-7 flex flex-col gap-5 w-full h-[600px] max-w-[1024px] bg-white rounded-lg">
+      <div className="p-7 flex flex-col gap-5 w-full h-[600px] max-w-[1024px] bg-white rounded-lg m:min-w-[260px] t:min-w-[504px]">
         <h1 className="text-2xl font-bold text-black_333236">초대받은 대시보드</h1>
         {invitations.length > 0 ? (
           <>
