@@ -109,23 +109,25 @@ export default function DashBoardNav() {
             <>
               <div className="flex items-center">
                 {members ? (
-                  members.members.map((member, index) => (
-                    <div key={member.id} className={`relative ${index > 0 ? '-ml-3' : ''}`}>
-                      {member.profileImageUrl ? (
-                        <Image
-                          src={member.profileImageUrl}
-                          alt={member.nickname}
-                          width={38}
-                          height={38}
-                          className=" rounded-full border-white border-2"
-                        />
-                      ) : (
-                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-gray-200 border-2 border-white text-gray-700 font-bold ">
-                          {member.nickname.charAt(0)}
-                        </div>
-                      )}
-                    </div>
-                  ))
+                  members.members
+                    .filter((member) => member.nickname !== user?.nickname)
+                    .map((member, index) => (
+                      <div key={member.id} className={`relative ${index > 0 ? '-ml-3' : ''}`}>
+                        {member.profileImageUrl ? (
+                          <Image
+                            src={member.profileImageUrl}
+                            alt={member.nickname}
+                            width={38}
+                            height={38}
+                            className=" rounded-full border-white border-2"
+                          />
+                        ) : (
+                          <div className="w-[40px] h-[40px] flex items-center justify-center rounded-full bg-gray-200 border-2 border-white text-gray-700 font-bold ">
+                            {member.nickname.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+                    ))
                 ) : (
                   <UserImage />
                 )}
