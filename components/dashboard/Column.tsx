@@ -2,7 +2,7 @@
 
 import { GoDotFill, GoGear } from 'react-icons/go';
 import { useRef } from 'react';
-import { ColumnType, MemberData } from '@/types/user/column';
+import { MemberData } from '@/types/user/column';
 import Modal, { ModalHandles } from '../Modal';
 import ColumnEditForm from '../Modal/views/ColumnEditForm';
 import ModalOpenButton from '../Modal/components/ModalOpenButton';
@@ -14,12 +14,12 @@ interface ColumnProps {
   title: string;
   count: number;
   memberData: MemberData;
-  handleReload: (col: ColumnType) => void;
   onUpdate: (id: number, title: string) => void;
   onDelete: (id: number) => void;
+  refreshCards: (id: number) => void;
 }
 
-function Column({ id, title, count, onUpdate, onDelete, dashboardId, handleReload, memberData }: ColumnProps) {
+function Column({ id, title, count, onUpdate, onDelete, dashboardId, memberData, refreshCards }: ColumnProps) {
   const modalRef = useRef<ModalHandles>(null);
   const toDoAddModalRef = useRef<ModalHandles>(null);
 
@@ -38,7 +38,7 @@ function Column({ id, title, count, onUpdate, onDelete, dashboardId, handleReloa
   };
 
   return (
-    <>
+    <div>
       <header className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <GoDotFill className="text-violet_5534DA mr-2" />
@@ -66,11 +66,11 @@ function Column({ id, title, count, onUpdate, onDelete, dashboardId, handleReloa
           columnId={id}
           dashboardId={dashboardId}
           handleCloseModal={handleCloseToDoAddModal}
-          handleReload={handleReload}
           memberData={memberData}
+          refreshCards={refreshCards}
         />
       </Modal>
-    </>
+    </div>
   );
 }
 
