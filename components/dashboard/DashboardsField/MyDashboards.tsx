@@ -31,19 +31,19 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
   }, [initialData, setDashboards]);
 
   return (
-    <section>
+    <section className="flex flex-col justify-center t:block">
       <ModalOpenButton text="새로운 대시보드" ref={buttonRef} handleClick={handleOpenModal} />
-      <div className="max-w-[1024px]">
-        <ul className="flex gap-3 flex-wrap mb-3">
+      <div className="max-w-[1024px] m:min-w-[260px] t:min-w-[504px]">
+        <ul className="flex flex-wrap gap-3 mb-3">
           {paginatedDashboards?.map(({ title, id, color, createdByMe }) => (
-            <li key={id} className="">
+            <li key={id} className="mx-auto">
               <Link
                 href={`/dashboard/${id}`}
-                className="w-[330px] h-[70px] flex bg-white border border-gray_D9D9D9 rounded-lg justify-between items-center px-5 py-7 font-semibold text-black_333236 gap-3"
+                className="w-[330px] h-[70px] flex bg-white border border-gray_D9D9D9 rounded-lg justify-between items-center px-5 py-7 font-semibold text-black_333236 gap-3 hover:bg-gray-300"
               >
                 <div className="flex items-center">
                   <GoDotFill className="mr-2" style={{ color }} />
-                  <span className="text-ellipsis overflow-hidden whitespace-nowrap">{title}</span>
+                  <span className="overflow-hidden text-ellipsis whitespace-nowrap">{title}</span>
                   {createdByMe && <CrownLogo className="ml-2" />}
                 </div>
                 <GoChevronRight />
@@ -51,26 +51,28 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
             </li>
           ))}
         </ul>
-        <div className="flex justify-end gap-1 items-center">
-          <span className="text-sm font-normal text-black">
-            {totalPage}페이지 중 {page}
+        <div className="flex flex-col-reverse justify-center gap-1 p:justify-end t:flex-row t:justify-end t:items-center">
+          <span className="mx-auto text-sm font-normal text-black t:mx-0">
+            {totalPage} 페이지 중 {page}
           </span>
-          <button
-            onClick={() => setPage((prevPage) => prevPage - 1)}
-            disabled={page === 1}
-            type="button"
-            className="border bg-white rounded-md w-10 h-10 flex justify-center items-center text-2xl border-gray_D9D9D9 text-gray_9FA6B2"
-          >
-            <GoChevronLeft />
-          </button>
-          <button
-            onClick={() => setPage((prevPage) => prevPage + 1)}
-            disabled={page >= Math.ceil((dashboards ? dashboards.length : 0) / 6)}
-            type="button"
-            className="border bg-white rounded-md w-10 h-10 flex justify-center items-center text-2xl border-gray_D9D9D9 text-gray_9FA6B2"
-          >
-            <GoChevronRight />
-          </button>
+          <div className="flex justify-center gap-1 t:justify-end p:justify-end">
+            <button
+              onClick={() => setPage((prevPage) => prevPage - 1)}
+              disabled={page === 1}
+              type="button"
+              className="flex items-center justify-center w-10 h-10 text-2xl bg-white border rounded-md border-gray_D9D9D9 text-gray_9FA6B2 hover:bg-gray-200 disabled:bg-gray-300"
+            >
+              <GoChevronLeft />
+            </button>
+            <button
+              onClick={() => setPage((prevPage) => prevPage + 1)}
+              disabled={page >= Math.ceil((dashboards ? dashboards.length : 0) / 6)}
+              type="button"
+              className="flex items-center justify-center w-10 h-10 text-2xl bg-white border rounded-md border-gray_D9D9D9 text-gray_9FA6B2 hover:bg-gray-200 disabled:bg-gray-300"
+            >
+              <GoChevronRight />
+            </button>
+          </div>
         </div>
       </div>
       <Modal ref={modalRef}>

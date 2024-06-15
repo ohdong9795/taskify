@@ -42,32 +42,38 @@ function InvitedTable({ invitations, cursorId, searchedInvitations }: InvitedTab
 
   return (
     <>
-      <div className="grid grid-cols-3 font-normal text-ls text-gray_787486">
+      <div className="hidden grid-cols-3 font-normal text-ls text-gray_787486 t:grid">
         <span>이름</span>
         <span>초대자</span>
         <span>수락 여부</span>
       </div>
-      <ul className="flex flex-col overflow-scroll border-t-2 border-b-2 scroll-smooth">
+      <ul className="flex flex-col overflow-scroll border-t-2 border-b-2 scroll-smooth snap-y">
         {(searchedInvitations || allInvitations).map(({ inviter, id, dashboard }, index) => (
           <li
             ref={index === allInvitations.length - 1 ? ref : null}
             key={id}
-            className="grid items-center grid-cols-3 py-6 font-normal border-b text-black_333236"
+            className="flex flex-col items-start grid-cols-[repeat(3,auto)] gap-3 py-6 font-normal border-b t:grid t:items-center text-black_333236 snap-start"
           >
-            <span>{dashboard?.title}</span>
-            <span>{inviter?.nickname}</span>
-            <div>
+            <div className="flex gap-5">
+              <span className="font-normal text-ls text-gray_787486 t:hidden">이름</span>
+              <span>{dashboard?.title}</span>
+            </div>
+            <div className="flex gap-5">
+              <span className="font-normal text-ls text-gray_787486 t:hidden">초대자</span>
+              <span>{inviter?.nickname}</span>
+            </div>
+            <div className="flex items-center justify-center w-full">
               <button
                 type="button"
                 onClick={() => handleAccept(id, true)}
-                className="py-2 px-7 rounded bg-violet_5534DA hover:bg-violet-500 text-white mr-[10px]"
+                className="text-center w-full py-2 t:px-7 rounded bg-violet_5534DA hover:bg-violet-500 text-white mr-[10px]"
               >
                 수락
               </button>
               <button
                 type="button"
                 onClick={() => handleAccept(id, false)}
-                className="py-2 border rounded px-7 text-violet_5534DA hover:bg-gray-200"
+                className="w-full py-2 text-center border rounded t:px-7 text-violet_5534DA hover:bg-gray-200"
               >
                 거절
               </button>
