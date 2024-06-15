@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm, Controller } from 'react-hook-form';
+import dayjs from 'dayjs';
 
 import { MemberData } from '@/types/user/column';
 import { createCard } from '@/services/client/cards';
@@ -92,10 +93,10 @@ function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refr
               <input
                 type="datetime-local"
                 id="dueDate"
-                value={field.value ? field.value.replace(' ', 'T') : ''}
+                value={field.value ? dayjs(field.value).format('YYYY-MM-DDTHH:mm') : ''}
                 onChange={(e) => {
-                  const value = e.target.value.replace('T', ' ');
-                  field.onChange(value);
+                  const { value } = e.target;
+                  field.onChange(dayjs(value).format('YYYY-MM-DD HH:mm'));
                 }}
               />
             </div>
