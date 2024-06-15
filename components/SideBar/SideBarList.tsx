@@ -20,10 +20,10 @@ function SideBarList() {
   };
 
   return (
-    <div className="ml-[24px] mt-[40px] w-[250px]">
+    <div className="ml-[24px] mt-[40px] items-center">
       <div className="flex flex-col items-start gap-3">
         <div className="w-full flex justify-between items-center pr-[24px]">
-          <span className="text-xs font-bold">Dashboards</span>
+          <span className="text-xs font-bold hidden t:block text-gray_787486">Dash boards</span>
           <SideBtn onClick={handleOpenModal} />
         </div>
         <SideBarItem dashboards={dashboards} />
