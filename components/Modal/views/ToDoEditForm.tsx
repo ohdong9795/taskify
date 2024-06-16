@@ -39,7 +39,12 @@ interface UpdateCardBody extends FormValues {
 export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards, refreshCardAll }: ToDoEditFormProps) {
   const { dashboardId, memberData, columnsData } = useDashboard();
   const [selectedDate, setSelectedDate] = useState(cardData.dueDate ? new Date(cardData.dueDate) : new Date());
-  const { control, handleSubmit, setValue } = useForm<FormValues>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: {
       assigneeUserId: cardData.assignee.id,
       title: cardData.title,
@@ -51,6 +56,7 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
       columnId: cardData.columnId,
     },
   });
+  const hasErrors = Object.keys(errors).length > 0;
   const handleImageUpload = (url: string) => {
     setValue('imageUrl', url);
   };
@@ -142,12 +148,37 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
         <Controller
           control={control}
           name="title"
-          render={({ field }) => <Input text="제목 *" id="title" placeholder="제목을 입력하세요" {...field} />}
+          rules={{
+            required: '제목은 필수입니다.',
+            maxLength: { value: 15, message: '제목은 15자를 넘을수 없습니다.' },
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <Input text="제목 *" id="title" placeholder="제목을 입력하세요" {...field} />
+              {error && <p className="text-red-500 mt-[-25px] ml-[3px]">{error.message}</p>}
+            </>
+          )}
         />
         <Controller
           control={control}
           name="description"
-          render={({ field }) => <Input text="설명 *" id="description" placeholder="설명을 입력해 주세요" {...field} />}
+          rules={{
+            required: '설명은 필수입니다.',
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <label htmlFor="description" className="text-lg font-medium text-black_333236 mb-[-25px]">
+                설명
+              </label>
+              <textarea
+                className="resize-none w-[484px] m:h-[84px] t:h-[96px] max-md:w-[287px] max-md:h-[42px] rounded-lg border border-solid px-[16px] py-[8px] focus:outline-1 focus:outline border-gray_D9 focus:outline-violet_5534DA"
+                id="description"
+                placeholder="설명을 입력해 주세요"
+                {...field}
+              />
+              {error && <p className="text-red-500 mt-[-25px] ml-[3px]">{error.message}</p>}
+            </>
+          )}
         />
         <Controller
           control={control}
@@ -215,10 +246,11 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
         />
         <div className="flex justify-end mt-7">
           <button
-            className="text-center w-[120px] h-[48px] py-2 t:px-7 rounded bg-violet_5534DA hover:bg-violet-500 text-white"
+            className={`h-[48px] w-[120px] bg-[#5534DA] rounded-[8px] py-[14px] ml-[12px] ${hasErrors ? 'opacity-50' : 'opacity-100'}`}
             type="submit"
+            disabled={hasErrors}
           >
-            변경
+            <span className="text-[16px] w-[28px] y-[19px] text-white">변경</span>
           </button>
         </div>
       </form>
