@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 interface InvitedTableProp {
   invitations: Invitation[];
   searchedInvitations: Invitation[] | null;
-  cursorId: number;
+  cursorId: number | null;
 }
 
 function InvitedTable({ invitations, cursorId, searchedInvitations }: InvitedTableProp) {

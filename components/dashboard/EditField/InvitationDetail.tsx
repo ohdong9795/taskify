@@ -13,7 +13,7 @@ interface InvitationDetailProp {
 }
 
 function InvitationDetail({ dashboardId }: InvitationDetailProp) {
-  const { handleOpenModal, modalRef } = useModal();
+  const { handleOpenModal, handleCloseModal, modalRef } = useModal();
   const [currentInvitations, setCurrentInvitations] = useState<Invitation[]>();
 
   const fetchInvitations = useCallback(async () => {
@@ -71,7 +71,7 @@ function InvitationDetail({ dashboardId }: InvitationDetailProp) {
         })}
       </ul>
       <Modal ref={modalRef}>
-        <InviteForm dashboardId={dashboardId} />
+        <InviteForm dashboardId={dashboardId} handleCloseModal={handleCloseModal} />
       </Modal>
     </section>
   );

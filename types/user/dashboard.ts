@@ -40,5 +40,5 @@ export interface Invitation {
 
 export interface InvitationData {
   invitations: Invitation[];
-  cursorId: number;
+  cursorId: number | null;
 }
