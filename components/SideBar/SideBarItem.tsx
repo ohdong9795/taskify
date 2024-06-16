@@ -11,10 +11,15 @@ const ITEMS_PER_PAGE = 18;
 
 export default function SideBarItem({ dashboards }: { dashboards: Dashboard[] | null }) {
   const [page, setPage] = useState(1);
+  const [clickedItem, setClickedItem] = useState<number | null>(null);
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedDashboards = dashboards?.slice(startIndex, endIndex);
+
+  const handleItemClick = (id: number) => {
+    setClickedItem(id);
+  };
 
   return (
     <div className="flex flex-col w-full px-3">
@@ -23,16 +28,19 @@ export default function SideBarItem({ dashboards }: { dashboards: Dashboard[] | 
           <li key={id} className="w-full">
             <Link
               href={`/dashboard/${id}`}
+              onClick={() => handleItemClick(id)}
               className="flex items-center w-full gap-2 p-3 text-lg rounded-lg hover:bg-violet_F1EFFD"
             >
               <DashboardLogo style={{ color }} className="items-center" />
-              <p className="hidden t:block">{title}</p>
+              <p className={`hidden t:block text-lg ${clickedItem === id ? 'text-black_333236' : 'text-gray_787486'}`}>
+                {title}
+              </p>
               {createdByMe && <CrownLogo className="hidden t:block" />}
             </Link>
           </li>
         ))}
       </ul>
-      <div className="flex justify-end gap-1">
+      <div className="t:flex justify-end gap-1 hidden">
         <button
           onClick={() => setPage((prevPage) => prevPage - 1)}
           disabled={page === 1}
