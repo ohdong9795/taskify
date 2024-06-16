@@ -6,11 +6,21 @@ interface TagsProps {
 }
 
 export default function Tags({ name }: TagsProps) {
-  const color = chroma(TAG_COLOR[name]);
+  try {
+    const color = chroma(TAG_COLOR[name]);
 
-  return (
+    return (
+      <span
+        className="rounded px-[6px] py-[4px]"
+        style={{ color: color.css(), backgroundColor: color.alpha(0.1).css() }}
+      >
+        {name}
+      </span>
+    );
+  } catch {
+    const color = chroma('#5534DA');
     <span className="rounded px-[6px] py-[4px]" style={{ color: color.css(), backgroundColor: color.alpha(0.1).css() }}>
       {name}
-    </span>
-  );
+    </span>;
+  }
 }
