@@ -42,6 +42,8 @@ export default function Content({ dashboardId, columnsData, cardsDataArray, memb
   };
 
   const refreshCardAll = async () => {
+    setCards([]);
+
     const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
     const result: CardData[] = await Promise.all(cardsPromises);
 
