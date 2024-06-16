@@ -28,14 +28,14 @@ export default function PaginationButtons({
   isEnd
 }: PaginationButtonsProps) {
   const contatinerStyle = isSidebar
-    ? 'flex tablet:flex-col-reverse items-center desktop:gap-[1.6rem] tablet:gap-[1.4rem] gap-[1.2rem]'
-    : 'flex items-center tablet:gap-[1.6rem] gap-[1.2rem]';
+    ? 'flex t:flex-col-reverse items-center d:gap-[1.6rem] t:gap-[1.4rem] gap-[1.2rem]'
+    : 'flex items-center t:gap-[1.6rem] gap-[1.2rem]';
   const buttonStyle = isSidebar
-    ? 'tablet:w-[4rem] w-[2rem] tablet:h-[4rem] h-[2rem]'
-    : 'tablet:w-[4rem] w-[3.6rem] tablet:h-[4rem] h-[3.6rem]';
+    ? 't:w-[4rem] w-[2rem] t:h-[4rem] h-[2rem]'
+    : 't:w-[4rem] w-[3.6rem] t:h-[4rem] h-[3.6rem]';
   const spanStyle = isSidebar
-    ? 'tablet:text-[1.4rem] hidden tablet:block'
-    : 'tablet:text-[1.4rem] text-[1.2rem]';
+    ? 't:text-[1.4rem] hidden t:block'
+    : 't:text-[1.4rem] text-[1.2rem]';
 
   return (
     <div className={contatinerStyle}>

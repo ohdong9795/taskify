@@ -9,6 +9,7 @@ import { AxiosError } from 'axios';
 import Button from '@/components/common/Button/Button';
 import FORM_OPTIONS from '@/constants/formOption';
 import { updatePassword } from '@/services/client/auth';
+import Input from '@/components/auth/Input';
 
 interface PasswordFormInputs {
   currentPassword: string;
@@ -59,12 +60,19 @@ export default function PasswordChangeForm() {
     [mutation]
   );
 
+  const formStyle =
+    'flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] p:h-[454px] t:h-[454px] m:h-[548px] ml-[20px] mt-[24px] rounded-lg mb-[12px] pr-[2.8rem]';
+  const labelStyle = 'font-medium text-black_333236 t:text-[18px] m:text-[16px] mb-[10px] mt-[20px] m:mt-[16px]';
+  const buttonStyle =
+    'bg-violet_5534DA w-[84px] h-[32px] m:h-[28px] text-white mr-[28px]  m:mr-[20px] mb-[28px] m:mb-[20px] font-medium rounded text-[12px] mt-[24px]';
+
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="mobile:w-[28.4rem] tablet:w-[54.4rem] flex flex-col ml-[1.7rem] w-[62rem] h-[45rem] bg-white rounded-lg justify-center align-center px-[2.8rem] justify-around">
-        <div className="text-zinc-800 text-[2.4rem] font-bold font-['Pretendard']">비밀번호 변경</div>
-        <div className="flex flex-col">
-          <label className="text-zinc-800 text-[1.8rem] font-medium font-['Pretendard']" htmlFor="currentPassword">
+    <form onSubmit={handleSubmit(onSubmit)} className={formStyle}>
+      <div className="t:ml-[28px] t:mt-[32px] m:ml-[20px] m:mt-[28px]">
+        <h2 className="text-[24px] text-black_333236 font-bold mb-[32px] m:mb-[24px]">비밀번호 변경</h2>
+        <div className="flex-col t:flex">
+          <label className={labelStyle} htmlFor="currentPassword">
             현재 비밀번호
           </label>
           <Controller
@@ -72,18 +80,18 @@ export default function PasswordChangeForm() {
             name="currentPassword"
             rules={FORM_OPTIONS.currentPassword.rules}
             render={({ field }) => (
-              <input
+              <Input 
                 id="currentPassword"
-                className="basicinput mb-[2rem]"
-                type="password"
+                usage="password"
                 placeholder="현재 비밀번호 입력"
+                style={{ height: '48px' }}
                 {...field}
               />
             )}
           />
           {errors.currentPassword && <p className="text-red-500">{errors.currentPassword.message}</p>}
-          
-          <label className="text-zinc-800 text-[1.8rem] font-medium font-['Pretendard']" htmlFor="newPassword">
+
+          <label className={labelStyle} htmlFor="newPassword">
             새 비밀번호
           </label>
           <Controller
@@ -91,18 +99,18 @@ export default function PasswordChangeForm() {
             name="newPassword"
             rules={FORM_OPTIONS.newPassword.rules}
             render={({ field }) => (
-              <input
+              <Input
                 id="newPassword"
-                className="basicinput placeholder-gray-400 mb-[2rem]"
-                type="password"
+                usage="password"
                 placeholder="새 비밀번호 입력"
+                style={{ height: '48px' }}
                 {...field}
               />
             )}
           />
           {errors.newPassword && <p className="text-red-500">{errors.newPassword.message}</p>}
-          
-          <label className="text-zinc-800 text-[1.8rem] font-medium font-['Pretendard']" htmlFor="confirmNewPassword">
+
+          <label className={labelStyle} htmlFor="confirmNewPassword">
             새 비밀번호 확인
           </label>
           <Controller
@@ -113,27 +121,28 @@ export default function PasswordChangeForm() {
               validate: value => value === watch('newPassword') || '비밀번호가 일치하지 않습니다.'
             }}
             render={({ field }) => (
-              <input
+              <Input
                 id="confirmNewPassword"
-                className="basicinput text-gray-400 font-['Pretendard'] mb-[2rem]"
-                type="password"
+                usage="password"
                 placeholder="새 비밀번호 다시입력"
+                
                 {...field}
               />
             )}
           />
           {errors.confirmNewPassword && <p className="text-red-500">{errors.confirmNewPassword.message}</p>}
-          
-          <Button
-            variant="primary"
-            customStyles="w-[8.4rem] h-[3.2rem] text-[1.4rem] rounded-[0.4rem] ml-auto mb-[2rem]"
-            type="submit"
-            disabled={!watch('currentPassword') || !watch('newPassword') || !watch('confirmNewPassword')}
-          >
-            변경
-          </Button>
+          <div className="flex justify-end h-screen">
+            <Button
+              variant="primary"
+              customStyles={buttonStyle}
+              type="submit"
+              disabled={!watch('currentPassword') || !watch('newPassword') || !watch('confirmNewPassword')}
+            >
+              변경
+            </Button>
+            </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
