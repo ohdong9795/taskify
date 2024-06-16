@@ -21,10 +21,18 @@ export const colourOptions: readonly ColourOption[] = [
   { value: '일반', label: '일반', color: TAG_COLOR['일반'] },
 ];
 
+const safeChroma = (color: string) => {
+  try {
+    return chroma(color);
+  } catch {
+    return chroma('#ccc');
+  }
+};
+
 const colourStyles: StylesConfig<ColourOption, true> = {
   control: (styles) => ({ ...styles, backgroundColor: 'white', height: '48px' }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    const color = chroma(data.color);
+    const color = safeChroma(data.color);
     return {
       ...styles,
       backgroundColor: isDisabled
@@ -44,7 +52,7 @@ const colourStyles: StylesConfig<ColourOption, true> = {
     };
   },
   multiValue: (styles, { data }) => {
-    const color = chroma(data.color);
+    const color = safeChroma(data.color);
     return {
       ...styles,
       backgroundColor: color.alpha(0.1).css(),
