@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { CardType } from '@/types/user/column';
 import { updateCard } from '@/services/client/cards';
@@ -7,9 +8,12 @@ import Title from '@/components/Modal/components/Title';
 import { useRouter } from 'next/navigation';
 import Input from '@/components/Modal/components/Input';
 import { useDashboard } from '@/contexts/DashboardContext';
+import { format } from 'date-fns';
+import DatePicker from 'react-datepicker';
 import ModalImageInput from '../components/ModalImageInput';
 import MultiSelect, { colourOptions } from '../components/MultiSelect';
 import SingleSelect from '../components/SingleSelect';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface ToDoEditFormProps {
   cardData: CardType;
@@ -36,6 +40,7 @@ interface UpdateCardBody extends FormValues {
 export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards, refreshCardAll }: ToDoEditFormProps) {
   const { dashboardId, memberData, columnsData } = useDashboard();
   const router = useRouter();
+  const [selectedDate, setSelectedDate] = useState(cardData.dueDate ? new Date(cardData.dueDate) : new Date());
   const { control, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: {
       assigneeUserId: cardData.assignee.id,
@@ -74,7 +79,7 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
   };
 
   return (
-    <div className="max-w-[327px] t:max-w-[506px] max-h-[907px]">
+    <div className="max-w-[327px] t:max-w-[550px] max-h-[907px]">
       <Title title="할 일 수정" />
       <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-6 t:gap-8">
         <div className="flex justify-between t:justify-normal flex-col t:flex-row gap-6 t:gap-8">
@@ -155,14 +160,21 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
               <label htmlFor="dueDate" className="text-lg font-medium text-black_333236 mb-[10px]">
                 마감일
               </label>
-              <input
-                type="datetime-local"
-                id="dueDate"
-                value={field.value ? field.value.replace(' ', 'T') : ''}
-                onChange={(e) => {
-                  const value = e.target.value.replace('T', ' ');
-                  field.onChange(value);
+              <DatePicker
+                dateFormat="yyyy-MM-dd HH:mm"
+                shouldCloseOnSelect={false}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                minDate={new Date()}
+                maxDate={new Date('2100-12-31')}
+                selected={selectedDate}
+                onChange={(date) => {
+                  const formattedDate = format(date as Date, 'yyyy-MM-dd HH:mm');
+                  field.onChange(formattedDate);
+                  setSelectedDate(date as Date);
                 }}
+                className="rounded-lg border border-solid px-[16px] py-[15px] focus:outline-1 focus:outline border-gray_D9 focus:outline-violet_5534DA w-[484px] h-[48px] max-md:w-[287px] max-md:h-[42px]"
               />
             </div>
           )}
