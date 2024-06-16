@@ -24,7 +24,7 @@ function DashboardEditForm({ dashboard, dashboardId }: DashboardEditFormProps) {
 
   const handlePost: SubmitHandler<FormValues> = async ({ newDashboardName, color }) => {
     await updateDashboard({ dashboardId, title: newDashboardName, color });
-    router.refresh();
+    router.push('/mydashboard');
   };
 
   return (
