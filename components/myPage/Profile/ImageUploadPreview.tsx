@@ -96,7 +96,7 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-end h-screen">
+      <div className="flex items-end justify-end h-screen">
         <button className={buttonStyle}>저장</button>
       </div>
     </form>

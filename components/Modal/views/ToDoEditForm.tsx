@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { CardType } from '@/types/user/column';
 import { updateCard } from '@/services/client/cards';
 import Title from '@/components/Modal/components/Title';
+import { useRouter } from 'next/navigation';
 import Input from '@/components/Modal/components/Input';
 import { useDashboard } from '@/contexts/DashboardContext';
 import ModalImageInput from '../components/ModalImageInput';
@@ -34,6 +35,7 @@ interface UpdateCardBody extends FormValues {
 
 export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards, refreshCardAll }: ToDoEditFormProps) {
   const { dashboardId, memberData, columnsData } = useDashboard();
+  const router = useRouter();
   const { control, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: {
       assigneeUserId: cardData.assignee.id,
@@ -64,7 +66,10 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
     if (data.imageUrl) body.imageUrl = data.imageUrl;
     await updateCard(body);
     if (cardData.columnId === Number(data.columnId)) refreshCards();
-    else refreshCardAll();
+    else {
+      refreshCardAll();
+      router.refresh();
+    }
     handleCloseModal();
   };
 

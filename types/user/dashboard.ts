@@ -14,6 +14,12 @@ export interface DashboardData {
   cursorId: number | null;
 }
 
+export interface Invitee {
+  nickname: string;
+  email: string;
+  id: number;
+}
+
 export interface Invitation {
   id: number;
   inviter: {
@@ -26,11 +32,7 @@ export interface Invitation {
     title: string;
     id: number;
   };
-  invitee: {
-    nickname: string;
-    email: string;
-    id: number;
-  };
+  invitee: Invitee;
   inviteAccepted: boolean;
   createdAt: string;
   updatedAt: string;

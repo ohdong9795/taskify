@@ -1,10 +1,14 @@
-// import MyNav from '@/components/nav/MyNav';
-// import SideBar from '@/components/SideBar/SideBar';
+import SideBar from '@/components/SideBar/SideBar';
+import DashBoardNav from '@/components/nav/DashboardNav';
 
 function MyPageLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <div>{children}</div>
+    <div className="flex h-screen">
+      <SideBar />
+      <div className="relative w-full">
+        <DashBoardNav />
+        {children}
+      </div>
     </div>
   );
 }
