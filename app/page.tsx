@@ -1,3 +1,30 @@
+'use client';
+
+import LandingNav from '@/components/nav/LandingNav';
+import Header from '@/components/landing/Header';
+import Description from '@/components/landing/Description';
+import Example from '@/components/landing/Example';
+import Footer from '@/components/landing/Footer';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/stores/authStore';
+
 export default function Home() {
-  return <div className="bg-black text-pink_E876EA w-[400px]">랜딩 페이지 tailwind 테스트</div>;
+  const router = useRouter();
+  const { accessToken } = useAuthStore();
+
+  if (accessToken) {
+    router.replace('/mydashboard');
+  }
+
+  return (
+    <>
+      <LandingNav />
+      <div className=" bg-black flex flex-col items-center pt-[164px] w-full">
+        <Header />
+        <Description />
+        <Example />
+      </div>
+      <Footer />
+    </>
+  );
 }
