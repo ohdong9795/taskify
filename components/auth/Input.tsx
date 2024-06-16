@@ -22,13 +22,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ usage, hasError = fals
   };
 
   if (usage === 'email' || usage === 'nickName') {
-    return <input ref={ref} className={signClassName(hasError)} {...rest} />;
+    return <input ref={ref} defaultValue="" className={signClassName(hasError)} {...rest} />;
   }
 
   if (usage === 'password') {
     return (
       <div className="relative w-[520px] h-[50px] max-w-full max-h-full">
-        <input ref={ref} className={signClassName(hasError)} type={passwordType} {...rest} />
+        <input ref={ref} defaultValue="" className={signClassName(hasError)} type={passwordType} {...rest} />
         {passwordType === 'password' ? (
           <IoMdEyeOff className={`${visibleButton} w-[24px] h-[24px]`} onClick={togglePasswordType} />
         ) : (
@@ -39,7 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ usage, hasError = fals
   }
 
   if (usage === 'checkbox') {
-    return <input ref={ref} type="checkbox" className="w-[20px] h-[20px] rounded-[4px]" {...rest} />;
+    return <input ref={ref} defaultValue="" type="checkbox" className="w-[20px] h-[20px] rounded-[4px]" {...rest} />;
   }
 
   return null;

@@ -23,7 +23,7 @@ export default function RegisterForm() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     setError,
   } = useForm<RegisterData>({ mode: 'onBlur' });
@@ -162,7 +162,11 @@ export default function RegisterForm() {
             <ErrorMsg msg={errors.agreeCheckbox.message} />
           )}
         </div>
-        <button className="w-full h-[50px] rounded-lg bg-gray_9FA6B2 text-[18px] text-white" type="submit">
+        <button
+          className="w-full h-[50px] rounded-lg disabled:bg-gray_9FA6B2 bg-violet_5534DA text-[18px] text-white hover:bg-violet-500"
+          type="submit"
+          disabled={!isValid}
+        >
           가입하기
         </button>
       </div>

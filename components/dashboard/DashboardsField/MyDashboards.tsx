@@ -24,7 +24,7 @@ function MyDashboards({ dashboardData }: MyDashboardsProps) {
   const totalPage = Math.ceil(totalCount / 6);
   const startIndex = (page - 1) * 6;
   const endIndex = startIndex + 6;
-  const paginatedDashboards = dashboards?.slice(startIndex, endIndex);
+  const paginatedDashboards = dashboards?.slice(startIndex, endIndex).sort((a, b) => a.title.localeCompare(b.title));
 
   useEffect(() => {
     setDashboards(initialData);
