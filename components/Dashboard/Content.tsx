@@ -41,12 +41,14 @@ export default function Content({ dashboardId, columnsData, cardsDataArray, memb
     );
   };
 
-  const refreshCardAll = async () => {
+  const refreshCardAll = () => {
     setCards([]);
 
-    const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
-    const result: CardData[] = await Promise.all(cardsPromises);
-    setCards(result);
+    (async () => {
+      const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
+      const result: CardData[] = await Promise.all(cardsPromises);
+      setCards(result);
+    })();
   };
 
   return (
