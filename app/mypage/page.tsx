@@ -1,26 +1,17 @@
 import getUserProfile from '@/services/server/userProfile';
-import ImageUploadPreview from '@/components/MyPage/Profile/ImageUploadPreview';
 import { User } from '@/types/user/user';
-import BackIcon from '@/components/MyPage/Profile/BackIcon';
-import PasswordChangeForm from '@/components/MyPage/Password/PasswordChangeForm';
-
-import SideBar from '@/components/SideBar/SideBar';
-import DashBoardNav from '@/components/nav/DashboardNav';
+import BackIcon from '@/components/myPage/Profile/BackIcon';
+import ImageUploadPreview from '@/components/myPage/Profile/ImageUploadPreview';
+import PasswordChangeForm from '@/components/myPage/Password/PasswordChangeForm';
 
 export default async function MyPage() {
   const Profile: User = await getUserProfile();
 
   return (
-    <div className="flex h-screen">
-      <SideBar />
-      <div className="relative w-full">
-        <DashBoardNav />
-        <div className="bg-gray_D9D9D9 flex flex-col">
-          <BackIcon />
-          <ImageUploadPreview Profile={Profile} />
-          <PasswordChangeForm />
-        </div>
-      </div>
+    <div className="flex flex-col h-full bg-gray_FAFAFA">
+      <BackIcon />
+      <ImageUploadPreview Profile={Profile} />
+      <PasswordChangeForm />
     </div>
   );
 }
