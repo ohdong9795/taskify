@@ -12,11 +12,10 @@ import Tags from '../common/Tag';
 
 interface CardProps {
   data: CardType;
-  refreshCards: () => void;
   refreshCardAll: () => void;
 }
 
-const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards, refreshCardAll }, ref) => {
+const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCardAll }, ref) => {
   const { title, tags, dueDate, assignee, imageUrl } = data;
   const { profileImageUrl } = assignee;
   const { modalRef, handleOpenModal, handleCloseModal } = useModal();
@@ -28,7 +27,7 @@ const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards, refresh
 
   const handleClose = () => {
     handleCloseModal();
-    refreshCards();
+    refreshCardAll();
   };
 
   return (
@@ -64,12 +63,7 @@ const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards, refresh
         />
       </Modal>
       <Modal ref={editModalRef}>
-        <ToDoEditForm
-          cardData={data}
-          handleCloseModal={handleCloseEditModal}
-          refreshCards={refreshCards}
-          refreshCardAll={refreshCardAll}
-        />
+        <ToDoEditForm cardData={data} handleCloseModal={handleCloseEditModal} refreshCardAll={refreshCardAll} />
       </Modal>
     </li>
   );

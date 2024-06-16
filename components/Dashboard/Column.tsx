@@ -3,8 +3,6 @@
 import { GoDotFill, GoGear } from 'react-icons/go';
 import useModal from '@/hooks/useModal';
 import { CardData, ColumnType } from '@/types/user/column';
-import { useEffect, useState } from 'react';
-import { getCards } from '@/services/client/cards';
 import Modal from '../Modal';
 import ColumnEditForm from '../Modal/views/ColumnEditForm';
 import ModalOpenButton from '../Modal/components/ModalOpenButton';
@@ -20,22 +18,12 @@ interface ColumnProps {
 }
 
 function Column({ data, cardsData, onUpdate, onDelete, refreshCardAll }: ColumnProps) {
-  const [cards, setCards] = useState<CardData | null>(cardsData);
   const { modalRef, handleOpenModal, handleCloseModal } = useModal();
   const {
     modalRef: toDoAddModalRef,
     handleOpenModal: handleOpenToDoAddModal,
     handleCloseModal: handleCloseToDoAddModal,
   } = useModal();
-
-  useEffect(() => {
-    setCards(cardsData);
-  }, [cardsData]);
-
-  const handleRefreshCards = async () => {
-    const result = await getCards({ columnId: data.id, size: 1000 });
-    setCards(result);
-  };
 
   return (
     <div>
@@ -44,7 +32,7 @@ function Column({ data, cardsData, onUpdate, onDelete, refreshCardAll }: ColumnP
           <GoDotFill className="text-violet_5534DA mr-2" />
           <h1 className="text-black_333236 font-bold text-lg mr-3">{data.title}</h1>
           <div className="w-5 h-5 rounded p-3 bg-gray_EE flex justify-center items-center font-medium text-xs text-gray_787486">
-            {cards?.totalCount ?? 0}
+            {cardsData?.totalCount ?? 0}
           </div>
         </div>
         <button type="button" aria-label="edit" onClick={handleOpenModal}>
@@ -53,9 +41,7 @@ function Column({ data, cardsData, onUpdate, onDelete, refreshCardAll }: ColumnP
       </header>
       <ModalOpenButton full handleClick={handleOpenToDoAddModal} text={null} />
       <ol className="overflow-y-scroll w-[284] t:w-full p:w-[314px]" style={{ height: 'calc(100vh - 300px)' }}>
-        {cards?.cards.map((card) => (
-          <Card key={card.id} data={card} refreshCards={handleRefreshCards} refreshCardAll={refreshCardAll} />
-        ))}
+        {cardsData?.cards.map((card) => <Card key={card.id} data={card} refreshCardAll={refreshCardAll} />)}
       </ol>
       <Modal ref={modalRef}>
         <ColumnEditForm
@@ -67,7 +53,7 @@ function Column({ data, cardsData, onUpdate, onDelete, refreshCardAll }: ColumnP
         />
       </Modal>
       <Modal ref={toDoAddModalRef}>
-        <ToDoAddForm columnId={data.id} handleCloseModal={handleCloseToDoAddModal} refreshCards={handleRefreshCards} />
+        <ToDoAddForm columnId={data.id} handleCloseModal={handleCloseToDoAddModal} refreshCardAll={refreshCardAll} />
       </Modal>
     </div>
   );

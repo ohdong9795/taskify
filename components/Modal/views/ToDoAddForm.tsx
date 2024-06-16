@@ -19,7 +19,7 @@ import MultiSelect from '../components/MultiSelect';
 interface ColumnAddFormProps {
   columnId: number;
   handleCloseModal: () => void;
-  refreshCards: () => void;
+  refreshCardAll: () => void;
 }
 
 interface FormValues {
@@ -33,7 +33,7 @@ interface FormValues {
   imageUrl?: string;
 }
 
-function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddFormProps) {
+function ToDoAddForm({ columnId, handleCloseModal, refreshCardAll }: ColumnAddFormProps) {
   const {
     control,
     handleSubmit,
@@ -65,7 +65,7 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
     await createCard(body);
-    refreshCards();
+    refreshCardAll();
     handleCloseModal();
   };
 
