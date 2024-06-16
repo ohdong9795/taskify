@@ -61,17 +61,17 @@ export default function PasswordChangeForm() {
   );
 
   const formStyle =
-    'flex flex-col bg-white p:w-[620px] t:w-[544px] m:w-[284px] p:h-[454px] t:h-[454px] m:h-[548px] ml-[20px] mt-[24px] rounded-lg mb-[12px] pr-[2.8rem]';
-  const labelStyle = 'font-medium text-black_333236 t:text-[18px] m:text-[16px] mb-[10px] mt-[20px] m:mt-[16px]';
+    'flex flex-col bg-white p:w-[620px] t:w-[544px] w-[284px] t:h-[500px] h-[450px] ml-[20px] mt-[24px] rounded-lg mb-[12px] pr-[2.8rem]';
+  const labelStyle = 'font-medium text-black_333236 t:text-[18px] text-[16px] mb-[10px] t:mt-[20px] mt-[16px]';
   const buttonStyle =
-    'bg-violet_5534DA w-[84px] h-[32px] m:h-[28px] text-white mr-[28px]  m:mr-[20px] mb-[28px] m:mb-[20px] font-medium rounded text-[12px] mt-[24px]';
+    'bg-violet_5534DA w-[84px] t:h-[32px] h-[28px] text-white t:mr-[28px]  mr-[20px] t:mb-[28px] mb-[20px] font-medium rounded text-[12px] mt-[24px]';
 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formStyle}>
-      <div className="t:ml-[28px] t:mt-[32px] m:ml-[20px] m:mt-[28px]">
-        <h2 className="text-[24px] text-black_333236 font-bold mb-[32px] m:mb-[24px]">비밀번호 변경</h2>
-        <div className="flex-col t:flex">
+      <div className="t:ml-[28px] t:mt-[32px] ml-[20px] mt-[28px]">
+        <h2 className="text-[24px] text-black_333236 font-bold t:mb-[32px] mb-[24px]">비밀번호 변경</h2>
+        <div className="flex-col flex gap-1">
           <label className={labelStyle} htmlFor="currentPassword">
             현재 비밀번호
           </label>
