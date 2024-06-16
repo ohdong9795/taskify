@@ -1,37 +1,35 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { createDashboard } from '@/services/client/dashboards';
+import { updateDashboard } from '@/services/client/dashboards';
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
 import ColorSelectInput from '@/components/Modal/components/ColorSelectInput';
+import { Dashboard } from '@/types/user/dashboard';
+import { useRouter } from 'next/navigation';
 
 interface FormValues {
   newDashboardName: string;
   color: string;
 }
 
-interface DashboardAddFormProp {
-  handleCloseModal?: () => void;
+interface DashboardEditFormProps {
+  dashboard?: Dashboard;
+  dashboardId: number;
 }
 
-function DashboardAddForm({ handleCloseModal }: DashboardAddFormProp) {
+function DashboardEditForm({ dashboard, dashboardId }: DashboardEditFormProps) {
   const router = useRouter();
   const { handleSubmit, control } = useForm<FormValues>();
 
   const handlePost: SubmitHandler<FormValues> = async ({ newDashboardName, color }) => {
-    await createDashboard({ title: newDashboardName, color });
-
-    if (handleCloseModal) {
-      handleCloseModal();
-      router.refresh();
-    }
+    await updateDashboard({ dashboardId, title: newDashboardName, color });
+    router.refresh();
   };
 
   return (
-    <div className="max-w-[540px]">
-      <Title title="새로운 대시보드" />
+    <section className="max-w-[540px] bg-white p-7 rounded-lg">
+      <Title title={dashboard?.title} />
       <form className="flex flex-col" onSubmit={handleSubmit(handlePost)}>
         <Controller
           control={control}
@@ -41,19 +39,23 @@ function DashboardAddForm({ handleCloseModal }: DashboardAddFormProp) {
               type="text"
               text="대시보드 이름"
               id="newDashboardName"
-              placeholder="새로운 대시보드 이름"
+              placeholder="수정할 대시보드 이름"
               {...field}
             />
           )}
         />
         <Controller control={control} name="color" render={({ field }) => <ColorSelectInput field={field} />} />
-        {/* 버튼 완료되면 추후 수정 */}
-        <button className="bg-violet_5534DA text-white rounded-lg py-[14px] px-[46px] text-center" type="submit">
-          생성
-        </button>
+        <div className="flex justify-end">
+          <button
+            className="bg-violet_5534DA hover:bg-violet-500 text-white rounded-lg py-[14px] px-[46px] text-center"
+            type="submit"
+          >
+            수정
+          </button>
+        </div>
       </form>
-    </div>
+    </section>
   );
 }
 
-export default DashboardAddForm;
+export default DashboardEditForm;

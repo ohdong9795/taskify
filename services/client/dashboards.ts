@@ -25,12 +25,8 @@ export const deleteDashboard = (query: { dashboardId: number }) => deleteDashboa
 export const inviteDashboard = (body: { dashboardId: number; email: string }) =>
   inviteDashboardCommon(clientInstance, body);
 
-export const getDashboardInvitations = (query: {
-  dashboardId: string;
-  cursorId?: number;
-  page?: number;
-  size?: number;
-}) => getDashboardInvitationsCommon(clientInstance, query);
+export const getDashboardInvitations = (query: { dashboardId: number }) =>
+  getDashboardInvitationsCommon(clientInstance, query);
 
 export const deleteDashboardInvitation = (query: { dashboardId: number; invitationId: number }) =>
   deleteDashboardInvitationCommon(clientInstance, query);
