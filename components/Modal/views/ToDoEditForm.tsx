@@ -17,7 +17,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 interface ToDoEditFormProps {
   cardData: CardType;
   handleCloseModal: () => void;
-  refreshCards: () => void;
   refreshCardAll: () => void;
 }
 
@@ -36,7 +35,7 @@ interface UpdateCardBody extends FormValues {
   cardId: number;
 }
 
-export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards, refreshCardAll }: ToDoEditFormProps) {
+export default function ToDoEditForm({ handleCloseModal, cardData, refreshCardAll }: ToDoEditFormProps) {
   const { dashboardId, memberData, columnsData } = useDashboard();
   const [selectedDate, setSelectedDate] = useState(cardData.dueDate ? new Date(cardData.dueDate) : new Date());
   const {
@@ -74,10 +73,7 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards,
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
     await updateCard(body);
-    if (cardData.columnId === Number(data.columnId)) refreshCards();
-    else {
-      refreshCardAll();
-    }
+    refreshCardAll();
     handleCloseModal();
   };
 
