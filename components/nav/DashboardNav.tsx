@@ -29,7 +29,9 @@ export default function DashBoardNav() {
   const dashboardId = parseInt(pathName.slice(11, 15), 10);
   const isDashboard = pathName.includes(`/dashboard/${dashboardId}`);
   const isMyPage = pathName === '/mypage';
+  const isMyDashboard = pathName === '/mydashboard';
   const currentDashboard = dashboards?.find((dashboard) => dashboard.id === dashboardId);
+  const ShowBorder = !(isMyPage || isMyDashboard);
 
   const toggleDropdown = () => {
     dropdownRef.current?.toggle();
@@ -41,11 +43,11 @@ export default function DashBoardNav() {
   };
 
   return (
-    <nav className="fixed w-full h-[70px] bg-white flex justify-between items-center px-[40px] border-b border-gray_D9D9D9">
+    <nav className=" w-full h-[70px] bg-white flex justify-between items-center px-[40px] border-b border-gray_D9D9D9 ">
       <div className="hidden font-bold t:block">
         {(isMyPage && '계정관리') || (isDashboard && currentDashboard?.title) || '나의 대시보드'}
       </div>
-      <div className="flex items-center gap-[40px]">
+      <div className="flex items-center gap-[40px] ml-auto">
         {isDashboard && (
           <>
             <div className="flex items-center gap-[16px]">
@@ -63,10 +65,10 @@ export default function DashBoardNav() {
             <MembersProfile dashboardId={dashboardId} nickname={user?.nickname} isDashboard={isDashboard} />
           </>
         )}
-        <div className="flex items-center gap-[12px] border-l px-8 border-gray_D9D9D9">
+        <div className={`flex items-center gap-[12px] px-8 ${ShowBorder ? 'border-l border-gray_D9D9D9' : ''}`}>
           <div>
             {user?.profileImageUrl ? (
-              <div className="relative w-[38px] h-[38px]">
+              <div className="relative w-[38px] h-[38px] ">
                 <Image src={user?.profileImageUrl} alt={user.nickname} fill className="rounded-full object-cover" />
               </div>
             ) : (

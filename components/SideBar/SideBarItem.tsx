@@ -21,9 +21,9 @@ export default function SideBarItem({ dashboards }: { dashboards: Dashboard[] | 
         {paginatedDashboards?.map((dashboard) => (
           <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id}>
             <div className="flex items-center gap-1">
-              <DashboardLogo style={{ color: dashboard.color }} />
-              <p>{dashboard.title}</p>
-              {dashboard.createdByMe && <CrownLogo />}
+              <DashboardLogo style={{ color: dashboard.color }} className="items-center" />
+              <p className="hidden t:block">{dashboard.title}</p>
+              {dashboard.createdByMe && <CrownLogo className="hidden t:block" />}
             </div>
           </Link>
         ))}

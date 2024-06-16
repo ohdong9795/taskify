@@ -1,7 +1,8 @@
+import Profile from '@/components/nav/Profile';
 import { deleteComment, updateComment } from '@/services/client/comments';
 import useAuthStore from '@/stores/authStore';
 import axios from 'axios';
-import Image from 'next/image';
+import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -79,17 +80,13 @@ export default function Comment({ data, refresh }: CommentProps) {
   }, [isEdit]);
 
   return (
-    <>
-      {data.author.profileImageUrl && (
-        <div>
-          <Image src={data.author.profileImageUrl} width={34} height={34} alt="프로필 이미지" />
-        </div>
-      )}
-      <div>
-        <div className="flex items-center mb-[6px]">
-          <span className="mr-2 text-sm font-semibold text-black_333236">{data.author.nickname}</span>
-          <div className="text-xs font-normal text-gray_9FA6B2">{data.updatedAt}</div>
-        </div>
+    <div>
+      <div className="flex items-center mb-[6px] gap-[10px]">
+        {data.author.profileImageUrl && <Profile imageUrl={data.author.profileImageUrl} />}
+        <span className="mr-2 text-sm font-semibold text-black_333236">{data.author.nickname}</span>
+        <div className="text-xs font-normal text-gray_9FA6B2">{dayjs(data.updatedAt).format('YYYY.MM.DD HH:MM')}</div>
+      </div>
+      <div className="pl-[44px]">
         {isEdit ? (
           <input
             defaultValue={data.content}
@@ -110,6 +107,6 @@ export default function Comment({ data, refresh }: CommentProps) {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

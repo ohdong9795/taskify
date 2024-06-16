@@ -3,21 +3,17 @@
 import { useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import dayjs from 'dayjs';
-
-import { MemberData } from '@/types/user/column';
 import { createCard } from '@/services/client/cards';
-
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
 import Dropdown, { DropdownHandle } from '@/components/common/Dropdown';
+import { useDashboard } from '@/contexts/DashboardContext';
 import ModalImageInput from '../components/ModalImageInput';
 
 interface ColumnAddFormProps {
   columnId: number;
-  dashboardId: number;
-  memberData: MemberData;
   handleCloseModal: () => void;
-  refreshCards: (id: number) => void;
+  refreshCards: () => void;
 }
 
 interface FormValues {
@@ -31,8 +27,9 @@ interface FormValues {
   imageUrl?: string;
 }
 
-function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refreshCards }: ColumnAddFormProps) {
+function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddFormProps) {
   const { control, handleSubmit, setValue } = useForm<FormValues>();
+  const { dashboardId, memberData } = useDashboard();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const dropdownRef = useRef<DropdownHandle>(null);
@@ -70,7 +67,7 @@ function ToDoAddForm({ dashboardId, columnId, handleCloseModal, memberData, refr
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
     await createCard(body);
-    refreshCards(columnId);
+    refreshCards();
     handleCloseModal();
   };
 

@@ -1,40 +1,40 @@
 'use client';
 
 import { GoDotFill, GoGear } from 'react-icons/go';
-import { useRef } from 'react';
-import { MemberData } from '@/types/user/column';
-import Modal, { ModalHandles } from '../Modal';
+import useModal from '@/hooks/useModal';
+import { CardData, ColumnType } from '@/types/user/column';
+import { useEffect, useState } from 'react';
+import { getCards } from '@/services/client/cards';
+import Modal from '../Modal';
 import ColumnEditForm from '../Modal/views/ColumnEditForm';
 import ModalOpenButton from '../Modal/components/ModalOpenButton';
 import ToDoAddForm from '../Modal/views/ToDoAddForm';
+import Card from './Card';
 
 interface ColumnProps {
-  id: number;
-  dashboardId: number;
-  title: string;
-  count: number;
-  memberData: MemberData;
+  data: ColumnType;
+  cardsData: CardData | null;
   onUpdate: (id: number, title: string) => void;
   onDelete: (id: number) => void;
-  refreshCards: (id: number) => void;
+  refreshCardAll: () => void;
 }
 
-function Column({ id, title, count, onUpdate, onDelete, dashboardId, memberData, refreshCards }: ColumnProps) {
-  const modalRef = useRef<ModalHandles>(null);
-  const toDoAddModalRef = useRef<ModalHandles>(null);
+function Column({ data, cardsData, onUpdate, onDelete, refreshCardAll }: ColumnProps) {
+  const [cards, setCards] = useState<CardData | null>(cardsData);
+  const { modalRef, handleOpenModal, handleCloseModal } = useModal();
+  const {
+    modalRef: toDoAddModalRef,
+    handleOpenModal: handleOpenToDoAddModal,
+    handleCloseModal: handleCloseToDoAddModal,
+  } = useModal();
 
-  const handleOpenModal = () => {
-    modalRef.current?.open();
-  };
-  const handleCloseModal = () => {
-    modalRef.current?.close();
-  };
+  useEffect(() => {
+    setCards(cardsData);
+  }, [cardsData]);
 
-  const handleOpenToDoAddModal = () => {
-    toDoAddModalRef.current?.open();
-  };
-  const handleCloseToDoAddModal = () => {
-    toDoAddModalRef.current?.close();
+  const handleRefreshCards = async () => {
+    const result = await getCards({ columnId: data.id, size: 1000 });
+    setCards(result);
   };
 
   return (
@@ -42,33 +42,32 @@ function Column({ id, title, count, onUpdate, onDelete, dashboardId, memberData,
       <header className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <GoDotFill className="text-violet_5534DA mr-2" />
-          <h1 className="text-black_333236 font-bold text-lg mr-3">{title}</h1>
+          <h1 className="text-black_333236 font-bold text-lg mr-3">{data.title}</h1>
           <div className="w-5 h-5 rounded p-3 bg-gray_EE flex justify-center items-center font-medium text-xs text-gray_787486">
-            {count}
+            {cards?.totalCount ?? 0}
           </div>
         </div>
         <button type="button" aria-label="edit" onClick={handleOpenModal}>
           <GoGear className="text-gray_787486 w-5 h-5" />
         </button>
       </header>
-      <ModalOpenButton handleClick={handleOpenToDoAddModal} text={null} />
+      <ModalOpenButton full handleClick={handleOpenToDoAddModal} text={null} />
+      <ol className="overflow-y-scroll w-[284] t:w-full p:w-[314px]" style={{ height: 'calc(100vh - 300px)' }}>
+        {cards?.cards.map((card) => (
+          <Card key={card.id} data={card} refreshCards={handleRefreshCards} refreshCardAll={refreshCardAll} />
+        ))}
+      </ol>
       <Modal ref={modalRef}>
         <ColumnEditForm
-          id={id}
-          title={title}
+          id={data.id}
+          title={data.title}
           handleCloseModal={handleCloseModal}
           onUpdate={onUpdate}
           onDelete={onDelete}
         />
       </Modal>
       <Modal ref={toDoAddModalRef}>
-        <ToDoAddForm
-          columnId={id}
-          dashboardId={dashboardId}
-          handleCloseModal={handleCloseToDoAddModal}
-          memberData={memberData}
-          refreshCards={refreshCards}
-        />
+        <ToDoAddForm columnId={data.id} handleCloseModal={handleCloseToDoAddModal} refreshCards={handleRefreshCards} />
       </Modal>
     </div>
   );

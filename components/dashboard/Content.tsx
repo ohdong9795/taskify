@@ -1,52 +1,36 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { ColumnType, ColumnCard, MemberData } from '@/types/user/column';
+import { useState } from 'react';
+import { ColumnType, MemberData, ColumnData, CardData } from '@/types/user/column';
+import { DashboardProvider } from '@/contexts/DashboardContext';
+import useModal from '@/hooks/useModal';
 import { getCards } from '@/services/client/cards';
-import Modal, { ModalHandles } from '../Modal';
+import Modal from '../Modal';
 import ColumnAddForm from '../Modal/views/ColumnAddForm';
 import Column from './Column';
-import Card from './Card';
 import ModalOpenButton from '../Modal/components/ModalOpenButton';
 
 interface ContentProps {
   dashboardId: number;
-  data: ColumnCard[];
+  columnsData: ColumnData;
+  cardsDataArray: CardData[];
   memberData: MemberData;
 }
 
-export default function Content({ dashboardId, data, memberData }: ContentProps) {
-  const [columns, setColumns] = useState(data);
-  const modalRef = useRef<ModalHandles>(null);
+export default function Content({ dashboardId, columnsData, cardsDataArray, memberData }: ContentProps) {
+  const [columns, setColumns] = useState(columnsData.data);
+  const [cards, setCards] = useState(cardsDataArray);
+  const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
-  const handleReload = (col: ColumnType) => {
-    setColumns((preCols) => [...preCols, { ...col, totalCount: 0, cursorId: null, cards: [] }]);
+  const handleAddColumnSuccess = (col: ColumnType) => {
+    setColumns((preCols) => [...preCols, col]);
   };
 
-  const handleOpenModal = () => {
-    modalRef.current?.open();
+  const handleDeleteColumnSuccess = (id: number): void => {
+    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== id));
   };
 
-  const handleCloseModal = () => {
-    modalRef.current?.close();
-  };
-
-  const handleDeleteCard = (cardId: number, columnId: number) => {
-    setColumns((prevColumns) =>
-      prevColumns.map((column) => {
-        if (column.id === columnId) {
-          return {
-            ...column,
-            cards: column.cards.filter((card) => card.id !== cardId),
-            totalCount: column.totalCount - 1,
-          };
-        }
-        return column;
-      }),
-    );
-  };
-
-  const handleUpdateColumn = (id: number, title: string) => {
+  const handleUpdateColumnSuccess = (id: number, title: string) => {
     setColumns((prevColumns) =>
       prevColumns.map((column) => {
         if (column.id === id) {
@@ -57,49 +41,43 @@ export default function Content({ dashboardId, data, memberData }: ContentProps)
     );
   };
 
-  const handleDeleteColumn = (id: number) => {
-    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== id));
-  };
+  const refreshCardAll = async () => {
+    const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
+    const result: CardData[] = await Promise.all(cardsPromises);
 
-  const refreshCards = async (columnId: number) => {
-    const result = await getCards({ columnId });
-    setColumns((prevColumns) =>
-      prevColumns.map((column) => {
-        if (column.id === columnId) {
-          return { ...column, cards: result.cards, totalCount: result.totalCount, cursorId: result.cursorId };
-        }
-        return column;
-      }),
-    );
+    setCards(result);
   };
 
   return (
-    <div className="w-full overflow-x-auto">
-      <ul className="flex w-full h-full">
-        {columns?.map(({ id, title, totalCount, cards }) => (
-          <li key={id} className="p-5 border-r border-r-gray_EE flex flex-col gap-5">
-            <Column
-              id={id}
-              dashboardId={dashboardId}
-              title={title}
-              memberData={memberData}
-              count={totalCount}
-              onUpdate={handleUpdateColumn}
-              onDelete={handleDeleteColumn}
-              refreshCards={refreshCards}
-            />
-            {cards?.map((card) => (
-              <Card key={card.id} data={card} dashboardId={dashboardId} onDelete={handleDeleteCard} />
-            ))}
-          </li>
-        ))}
-        <div className="w-80">
-          <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
-        </div>
-      </ul>
-      <Modal ref={modalRef}>
-        <ColumnAddForm dashboardId={dashboardId} handleReload={handleReload} handleCloseModal={handleCloseModal} />
-      </Modal>
-    </div>
+    <DashboardProvider dashboardId={dashboardId} memberData={memberData} columnsData={columnsData}>
+      <div
+        className="fixed bottom-2 left-1/2 transform -translate-x-1/2 p:static p:transform-none p:pl-5 p:pt-5"
+        style={{ left: `calc(50% + var(--sidebar-width) / 2)` }}
+      >
+        <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
+      </div>
+      <div className="w-full">
+        <ul className="flex h-full flex-col p:flex-row overflow-scroll pr-12">
+          {columns?.map((col) => (
+            <li key={col.id} className="w-full p:w-[354px] p-5 border-r border-r-gray_EE flex flex-col">
+              <Column
+                data={col}
+                cardsData={cards.find((cardData) => cardData.cards.some((card) => card.columnId === col.id)) || null}
+                onUpdate={handleUpdateColumnSuccess}
+                onDelete={handleDeleteColumnSuccess}
+                refreshCardAll={refreshCardAll}
+              />
+            </li>
+          ))}
+        </ul>
+        <Modal ref={modalRef}>
+          <ColumnAddForm
+            dashboardId={dashboardId}
+            onSuccess={handleAddColumnSuccess}
+            handleCloseModal={handleCloseModal}
+          />
+        </Modal>
+      </div>
+    </DashboardProvider>
   );
 }
