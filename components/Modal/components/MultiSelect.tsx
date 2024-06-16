@@ -62,6 +62,11 @@ const colourStyles: StylesConfig<ColourOption, true> = {
       color: 'white',
     },
   }),
+  valueContainer: (provided) => ({
+    ...provided,
+    maxHeight: '100px', // valueContainer의 최대 높이를 설정합니다.
+    overflowY: 'auto', // 세로 스크롤을 가능하게 합니다.
+  }),
 };
 
 interface MultiSelectProps {
@@ -79,6 +84,7 @@ export default function MultiSelect({ defaultValue, onChange }: MultiSelectProps
       isMulti
       options={colourOptions}
       styles={colourStyles}
+      isSearchable={false}
     />
   );
 }

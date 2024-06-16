@@ -127,6 +127,7 @@ export default function SingleSelect({ type, defaultValue, colourOptions, onChan
           ? { SingleValue: ColumnValue, Option: ColumnSelect }
           : { SingleValue: MemberValue, Option: MemberSelect }
       }
+      isSearchable={false}
     />
   );
 }
