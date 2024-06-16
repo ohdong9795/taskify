@@ -47,12 +47,12 @@ function InvitedTable({ invitations, cursorId, searchedInvitations }: InvitedTab
         <span>초대자</span>
         <span>수락 여부</span>
       </div>
-      <ul className="flex flex-col justify-around t:grid overflow-scroll border-t-2 border-b-2 scroll-smooth snap-y">
+      <ul className="overflow-scroll border-t-2 border-b-2 scroll-smooth snap-y">
         {(searchedInvitations || allInvitations).map(({ inviter, id, dashboard }, index) => (
           <li
             ref={index === allInvitations.length - 1 ? ref : null}
             key={id}
-            className="flex flex-col items-start t:w-full t:grid-cols-[repeat(3,auto)] gap-3 py-6 font-normal border-b t:grid t:items-center text-black_333236 snap-start"
+            className="flex flex-col gap-3 py-6 font-normal border-b t:grid t:grid-cols-3 text-black_333236 snap-start"
           >
             <div className="flex gap-5">
               <span className="font-normal text-ls text-gray_787486 t:hidden">이름</span>
@@ -62,7 +62,7 @@ function InvitedTable({ invitations, cursorId, searchedInvitations }: InvitedTab
               <span className="font-normal text-ls text-gray_787486 t:hidden">초대자</span>
               <span>{inviter?.nickname}</span>
             </div>
-            <div className="flex items-center w-full t:w-[250px]">
+            <div className="flex items-center w-full">
               <button
                 type="button"
                 onClick={() => handleAccept(id, true)}

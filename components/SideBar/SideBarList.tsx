@@ -12,10 +12,10 @@ function SideBarList() {
   const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
   return (
-    <div className="ml-[24px] mt-[40px] items-center">
+    <div className="mt-[40px] items-center">
       <div className="flex flex-col items-start gap-3">
-        <div className="w-full flex justify-between items-center pr-[24px]">
-          <span className="text-xs font-bold hidden t:block text-gray_787486">Dashboards</span>
+        <div className="w-full flex justify-between items-center px-[24px]">
+          <span className="hidden text-xs font-bold t:block text-gray_787486">Dashboards</span>
           <button type="button" onClick={handleOpenModal}>
             <SideBtn />
           </button>

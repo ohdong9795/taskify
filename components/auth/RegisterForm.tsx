@@ -7,6 +7,7 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
+import useAuthStore from '@/stores/authStore';
 import FORM_OPTIONS from '@/constants/formOption';
 import ErrorMsg from './ErrorMsg';
 import AuthInput from './Input';
@@ -20,6 +21,7 @@ interface RegisterData {
 }
 
 export default function RegisterForm() {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -27,8 +29,11 @@ export default function RegisterForm() {
     watch,
     setError,
   } = useForm<RegisterData>({ mode: 'onBlur' });
+  const { accessToken } = useAuthStore();
 
-  const router = useRouter();
+  if (accessToken) {
+    router.replace('/mydashboard');
+  }
 
   const mutation = useMutation(createUser, {
     onSuccess: () => {
