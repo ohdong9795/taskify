@@ -123,12 +123,20 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
         <Controller
           control={control}
           rules={{
-            required: '제목은 필수입니다.',
+            required: '설명은 필수입니다.',
           }}
           name="description"
           render={({ field, fieldState: { error } }) => (
             <>
-              <Input text="설명 *" id="description" placeholder="설명을 입력해 주세요" {...field} />
+              <label htmlFor="description" className="text-lg font-medium text-black_333236 mb-[-25px]">
+                설명
+              </label>
+              <textarea
+                className="resize-none w-[484px] m:h-[84px] t:h-[96px] max-md:w-[287px] max-md:h-[42px] rounded-lg border border-solid px-[16px] py-[8px] focus:outline-1 focus:outline border-gray_D9 focus:outline-violet_5534DA"
+                id="description"
+                placeholder="설명을 입력해 주세요"
+                {...field}
+              />
               {error && <p className="text-red-500 mt-[-25px] ml-[3px]">{error.message}</p>}
             </>
           )}
