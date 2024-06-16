@@ -49,7 +49,7 @@ function MemberValue(props: SingleValueProps<ColourOption>) {
 
   return (
     <components.SingleValue {...props}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 ">
         {data.image && (
           <div className="relative w-[26px] h-[26px]">
             <Image
@@ -60,7 +60,7 @@ function MemberValue(props: SingleValueProps<ColourOption>) {
             />
           </div>
         )}
-        <span>{data.label}</span>
+        <span className={`${data.value ? 'text-[#333236]' : 'text-[#9FA6B2]'}`}>{data.label}</span>
       </div>
     </components.SingleValue>
   );
@@ -81,7 +81,7 @@ function MemberSelect(props: any) {
             />
           </div>
         )}
-        <span>{props?.children}</span>
+        <span className="text-[#333236]">{props?.children}</span>
       </div>
     </components.Option>
   );

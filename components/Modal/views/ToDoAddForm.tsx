@@ -1,14 +1,19 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import dayjs from 'dayjs';
+
 import { createCard } from '@/services/client/cards';
 import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
-import Dropdown, { DropdownHandle } from '@/components/common/Dropdown';
 import { useDashboard } from '@/contexts/DashboardContext';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { format } from 'date-fns';
+
 import ModalImageInput from '../components/ModalImageInput';
+import SingleSelect from '../components/SingleSelect';
+import MultiSelect from '../components/MultiSelect';
 
 interface ColumnAddFormProps {
   columnId: number;
@@ -30,25 +35,6 @@ interface FormValues {
 function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddFormProps) {
   const { control, handleSubmit, setValue } = useForm<FormValues>();
   const { dashboardId, memberData } = useDashboard();
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
-  const dropdownRef = useRef<DropdownHandle>(null);
-  const toggleDropdown = () => {
-    dropdownRef.current?.toggle();
-  };
-
-  const options = ['상', '중', '하', '프론트', '백엔드', '일반', '프로젝트'];
-
-  const handleSelectItem = (item: string) => {
-    let newSelectedItems;
-    if (selectedItems.includes(item)) {
-      newSelectedItems = selectedItems.filter((selectedItem) => selectedItem !== item);
-    } else {
-      newSelectedItems = [...selectedItems, item];
-    }
-    setSelectedItems(newSelectedItems);
-    setValue('tags', newSelectedItems);
-  };
 
   const handleImageUpload = (url: string) => {
     setValue('imageUrl', url);
@@ -80,14 +66,27 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
           name="assigneeUserId"
           render={({ field }) => (
             <div className="flex flex-col w-[217px]">
-              <select {...field}>
-                <option value="">이름을 입력해 주세요</option>
-                {memberData.members.map((member) => (
-                  <option key={member.id} value={member.userId}>
-                    {member.nickname}
-                  </option>
-                ))}
-              </select>
+              <label htmlFor="assigneeUserId" className="text-lg font-medium text-black_333236 mb-[10px]">
+                담당자
+              </label>
+              <SingleSelect
+                {...field}
+                type="member"
+                defaultValue={{
+                  value: 0,
+                  label: '이름을 입력해 주세요',
+                }}
+                colourOptions={memberData.members.map((member) => ({
+                  value: member.userId,
+                  label: member.nickname,
+                  image: member.profileImageUrl,
+                }))}
+                onChange={(option) => {
+                  if (option && 'value' in option) {
+                    field.onChange(option.value);
+                  }
+                }}
+              />
             </div>
           )}
         />
@@ -107,16 +106,18 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
           render={({ field }) => (
             <div className="flex flex-col">
               <label htmlFor="dueDate" className="text-lg font-medium text-black_333236 mb-[10px]">
-                날짜
+                마감일
               </label>
-              <input
-                type="datetime-local"
-                id="dueDate"
-                value={field.value ? dayjs(field.value).format('YYYY-MM-DDTHH:mm') : ''}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  field.onChange(dayjs(value).format('YYYY-MM-DD HH:mm'));
-                }}
+              <DatePicker
+                dateFormat="yyyy-MM-dd HH:mm"
+                shouldCloseOnSelect={false}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                minDate={new Date()}
+                maxDate={new Date('2100-12-31')}
+                selected={field.value ? new Date(field.value) : null}
+                onChange={(date) => field.onChange(format(date as Date, 'yyyy-MM-dd HH:mm'))}
               />
             </div>
           )}
@@ -125,33 +126,17 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
           control={control}
           name="tags"
           render={({ field }) => (
-            <>
-              <button type="button" onClick={toggleDropdown} onKeyDown={toggleDropdown}>
-                <Input
-                  text="태그"
-                  id="tag"
-                  placeholder="입력 후 Enter, 쉼표로 구분"
-                  {...field}
-                  value={selectedItems.join(' ')}
-                  readOnly
-                  onFocus={(e) => e.target.blur()}
-                />
-              </button>
-              <Dropdown ref={dropdownRef}>
-                {options.map((option) => (
-                  <span
-                    key={option}
-                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => handleSelectItem(option)}
-                    onKeyDown={() => handleSelectItem(option)}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    {option}
-                  </span>
-                ))}
-              </Dropdown>
-            </>
+            <div>
+              <label htmlFor="tags" className="text-lg font-medium text-black_333236 mb-[10px]">
+                태그
+              </label>
+              <MultiSelect
+                onChange={(selectedOptions) => {
+                  const values = Array.isArray(selectedOptions) ? selectedOptions.map((option) => option.value) : [];
+                  field.onChange(values);
+                }}
+              />
+            </div>
           )}
         />
         <Controller
