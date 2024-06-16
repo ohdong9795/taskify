@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm, Controller } from 'react-hook-form';
+import { useEffect } from 'react';
 
 import { createCard } from '@/services/client/cards';
 import Title from '@/components/Modal/components/Title';
@@ -33,12 +34,23 @@ interface FormValues {
 }
 
 function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddFormProps) {
-  const { control, handleSubmit, setValue } = useForm<FormValues>();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormValues>();
   const { dashboardId, memberData } = useDashboard();
+  const hasErrors = Object.keys(errors).length > 0;
 
   const handleImageUpload = (url: string) => {
     setValue('imageUrl', url);
   };
+
+  useEffect(() => {
+    const defaultDueDate = new Date(new Date().setHours(new Date().getHours() + 1));
+    setValue('dueDate', format(defaultDueDate, 'yyyy-MM-dd HH:mm'));
+  }, [setValue]);
 
   const submit = async (data: FormValues) => {
     const body: FormValues = {
@@ -58,14 +70,17 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
   };
 
   return (
-    <div className="max-w-[540px] max-h-[907px]">
+    <div className="w-[504px] h-[907px]">
       <Title title="할 일 생성" />
       <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-8">
         <Controller
           control={control}
+          rules={{
+            required: '담당자는 필수입니다.',
+          }}
           name="assigneeUserId"
-          render={({ field }) => (
-            <div className="flex flex-col w-[217px]">
+          render={({ field, fieldState: { error } }) => (
+            <div className="flex flex-col t:w-[217px] w-[287px]">
               <label htmlFor="assigneeUserId" className="text-lg font-medium text-black_333236 mb-[10px]">
                 담당자
               </label>
@@ -87,18 +102,44 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
                   }
                 }}
               />
+              <div>{error && <p className="text-red-500 mt-[5px] mb-[-10px] ml-[3px]">{error.message}</p>}</div>
             </div>
           )}
         />
         <Controller
           control={control}
           name="title"
-          render={({ field }) => <Input text="제목 *" id="title" placeholder="제목을 입력하세요" {...field} />}
+          rules={{
+            required: '제목은 필수입니다.',
+            maxLength: { value: 15, message: '제목은 15자를 넘을수 없습니다.' },
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <Input text="제목 *" id="title" placeholder="제목을 입력하세요" {...field} />
+              {error && <p className="text-red-500 mt-[-25px] ml-[3px]">{error.message}</p>}
+            </>
+          )}
         />
         <Controller
           control={control}
+          rules={{
+            required: '설명은 필수입니다.',
+          }}
           name="description"
-          render={({ field }) => <Input text="설명 *" id="description" placeholder="설명을 입력해 주세요" {...field} />}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <label htmlFor="description" className="text-lg font-medium text-black_333236 mb-[-25px]">
+                설명
+              </label>
+              <textarea
+                className="resize-none w-[484px] m:h-[84px] t:h-[96px] max-md:w-[287px] max-md:h-[42px] rounded-lg border border-solid px-[16px] py-[8px] focus:outline-1 focus:outline border-gray_D9 focus:outline-violet_5534DA"
+                id="description"
+                placeholder="설명을 입력해 주세요"
+                {...field}
+              />
+              {error && <p className="text-red-500 mt-[-25px] ml-[3px]">{error.message}</p>}
+            </>
+          )}
         />
         <Controller
           control={control}
@@ -108,6 +149,7 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
               <label htmlFor="dueDate" className="text-lg font-medium text-black_333236 mb-[10px]">
                 마감일
               </label>
+
               <DatePicker
                 dateFormat="yyyy-MM-dd HH:mm"
                 shouldCloseOnSelect={false}
@@ -115,9 +157,11 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 minDate={new Date()}
-                maxDate={new Date('2100-12-31')}
-                selected={field.value ? new Date(field.value) : null}
+                selected={
+                  field.value ? new Date(field.value) : new Date(new Date().setHours(new Date().getHours() + 1))
+                }
                 onChange={(date) => field.onChange(format(date as Date, 'yyyy-MM-dd HH:mm'))}
+                className="rounded-lg border border-solid px-[16px] py-[15px] focus:outline-1 focus:outline border-gray_D9 focus:outline-violet_5534DA w-[484px] h-[48px] max-md:w-[287px] max-md:h-[42px]"
               />
             </div>
           )}
@@ -144,11 +188,21 @@ function ToDoAddForm({ columnId, handleCloseModal, refreshCards }: ColumnAddForm
           name="imageUrl"
           render={({ field }) => <ModalImageInput columnId={columnId} onImageUpload={handleImageUpload} {...field} />}
         />
-        <div className="mt-7">
-          <button type="button" onClick={handleCloseModal}>
-            취소
+        <div className="flex justify-end">
+          <button
+            className="h-[48px] w-[120px] bg-[#FFFFFF] border-[1px] border-[gray_D9D9D9] rounded-[8px]  py-[14px]"
+            type="button"
+            onClick={handleCloseModal}
+          >
+            <span className="text-[16px] w-[28px] y-[19px] text-[gray_D9D9D9]">취소</span>
           </button>
-          <button type="submit">변경</button>
+          <button
+            className={`h-[48px] w-[120px] bg-[#5534DA] rounded-[8px] py-[14px] ml-[12px] ${hasErrors ? 'opacity-50' : 'opacity-100'}`}
+            type="submit"
+            disabled={hasErrors}
+          >
+            <span className="text-[16px] w-[28px] y-[19px] text-white">생성</span>
+          </button>
         </div>
       </form>
     </div>
