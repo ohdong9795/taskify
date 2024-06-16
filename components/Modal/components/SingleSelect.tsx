@@ -18,10 +18,18 @@ interface ColourOption {
   readonly image?: string;
 }
 
+const safeChroma = (color: string) => {
+  try {
+    return chroma(color);
+  } catch {
+    return chroma('#ccc');
+  }
+};
+
 const colourStyles: StylesConfig<ColourOption> = {
   control: (styles) => ({ ...styles, backgroundColor: 'white', height: '48px' }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    const color = data.color ? chroma(data.color) : chroma('#ccc');
+    const color = data.color ? safeChroma(data.color) : chroma('#ccc');
     return {
       ...styles,
       backgroundColor: isDisabled
