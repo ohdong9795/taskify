@@ -19,7 +19,10 @@ async function Dashboard({ params }: DashboardPageProps) {
   const memberData = await getMembers({ dashboardId });
 
   return (
-    <main className="bg-gray_FAFAFA w-full h-full pt-[70px]">
+    <main
+      className="bg-gray_FAFAFA overflow-y-auto relative"
+      style={{ width: 'calc(100vw - var(--sidebar-width) + 50px)', height: 'calc(100vh - 70px)' }}
+    >
       <Content
         dashboardId={dashboardId}
         columnsData={columnsData}

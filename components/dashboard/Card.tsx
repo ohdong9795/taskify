@@ -8,13 +8,15 @@ import Modal from '../Modal';
 import ModalColumnCard from '../Modal/views/ModalColumnCard';
 import ToDoEditForm from '../Modal/views/ToDoEditForm';
 import Profile from '../nav/Profile';
+import Tags from '../common/Tag';
 
 interface CardProps {
   data: CardType;
   refreshCards: () => void;
+  refreshCardAll: () => void;
 }
 
-const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards }, ref) => {
+const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards, refreshCardAll }, ref) => {
   const { title, tags, dueDate, assignee, imageUrl } = data;
   const { profileImageUrl } = assignee;
   const { modalRef, handleOpenModal, handleCloseModal } = useModal();
@@ -31,13 +33,17 @@ const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards }, ref) 
 
   return (
     <li ref={ref} className="flex flex-col rounded-md border border-solid border-gray_D9 bg-white p-5 gap-[10px] mb-4">
-      {imageUrl && <Image src={imageUrl} width={274} height={160} alt="" />}
+      {imageUrl && (
+        <div className="w-full h-[160px] relative cursor-pointer">
+          <Image onClick={handleOpenModal} src={imageUrl} layout="fill" objectFit="cover" alt="" />
+        </div>
+      )}
       <span>
         <button onClick={handleOpenModal}>{title}</button>
       </span>
-      <div>
+      <div className="flex gap-[6px]">
         {tags.map((tag) => (
-          <span key={tag}>{tag}</span>
+          <Tags key={tag} name={tag} />
         ))}
       </div>
       <div className="flex justify-between">
@@ -58,7 +64,12 @@ const Card = forwardRef<HTMLLIElement, CardProps>(({ data, refreshCards }, ref) 
         />
       </Modal>
       <Modal ref={editModalRef}>
-        <ToDoEditForm cardData={data} handleCloseModal={handleCloseEditModal} refreshCards={refreshCards} />
+        <ToDoEditForm
+          cardData={data}
+          handleCloseModal={handleCloseEditModal}
+          refreshCards={refreshCards}
+          refreshCardAll={refreshCardAll}
+        />
       </Modal>
     </li>
   );
