@@ -38,7 +38,6 @@ interface UpdateCardBody extends FormValues {
 
 export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards, refreshCardAll }: ToDoEditFormProps) {
   const { dashboardId, memberData, columnsData } = useDashboard();
-  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(cardData.dueDate ? new Date(cardData.dueDate) : new Date());
   const { control, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: {
