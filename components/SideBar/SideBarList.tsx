@@ -1,30 +1,24 @@
 'use client';
 
-import { useRef } from 'react';
 import useDataStore from '@/stores/dataStore';
+import useModal from '@/hooks/useModal';
 import SideBtn from '../../public/images/sideMenuButton.svg';
-import Modal, { ModalHandles } from '../Modal';
+import Modal from '../Modal';
 import DashboardAddForm from '../Modal/views/DashboardAddForm';
 import SideBarItem from './SideBarItem';
 
 function SideBarList() {
-  const modalRef = useRef<ModalHandles>(null);
   const { dashboards } = useDataStore();
-
-  const handleOpenModal = () => {
-    modalRef.current?.open();
-  };
-
-  const handleCloseModal = () => {
-    modalRef.current?.close();
-  };
+  const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
   return (
-    <div className="ml-[24px] mt-[40px] items-center">
+    <div className="mt-[40px] items-center">
       <div className="flex flex-col items-start gap-3">
-        <div className="w-full flex justify-between items-center pr-[24px]">
-          <span className="text-xs font-bold hidden t:block text-gray_787486">Dash boards</span>
-          <SideBtn onClick={handleOpenModal} />
+        <div className="w-full flex justify-between items-center px-[24px]">
+          <span className="hidden text-xs font-bold t:block text-gray_787486">Dashboards</span>
+          <button type="button" onClick={handleOpenModal}>
+            <SideBtn />
+          </button>
         </div>
         <SideBarItem dashboards={dashboards} />
       </div>

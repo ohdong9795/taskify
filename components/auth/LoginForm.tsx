@@ -18,20 +18,23 @@ interface LoginData {
 }
 
 export default function LoginForm() {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<LoginData>({ mode: 'onBlur' });
+  const { setUser, setToken, accessToken } = useAuthStore();
 
-  const { setUser, setToken } = useAuthStore();
-  const router = useRouter();
+  if (accessToken) {
+    router.replace('/mydashboard');
+  }
 
   const mutation = useMutation(login, {
     onSuccess: (data) => {
       setUser(data.user);
       setToken(data.accessToken);
-      router.push('/mydashboard');
+      router.replace('/mydashboard');
     },
     onError: (error: AxiosError) => {
       toast(error.message, {
@@ -89,7 +92,11 @@ export default function LoginForm() {
           />
           {errors.password && typeof errors.password.message === 'string' && <ErrorMsg msg={errors.password.message} />}
         </div>
-        <button className="w-full h-[50px] rounded-lg bg-gray_9FA6B2 text-[18px] text-white" type="submit">
+        <button
+          className="w-full h-[50px] rounded-lg disabled:bg-gray_9FA6B2 bg-violet_5534DA text-[18px] text-white hover:bg-violet-500"
+          type="submit"
+          disabled={!isValid}
+        >
           로그인
         </button>
       </div>

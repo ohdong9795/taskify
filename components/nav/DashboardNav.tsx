@@ -23,7 +23,7 @@ export default function DashBoardNav() {
   const { setLogout, user } = useAuthStore();
   const router = useRouter();
   const pathName = usePathname();
-  const { modalRef, handleOpenModal } = useModal();
+  const { modalRef, handleOpenModal, handleCloseModal } = useModal();
   const dropdownRef = useRef<DropdownHandle>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dashboardId = parseInt(pathName.slice(11, 15), 10);
@@ -44,7 +44,7 @@ export default function DashBoardNav() {
 
   return (
     <nav className=" w-full h-[70px] bg-white flex justify-between items-center px-[40px] border-b border-gray_D9D9D9 ">
-      <div className="hidden font-bold t:block">
+      <div className="hidden font-bold t:block text-xl">
         {(isMyPage && '계정관리') || (isDashboard && currentDashboard?.title) || '나의 대시보드'}
       </div>
       <div className="flex items-center gap-[40px] ml-auto">
@@ -53,7 +53,7 @@ export default function DashBoardNav() {
             <div className="flex items-center gap-[16px]">
               <Link
                 href={`/dashboard/${dashboardId}/edit`}
-                className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
+                className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486 hover:bg-gray-300"
               >
                 <IoMdSettings className="hidden t:flex" />
                 관리
@@ -69,7 +69,7 @@ export default function DashBoardNav() {
           <div>
             {user?.profileImageUrl ? (
               <div className="relative w-[38px] h-[38px] ">
-                <Image src={user?.profileImageUrl} alt={user.nickname} fill className="rounded-full object-cover" />
+                <Image src={user?.profileImageUrl} alt={user.nickname} fill className="object-cover rounded-full" />
               </div>
             ) : (
               <UserImage onClick={toggleDropdown} />
@@ -92,7 +92,7 @@ export default function DashBoardNav() {
         </div>
       </div>
       <Modal ref={modalRef}>
-        <InviteForm dashboardId={dashboardId} />
+        <InviteForm dashboardId={dashboardId} handleCloseModal={handleCloseModal} />
       </Modal>
     </nav>
   );

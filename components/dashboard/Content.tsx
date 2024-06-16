@@ -42,22 +42,23 @@ export default function Content({ dashboardId, columnsData, cardsDataArray, memb
   };
 
   const refreshCardAll = async () => {
+    setCards([]);
+
     const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
     const result: CardData[] = await Promise.all(cardsPromises);
-
     setCards(result);
   };
 
   return (
     <DashboardProvider dashboardId={dashboardId} memberData={memberData} columnsData={columnsData}>
       <div
-        className="fixed bottom-2 left-1/2 transform -translate-x-1/2 p:static p:transform-none p:pl-5 p:pt-5"
+        className="fixed transform -translate-x-1/2 bottom-2 left-1/2 p:static p:transform-none p:pl-5 p:pt-5"
         style={{ left: `calc(50% + var(--sidebar-width) / 2)` }}
       >
         <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
       </div>
       <div className="w-full">
-        <ul className="flex h-full flex-col p:flex-row overflow-scroll pr-12">
+        <ul className="flex flex-col h-full pr-12 overflow-scroll p:flex-row border-t">
           {columns?.map((col) => (
             <li key={col.id} className="w-full p:w-[354px] p-5 border-r border-r-gray_EE flex flex-col">
               <Column

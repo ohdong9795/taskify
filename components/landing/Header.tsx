@@ -7,8 +7,8 @@ export default function Description() {
     <header className="flex flex-col items-center">
       <Image src={MainImage} alt="Main Image" />
       <div className="flex flex-col t:flex-row items-center space-x-[28px] mt-[38px]">
-        <p className=" text-white text-[76px] font-bold">새로운 일정 관리</p>
-        <p className=" text-violet_5534DA text-[76px] font-bold">Taskify</p>
+        <p className=" text-white p:text-[76px] t:text-[56px] text-[40px] font-bold">새로운 일정 관리</p>
+        <p className=" text-violet_5534DA p:text-[76px] t:text-[56px] text-[40px] font-bold">Taskify</p>
       </div>
       <div className="text-white mt-[24px]">스마트하게 나의 일정을 관리하자!</div>
 

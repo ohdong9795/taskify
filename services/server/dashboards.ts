@@ -7,7 +7,7 @@ export const getDashboards = (query: { navigationMethod: string; cursorId?: numb
 export const getDashboardById = (query: { dashboardId: number }) => getDashboardByIdCommon(serverInstance, query);
 
 export const getDashboardInvitations = (query: {
-  dashboardId: string;
+  dashboardId: number;
   cursorId?: number;
   page?: number;
   size?: number;

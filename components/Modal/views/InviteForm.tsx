@@ -9,21 +9,23 @@ import { useRouter } from 'next/navigation';
 
 interface InviteFormProp {
   dashboardId: number;
+  handleCloseModal: () => void;
 }
 
-function InviteForm({ dashboardId }: InviteFormProp) {
+function InviteForm({ dashboardId, handleCloseModal }: InviteFormProp) {
   const router = useRouter();
   const { handleSubmit, control } = useForm<{ email: string }>();
 
   const handleInvite = async ({ email }: { email: string }) => {
     await inviteDashboard({ dashboardId, email });
+    handleCloseModal();
     router.refresh();
   };
 
   return (
     <div className="max-w-[540px]">
       <Title title="초대하기" />
-      <form className="flex flex-col relative" onSubmit={handleSubmit(handleInvite)}>
+      <form className="relative flex flex-col" onSubmit={handleSubmit(handleInvite)}>
         <Controller
           control={control}
           name={FORM_OPTIONS.email.name}
@@ -38,7 +40,14 @@ function InviteForm({ dashboardId }: InviteFormProp) {
             />
           )}
         />
-        <button type="submit">초대</button>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="mt-3 text-center w-[120px] h-[48px] py-2 t:px-7 rounded bg-violet_5534DA hover:bg-violet-500 text-white"
+          >
+            초대
+          </button>
+        </div>
       </form>
     </div>
   );

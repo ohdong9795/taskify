@@ -13,7 +13,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ text, handleClick, 
   <button
     ref={ref}
     type="button"
-    className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486"
+    className="flex items-center gap-[8px] rounded-md border border-gray_D9 py-[11px] px-[16px] text-gray_787486 hover:bg-gray-300"
     onClick={handleClick}
   >
     {children}
