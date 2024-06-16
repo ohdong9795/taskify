@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ColumnType, MemberData, ColumnData, CardData } from '@/types/user/column';
 import { DashboardProvider } from '@/contexts/DashboardContext';
 import useModal from '@/hooks/useModal';
+import { getCards } from '@/services/client/cards';
 import Modal from '../Modal';
 import ColumnAddForm from '../Modal/views/ColumnAddForm';
 import Column from './Column';
@@ -18,6 +19,7 @@ interface ContentProps {
 
 export default function Content({ dashboardId, columnsData, cardsDataArray, memberData }: ContentProps) {
   const [columns, setColumns] = useState(columnsData.data);
+  const [cards, setCards] = useState(cardsDataArray);
   const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
   const handleAddColumnSuccess = (col: ColumnType) => {
@@ -39,25 +41,34 @@ export default function Content({ dashboardId, columnsData, cardsDataArray, memb
     );
   };
 
+  const refreshCardAll = async () => {
+    const cardsPromises = columnsData.data.map((col) => getCards({ columnId: col.id, size: 1000 }));
+    const result: CardData[] = await Promise.all(cardsPromises);
+
+    setCards(result);
+  };
+
   return (
-    <DashboardProvider dashboardId={dashboardId} memberData={memberData}>
+    <DashboardProvider dashboardId={dashboardId} memberData={memberData} columnsData={columnsData}>
+      <div
+        className="fixed bottom-2 left-1/2 transform -translate-x-1/2 p:static p:transform-none p:pl-5 p:pt-5"
+        style={{ left: `calc(50% + var(--sidebar-width) / 2)` }}
+      >
+        <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
+      </div>
       <div className="w-full">
-        <ul className="flex h-full overflow-x-scroll">
+        <ul className="flex h-full flex-col p:flex-row overflow-scroll pr-12">
           {columns?.map((col) => (
-            <li key={col.id} className="w-[354px] p-5 border-r border-r-gray_EE flex flex-col">
+            <li key={col.id} className="w-full p:w-[354px] p-5 border-r border-r-gray_EE flex flex-col">
               <Column
                 data={col}
-                cardsData={
-                  cardsDataArray.find((cardData) => cardData.cards.some((card) => card.columnId === col.id)) || null
-                }
+                cardsData={cards.find((cardData) => cardData.cards.some((card) => card.columnId === col.id)) || null}
                 onUpdate={handleUpdateColumnSuccess}
                 onDelete={handleDeleteColumnSuccess}
+                refreshCardAll={refreshCardAll}
               />
             </li>
           ))}
-          <div className="w-80">
-            <ModalOpenButton text="새로운 컬럼 추가하기" handleClick={handleOpenModal} />
-          </div>
         </ul>
         <Modal ref={modalRef}>
           <ColumnAddForm

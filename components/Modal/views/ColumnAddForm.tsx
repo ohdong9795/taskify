@@ -24,7 +24,7 @@ function ColumnAddForm({ dashboardId, onSuccess, handleCloseModal }: ColumnAddFo
   };
 
   return (
-    <div className="max-w-[540px]">
+    <div className="max-w-[327px] t:max-w-[540px]">
       <Title title="새 컬럼 생성" />
       <form onSubmit={handleSubmit(submit)} className="flex flex-col">
         <Controller
@@ -33,10 +33,12 @@ function ColumnAddForm({ dashboardId, onSuccess, handleCloseModal }: ColumnAddFo
           render={({ field }) => <Input text="이름" id="newColumnName" placeholder="새로운 컬럼 이름" {...field} />}
         />
         <div className="mt-7 flex justify-end gap-3">
-          <button type="button" onClick={handleCloseModal}>
-            취소
+          <button
+            type="submit"
+            className="text-center w-[120px] h-[48px] py-2 t:px-7 rounded bg-violet_5534DA hover:bg-violet-500 text-white"
+          >
+            생성
           </button>
-          <button type="submit">생성</button>
         </div>
       </form>
     </div>

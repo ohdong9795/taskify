@@ -1,3 +1,5 @@
+import { TagType } from '@/constants/tag';
+
 export interface ColumnType {
   id: number;
   title: string;
@@ -16,7 +18,7 @@ export interface CardType {
   id: number;
   title: string;
   description: string;
-  tags: string[];
+  tags: TagType[];
   dueDate: string;
   assignee: {
     profileImageUrl: string;

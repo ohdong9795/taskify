@@ -7,6 +7,8 @@ import { deleteCardById } from '@/services/client/cards';
 import { createComment, getComments } from '@/services/client/comments';
 import Image from 'next/image';
 import { useDashboard } from '@/contexts/DashboardContext';
+import Profile from '@/components/nav/Profile';
+import Tags from '@/components/common/Tag';
 import Comment from '../components/Comment';
 
 interface ModalColumnCardProps {
@@ -34,10 +36,11 @@ interface CommentsType {
 }
 
 function ModalColumnCard({ data, onOpenEditModal, onClose }: ModalColumnCardProps) {
-  const { dashboardId } = useDashboard();
+  const { dashboardId, columnsData } = useDashboard();
   const dropdownRef = useRef<DropdownHandle>(null);
   const [comments, setComments] = useState<CommentsType | null>(null);
   const [comment, setComment] = useState('');
+  const column = columnsData.data.filter((col) => col.id === data.columnId);
 
   useEffect(() => {
     (async () => {
@@ -81,7 +84,7 @@ function ModalColumnCard({ data, onOpenEditModal, onClose }: ModalColumnCardProp
   };
 
   return (
-    <div className="max-w-[730px]">
+    <div className="max-w-[327px] t:max-w-[680px] p:max-w-[730px]">
       <header className="flex items-center justify-between h-8 mb-6">
         <Title title={data.title} />
         <button type="button" className="mr-14" aria-label="dropdown" onClick={toggleDropdown}>
@@ -100,12 +103,18 @@ function ModalColumnCard({ data, onOpenEditModal, onClose }: ModalColumnCardProp
           </button>
         </Dropdown>
       </header>
-      <main className="grid grid-cols-3 gap-6">
-        <section className="col-span-2">
-          <div>
-            {data.tags.map((tag) => (
-              <span key={tag}>{tag}</span>
-            ))}
+      <main className="grid t:grid-cols-3 gap-6">
+        <section className="col-span-2 order-2 t:order-none">
+          <div className="flex items-center">
+            <div className="rounded-[11px] bg-violet_F1EFFD text-violet_5534DA px-2 py-1">
+              {`● ${column.map((col) => col.title)}`}
+            </div>
+            <div className="w-px h-full mx-[20px] text-gray_D9">|</div>
+            <div className="flex gap-[6px]">
+              {data.tags.map((tag) => (
+                <Tags key={tag} name={tag} />
+              ))}
+            </div>
           </div>
           <p className="my-4 text-sm font-normal leading-6 text-black_333236">{data.description}</p>
           <div className="relative flex justify-center w-full">
@@ -136,20 +145,22 @@ function ModalColumnCard({ data, onOpenEditModal, onClose }: ModalColumnCardProp
               comments.comments.map((com) => <Comment key={com.id} data={com} refresh={refreshComments} />)}
           </div>
         </section>
-        <section className="col-span-1">
-          <div className="p-4 border rounded-lg border-gray_D9">
-            <span className="text-xs font-semibold text-black_333236">담당자</span>
-            <div className="flex text-sm font-normal text-black_333236">
-              <div className="mr-2">
-                {data.assignee.profileImageUrl && (
-                  <Image src={data.assignee.profileImageUrl} width={34} height={34} alt="프로필 이미지" />
-                )}
-              </div>
-              <span>{data.assignee.nickname}</span>
-            </div>
+        <section className="col-span-2 t:col-span-1 order-1">
+          <div className="flex t:flex-col justify-between px-4 py-3 t:py-4 border rounded-lg border-gray_D9">
             <div>
+              <span className="text-xs font-semibold text-black_333236">담당자</span>
+              <div className="flex items-center text-sm font-normal text-black_333236 t:h-[38px] mt-1 t:mt-[11px] t:mb-[22px]">
+                {data.assignee.profileImageUrl && (
+                  <div className="mr-2">
+                    <Profile imageUrl={data.assignee.profileImageUrl} />
+                  </div>
+                )}
+                <span>{data.assignee.nickname}</span>
+              </div>
+            </div>
+            <div className="mr-[34px] t:mr-0">
               <span className="text-xs font-semibold text-black_333236">마감일</span>
-              <div className="text-sm font-normal text-black_333236">{data.dueDate}</div>
+              <div className="text-sm font-normal text-black_333236 mt-2">{data.dueDate}</div>
             </div>
           </div>
         </section>

@@ -7,11 +7,14 @@ import Title from '@/components/Modal/components/Title';
 import Input from '@/components/Modal/components/Input';
 import { useDashboard } from '@/contexts/DashboardContext';
 import ModalImageInput from '../components/ModalImageInput';
+import MultiSelect, { colourOptions } from '../components/MultiSelect';
+import SingleSelect from '../components/SingleSelect';
 
 interface ToDoEditFormProps {
   cardData: CardType;
   handleCloseModal: () => void;
-  refreshCards: (addCard?: boolean) => void;
+  refreshCards: () => void;
+  refreshCardAll: () => void;
 }
 
 interface FormValues {
@@ -29,8 +32,8 @@ interface UpdateCardBody extends FormValues {
   cardId: number;
 }
 
-export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards }: ToDoEditFormProps) {
-  const { dashboardId, memberData } = useDashboard();
+export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards, refreshCardAll }: ToDoEditFormProps) {
+  const { dashboardId, memberData, columnsData } = useDashboard();
   const { control, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: {
       assigneeUserId: cardData.assignee.id,
@@ -51,7 +54,7 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards 
       cardId: cardData.id,
       assigneeUserId: Number(data.assigneeUserId),
       dashboardId,
-      columnId: cardData.columnId,
+      columnId: Number(data.columnId),
       title: data.title,
       description: data.description,
       dueDate: data.dueDate,
@@ -60,30 +63,75 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards 
 
     if (data.imageUrl) body.imageUrl = data.imageUrl;
     await updateCard(body);
-    refreshCards();
+    if (cardData.columnId === Number(data.columnId)) refreshCards();
+    else refreshCardAll();
     handleCloseModal();
   };
 
   return (
-    <div className="max-w-[540px] max-h-[907px]">
+    <div className="max-w-[327px] t:max-w-[506px] max-h-[907px]">
       <Title title="할 일 수정" />
-      <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-8">
-        <Controller
-          control={control}
-          name="assigneeUserId"
-          render={({ field }) => (
-            <div className="flex flex-col w-[217px]">
-              <select {...field}>
-                <option value="">이름을 입력해 주세요</option>
-                {memberData.members.map((member) => (
-                  <option key={member.id} value={member.userId} selected={cardData.assignee.id === member.userId}>
-                    {member.nickname}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-        />
+      <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-6 t:gap-8">
+        <div className="flex justify-between t:justify-normal flex-col t:flex-row gap-6 t:gap-8">
+          <Controller
+            control={control}
+            name="columnId"
+            render={({ field }) => (
+              <div className="flex flex-col w-[217px]">
+                <label htmlFor="columnId" className="text-lg font-medium text-black_333236 mb-[10px]">
+                  상태
+                </label>
+                <SingleSelect
+                  {...field}
+                  type="column"
+                  defaultValue={{
+                    value: cardData.columnId,
+                    label: columnsData.data.find((col) => col.id === cardData.columnId)?.title ?? '',
+                  }}
+                  colourOptions={columnsData.data.map((col) => ({
+                    value: col.id,
+                    label: col.title,
+                  }))}
+                  onChange={(option) => {
+                    if (option && 'value' in option) {
+                      field.onChange(option.value);
+                    }
+                  }}
+                />
+              </div>
+            )}
+          />
+          <Controller
+            control={control}
+            name="assigneeUserId"
+            render={({ field }) => (
+              <div className="flex flex-col w-[217px]">
+                <label htmlFor="assigneeUserId" className="text-lg font-medium text-black_333236 mb-[10px]">
+                  담당자
+                </label>
+                <SingleSelect
+                  {...field}
+                  type="member"
+                  defaultValue={{
+                    value: cardData.assignee.id,
+                    label: cardData.assignee.nickname,
+                    image: cardData.assignee.profileImageUrl,
+                  }}
+                  colourOptions={memberData.members.map((member) => ({
+                    value: member.userId,
+                    label: member.nickname,
+                    image: member.profileImageUrl,
+                  }))}
+                  onChange={(option) => {
+                    if (option && 'value' in option) {
+                      field.onChange(option.value);
+                    }
+                  }}
+                />
+              </div>
+            )}
+          />
+        </div>
         <Controller
           control={control}
           name="title"
@@ -118,16 +166,25 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards 
           control={control}
           name="tags"
           render={({ field }) => (
-            <Input
-              text="태그"
-              id="tag"
-              placeholder="입력 후 Enter, 쉼표로 구분"
-              {...field}
-              onChange={(e) => {
-                const tagsArray = e.target.value.split(',').map((tag) => tag.trim());
-                field.onChange(tagsArray);
-              }}
-            />
+            <div>
+              <label htmlFor="tags" className="text-lg font-medium text-black_333236 mb-[10px]">
+                태그
+              </label>
+              <MultiSelect
+                defaultValue={cardData.tags.map((tag) => {
+                  const colour = colourOptions.find((col) => col.value === tag);
+                  return {
+                    value: colour?.value ?? '',
+                    label: colour?.label ?? '',
+                    color: colour?.color ?? '',
+                  };
+                })}
+                onChange={(selectedOptions) => {
+                  const values = Array.isArray(selectedOptions) ? selectedOptions.map((option) => option.value) : [];
+                  field.onChange(values);
+                }}
+              />
+            </div>
           )}
         />
         <Controller
@@ -142,11 +199,13 @@ export default function ToDoEditForm({ handleCloseModal, cardData, refreshCards 
             />
           )}
         />
-        <div className="mt-7">
-          <button type="button" onClick={handleCloseModal}>
-            취소
+        <div className="flex justify-end mt-7">
+          <button
+            className="text-center w-[120px] h-[48px] py-2 t:px-7 rounded bg-violet_5534DA hover:bg-violet-500 text-white"
+            type="submit"
+          >
+            변경
           </button>
-          <button type="submit">변경</button>
         </div>
       </form>
     </div>
