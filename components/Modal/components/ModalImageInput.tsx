@@ -46,11 +46,11 @@ export default function ModalImageInput({ columnId, imageUrl, onImageUpload }: M
     [columnId, onImageUpload],
   );
 
-  const labelStyle = 'flex items-center justify-center bg-gray_F5F5F5 t:w-[84px] t:h-[84px]';
+  const labelStyle = 'flex items-center justify-center bg-gray_F5F5F5 t:w-[84px] t:h-[84px] w-[58px] h-[58px]';
   return (
     <div className="flex flex-col">
       <label htmlFor="profileImageUpload" className={labelStyle}>
-        {typeof preview === 'string' && <Image src={preview} alt="프로필 이미지가 들어가요" width={84} height={84} />}
+        {typeof preview === 'string' && <Image src={preview} alt="프로필 이미지가 들어가요" width={58} height={58} />}
         <FaPlus className={`w-[20px] h-[20px] text-violet_5534DA ${preview ? 'hidden' : ''}`} />
         <input id="profileImageUpload" type="file" accept="image/*" onChange={onUploadImage} className="hidden" />
       </label>
