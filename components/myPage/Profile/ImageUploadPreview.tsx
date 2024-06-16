@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { FaPlus } from 'react-icons/fa';
 import { useCallback, useState } from 'react';
 import { User } from '@/types/user/user';
+import useAuthStore from '@/stores/authStore';
+import { toast } from 'react-toastify';
 
 interface ProfileProps {
   Profile: User;
@@ -16,6 +18,7 @@ interface ProfileProps {
 export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Element {
   const [preview, setPreview] = useState<string>(Profile.profileImageUrl);
   const [nickname, setNickname] = useState<string>(Profile.nickname);
+  const { user, setUser } = useAuthStore();
 
   const onUploadImage = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -50,14 +53,35 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
   const handleClick = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (nickname && preview) {
-        instance.put('/users/me', {
-          nickname,
-          profileImageUrl: preview,
+      let body;
+
+      if (nickname) body = { nickname };
+      if (preview) body = { profileImageUrl: preview };
+      if (nickname && preview) body = { nickname, profileImageUrl: preview };
+
+      try {
+        instance.put('/users/me', body);
+        if (user) {
+          setUser({ ...user, ...body });
+        }
+        toast('변경이 완료되었습니다.', {
+          position: 'top-center',
+          autoClose: 1500,
+          draggable: true,
+          theme: 'dark',
         });
+      } catch (error) {
+        if (error) {
+          toast('변경에 실패하였습니다.', {
+            position: 'top-center',
+            autoClose: 1500,
+            draggable: true,
+            theme: 'dark',
+          });
+        }
       }
     },
-    [nickname, preview],
+    [nickname, preview, setUser, user],
   );
 
   const formStyle =
@@ -97,7 +121,9 @@ export default function ImageUploadPreview({ Profile }: ProfileProps): JSX.Eleme
         </div>
       </div>
       <div className="flex items-end justify-end h-screen">
-        <button className={buttonStyle}>저장</button>
+        <button className={buttonStyle} type="submit">
+          저장
+        </button>
       </div>
     </form>
   );
