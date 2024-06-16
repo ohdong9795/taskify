@@ -1,8 +1,8 @@
-import Content from '@/components/dashboard/Content';
 import { getMembers } from '@/services/server/members';
 import { getCards } from '@/services/server/cards';
 import { getColumns } from '@/services/server/columns';
 import { CardData, ColumnCard, ColumnData } from '@/types/user/column';
+import Content from '@/components/Dashboard/Content';
 
 interface DashboardPageProps {
   params: {

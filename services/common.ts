@@ -339,11 +339,10 @@ export const inviteDashboardCommon = async (instance: AxiosInstance, body: { das
 
 export const getDashboardInvitationsCommon = async (
   instance: AxiosInstance,
-  { dashboardId, cursorId, page, size }: { dashboardId: string; cursorId?: number; page?: number; size?: number },
+  { dashboardId }: { dashboardId: number },
 ) => {
   try {
-    const queryString = buildQueryString({ cursorId, page, size });
-    const response = await instance.get(`/dashboards/${dashboardId}/invitations/${queryString}`);
+    const response = await instance.get(`/dashboards/${dashboardId}/invitations`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -415,6 +414,7 @@ export const getMembersCommon = async (
   try {
     const queryString = buildQueryString(query);
     const response = await instance.get(`/members${queryString}`);
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
